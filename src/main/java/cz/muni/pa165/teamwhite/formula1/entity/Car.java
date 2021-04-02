@@ -72,7 +72,7 @@ public class Car {
         this.components.add(component);
     }
 
-    public void removeComponent(Componenent component) {
+    public void removeComponent(Component component) {
         if (!this.components.contains(component)) {
             throw new IllegalArgumentException("Component " + component + " is not in this car!");
         }
