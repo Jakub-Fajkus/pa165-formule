@@ -54,7 +54,7 @@ public class Driver {
         this.id = id;
     }
 
-    public Driver(Long id, Car car, String name, String surname, String nationality,
+    public Driver(Car car, String name, String surname, String nationality,
                   boolean isAgresive, int wetDriving, int reactions) {
         this.id = id;
         this.car = car;
