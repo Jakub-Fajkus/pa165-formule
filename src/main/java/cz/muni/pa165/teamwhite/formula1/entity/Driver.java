@@ -56,7 +56,6 @@ public class Driver {
 
     public Driver(Car car, String name, String surname, String nationality,
                   boolean isAgresive, int wetDriving, int reactions) {
-        this.id = id;
         this.car = car;
         this.name = name;
         this.surname = surname;
