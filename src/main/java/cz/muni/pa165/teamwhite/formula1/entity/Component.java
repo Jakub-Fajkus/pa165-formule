@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.ManyToOne;
 import javax.persistence.EnumType;
+import javax.persistence.Column;
 import javax.validation.constraints.NotNull;
 
 import java.util.Objects;
@@ -21,6 +22,10 @@ public class Component {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(nullable = false, unique = true)
+    @NotNull
+    private String name;
 
     @ManyToOne
     private Car car;
@@ -35,9 +40,15 @@ public class Component {
         this.id = componentId;
     }
 
-    public Component(ComponentType ctype, Car car){
+    public Component(ComponentType ctype, String name, Car car){
         this.type = ctype;
+        this.name = name;
         this.car = car;
+    }
+
+    public Component(ComponentType ctype, String name) {
+        this.type = ctype;
+        this.name = name;
     }
 
     public Long getId() {
@@ -64,16 +75,24 @@ public class Component {
         this.type = type;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Component)) return false;
         Component component = (Component) o;
-        return Objects.equals(getCar(), component.getCar()) && getType() == component.getType();
+        return getName().equals(component.getName()) && Objects.equals(getCar(), component.getCar()) && getType() == component.getType();
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getCar(), getType());
+        return Objects.hash(getName(), getCar(), getType());
     }
 }
