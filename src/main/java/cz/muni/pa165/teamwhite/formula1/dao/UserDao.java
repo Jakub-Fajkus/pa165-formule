@@ -10,7 +10,7 @@ import java.util.List;
 public interface UserDao {
 
     /**
-     * This method create new user in database
+     * This method creates new user in database
      * @param user - user to be added to DB
      */
     void create(User user);
@@ -25,7 +25,7 @@ public interface UserDao {
     /**
      * This method finds user in DB by entered login
      * @param login - login of the requested user
-     * @return found yser
+     * @return found user
      */
     User findByLogin(String login);
 
