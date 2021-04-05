@@ -5,12 +5,14 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 import java.util.List;
 
 /**
  * @author Jakub Fajkus
  */
 @Repository
+@Transactional
 public class DriverDaoImpl implements DriverDao {
     @PersistenceContext
     private EntityManager em;
