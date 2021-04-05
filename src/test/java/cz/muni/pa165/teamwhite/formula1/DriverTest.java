@@ -33,7 +33,7 @@ public class DriverTest extends AbstractTestNGSpringContextTests {
     private CarDao carDao;
 
     @AfterMethod
-    public void afterClass() {
+    public void afterMethod() {
         EntityManager em = null;
         try {
             em = emf.createEntityManager();
