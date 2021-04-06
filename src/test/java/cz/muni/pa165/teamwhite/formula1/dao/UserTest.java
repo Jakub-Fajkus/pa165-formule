@@ -1,6 +1,6 @@
-package cz.muni.pa165.teamwhite.formula1;
+package cz.muni.pa165.teamwhite.formula1.dao;
 
-import cz.muni.pa165.teamwhite.formula1.dao.UserDao;
+import cz.muni.pa165.teamwhite.formula1.PersistenceSampleApplicationContext;
 import cz.muni.pa165.teamwhite.formula1.entity.User;
 import cz.muni.pa165.teamwhite.formula1.enums.Role;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,17 +9,11 @@ import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
 import org.testng.Assert;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.PersistenceContext;
-import javax.persistence.PersistenceUnit;
+import javax.persistence.NoResultException;
 import javax.transaction.Transactional;
 import javax.validation.ConstraintViolationException;
-import java.util.List;
 
 /**
  * @author Jiří Andrlík
@@ -28,12 +22,6 @@ import java.util.List;
 @TestExecutionListeners(TransactionalTestExecutionListener.class)
 @Transactional
 public class UserTest extends AbstractTestNGSpringContextTests {
-
-    @PersistenceUnit
-    EntityManagerFactory emf;
-
-    @PersistenceContext
-    private EntityManager em;
 
     @Autowired
     private UserDao userDao;
@@ -83,21 +71,21 @@ public class UserTest extends AbstractTestNGSpringContextTests {
 
     }
 
-    @Test(expectedExceptions = ConstraintViolationException.class)
+    @Test
     public void loginNotNull(){
         User user = new User(null, "1234", Role.MANAGER);
-        userDao.create(user);
+        Assert.assertThrows(ConstraintViolationException.class, () -> userDao.create(user));
     }
 
-    @Test(expectedExceptions = ConstraintViolationException.class)
+    @Test
     public void passwordNotNull(){
         User user = new User("jiri", null, Role.MANAGER);
-        userDao.create(user);
+        Assert.assertThrows(ConstraintViolationException.class, () -> userDao.create(user));
     }
 
-    @Test(expectedExceptions = ConstraintViolationException.class)
+    @Test
     public void roleNotNull(){
         User user = new User("jiri", "1111", null);
-        userDao.create(user);
+        Assert.assertThrows(ConstraintViolationException.class, () -> userDao.create(user));
     }
 }
