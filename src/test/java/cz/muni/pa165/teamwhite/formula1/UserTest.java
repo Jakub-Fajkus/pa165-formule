@@ -18,6 +18,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceUnit;
 import javax.transaction.Transactional;
+import javax.validation.ConstraintViolationException;
 import java.util.List;
 
 /**
@@ -38,29 +39,6 @@ public class UserTest extends AbstractTestNGSpringContextTests {
     private UserDao userDao;
 
 
-    /**@BeforeClass
-    public void setup(){
-        EntityManager em = emf.createEntityManager();
-        em.getTransaction().begin();
-        User tom = new User("lime", "4321", Role.ENGINEER);
-        User jakub = new User("spasitel", "JeToBezHesla", Role.ENGINEER);
-        userDao.create(tom);
-        userDao.create(jakub);
-    }*/
-
-    @AfterClass
-    public void cleanDB(){
-        List<User> all = userDao.findAll();
-
-        Assert.assertNotEquals(all.size(), 0);
-
-        em.createQuery("delete from User").executeUpdate();
-        em.getTransaction().commit();
-        all = userDao.findAll();
-        Assert.assertEquals(all.size(), 0);
-
-    }
-
     @Test
     public void testCreate(){
         User kaja = new User("kaja", "CoTeToZajima", Role.MANAGER);
@@ -80,20 +58,22 @@ public class UserTest extends AbstractTestNGSpringContextTests {
 
     @Test
     public void testFetchByNameAndRemove(){
-        User tom = userDao.findByLogin("lime");
-        userDao.remove(tom);
+        User tom = new User("lime", "4321", Role.ENGINEER);
+        userDao.create(tom);
         tom = userDao.findByLogin("lime");
-        Assert.assertNull(tom);
+        userDao.remove(tom);
+        Assert.assertThrows(NoResultException.class, () -> userDao.findByLogin("lime"));
     }
 
     @Test
     public void testUpdate(){
-        User jakub = userDao.findByLogin("spasitel");
-        String oldPassword = jakub.getPassword();
+        User jakub = new User("spasitel", "JeToBezHesla", Role.ENGINEER);
+        userDao.create(jakub);
+        jakub = userDao.findByLogin("spasitel");
+
         String newPassword = "1111";
 
         jakub.setPassword(newPassword);
-        Assert.assertEquals(userDao.findById(jakub.getId()).getPassword(), oldPassword);
 
         userDao.update(jakub);
         User jakubClone = userDao.findById(jakub.getId());
@@ -102,5 +82,22 @@ public class UserTest extends AbstractTestNGSpringContextTests {
         Assert.assertEquals(jakubClone.getPassword(), newPassword);
 
     }
-    
+
+    @Test(expectedExceptions = ConstraintViolationException.class)
+    public void loginNotNull(){
+        User user = new User(null, "1234", Role.MANAGER);
+        userDao.create(user);
+    }
+
+    @Test(expectedExceptions = ConstraintViolationException.class)
+    public void passwordNotNull(){
+        User user = new User("jiri", null, Role.MANAGER);
+        userDao.create(user);
+    }
+
+    @Test(expectedExceptions = ConstraintViolationException.class)
+    public void roleNotNull(){
+        User user = new User("jiri", "1111", null);
+        userDao.create(user);
+    }
 }
