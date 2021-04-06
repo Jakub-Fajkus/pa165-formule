@@ -1,6 +1,5 @@
 package cz.muni.pa165.teamwhite.formula1.dao;
 
-
 import cz.muni.pa165.teamwhite.formula1.entity.User;
 import org.springframework.stereotype.Repository;
 

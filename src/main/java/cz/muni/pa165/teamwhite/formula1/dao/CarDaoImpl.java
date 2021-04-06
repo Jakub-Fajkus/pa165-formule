@@ -1,12 +1,10 @@
 package cz.muni.pa165.teamwhite.formula1.dao;
 
 import cz.muni.pa165.teamwhite.formula1.entity.Car;
-import cz.muni.pa165.teamwhite.formula1.entity.Driver;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.transaction.Transactional;
 import java.util.List;
 
 /**

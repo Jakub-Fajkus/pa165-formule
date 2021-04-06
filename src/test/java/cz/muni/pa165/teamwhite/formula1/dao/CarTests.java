@@ -1,36 +1,20 @@
-package cz.muni.pa165.teamwhite.formula1.Dao;
-
+package cz.muni.pa165.teamwhite.formula1.dao;
 
 import cz.muni.pa165.teamwhite.formula1.PersistenceSampleApplicationContext;
-import cz.muni.pa165.teamwhite.formula1.dao.CarDao;
-import cz.muni.pa165.teamwhite.formula1.dao.ComponentDao;
-import cz.muni.pa165.teamwhite.formula1.dao.DriverDao;
 import cz.muni.pa165.teamwhite.formula1.entity.Car;
-
-import javax.transaction.Transactional;
-import javax.validation.ConstraintViolationException;
-
 import cz.muni.pa165.teamwhite.formula1.entity.Component;
 import cz.muni.pa165.teamwhite.formula1.entity.Driver;
 import cz.muni.pa165.teamwhite.formula1.enums.ComponentType;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
 import org.testng.Assert;
-import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.PersistenceUnit;
-import java.lang.reflect.Method;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Set;
+import javax.transaction.Transactional;
+import javax.validation.ConstraintViolationException;
 
 /**
  * @author Tomas Sedlacek
@@ -39,9 +23,6 @@ import java.util.Set;
 @Transactional
 @TestExecutionListeners(TransactionalTestExecutionListener.class)
 public class CarTests extends AbstractTestNGSpringContextTests {
-    @PersistenceUnit
-    private EntityManagerFactory emf;
-
     @Autowired
     private DriverDao driverDao;
 
@@ -59,7 +40,6 @@ public class CarTests extends AbstractTestNGSpringContextTests {
     }
 
     @Test
-    @Rollback(value = true)
     public void createTwoCars() {
         Driver lewis = createDriverLewis();
         Driver fernando = createDriverFernando();
@@ -91,11 +71,9 @@ public class CarTests extends AbstractTestNGSpringContextTests {
         carDao.create(car2);
 
         Assert.assertEquals(carDao.findAll().size(), 2);
-
     }
 
     @Test
-    @Rollback(value = true)
     public void findByIdTest() {
         Driver lewis = createDriverLewis();
         Car monopost2021 = new Car();
@@ -112,7 +90,6 @@ public class CarTests extends AbstractTestNGSpringContextTests {
     }
 
     @Test
-    @Rollback(value = true)
     public void findByNameTest() {
         Driver lewis = createDriverLewis();
         Car monopost2021 = new Car();
@@ -172,9 +149,8 @@ public class CarTests extends AbstractTestNGSpringContextTests {
 
         Car found = carDao.findById(car.getId());
         Assert.assertEquals(found.getName(), "AMG petronas ultra fast uber new car");
+        Assert.assertNull(lewis.getCar());
         Assert.assertEquals(found.getDriver(), fernando);
-
-
     }
 
     @Test
@@ -198,7 +174,7 @@ public class CarTests extends AbstractTestNGSpringContextTests {
         Driver driver = new Driver();
         driver.setName("Lewis");
         driver.setSurname("Hamilton");
-        driver.setNationaliy("GB");
+        driver.setNationality("GB");
         driver.setAgresive(true);
         driver.setWetDriving(10);
         driver.setReactions(10);
@@ -210,7 +186,7 @@ public class CarTests extends AbstractTestNGSpringContextTests {
         Driver driver = new Driver();
         driver.setName("Fernando");
         driver.setSurname("Alonso");
-        driver.setNationaliy("ES");
+        driver.setNationality("ES");
         driver.setAgresive(true);
         driver.setWetDriving(9);
         driver.setReactions(8);

@@ -99,8 +99,9 @@ public class Car {
         return getName().equals(car.getName()) && getDriver().equals(car.getDriver()) && getComponents().equals(car.getComponents());
     }
 
+
     @Override
     public int hashCode() {
-        return Objects.hash(getName(), getDriver(), getComponents());
+        return Objects.hash(getName());
     }
 }
