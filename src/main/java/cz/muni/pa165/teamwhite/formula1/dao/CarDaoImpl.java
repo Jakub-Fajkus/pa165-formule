@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 import java.util.List;
 
 /**
@@ -29,12 +30,8 @@ public class CarDaoImpl implements CarDao{
 
     @Override
     public Car findByName(String name) {
-        return em.createQuery("select c from Car c where c.name = :name", Car.class).setParameter("name", name).getSingleResult();
-    }
-
-    @Override
-    public Car findByDriver(Driver driver) {
-        return em.createQuery("select c from Car c where c.driver = :driver", Car.class).setParameter("driver", driver).getSingleResult();
+        Car car = em.createQuery("select c from Car c where c.name = :name", Car.class).setParameter("name", name).getSingleResult();
+        return car;
     }
 
     @Override

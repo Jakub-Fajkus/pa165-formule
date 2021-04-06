@@ -30,13 +30,6 @@ public interface CarDao {
     Car findByName(String name);
 
     /**
-     * This method finds car in DB by entered name
-     * @param driver - driver of the requested car
-     * @return found car
-     */
-    Car findByDriver(Driver driver);
-
-    /**
      * This method return all the cars from the storage
      * @return list of all cars
      */
