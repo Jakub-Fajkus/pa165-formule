@@ -1,7 +1,6 @@
-package cz.muni.pa165.teamwhite.formula1;
+package cz.muni.pa165.teamwhite.formula1.dao;
 
-import cz.muni.pa165.teamwhite.formula1.dao.CarDao;
-import cz.muni.pa165.teamwhite.formula1.dao.DriverDao;
+import cz.muni.pa165.teamwhite.formula1.PersistenceSampleApplicationContext;
 import cz.muni.pa165.teamwhite.formula1.entity.Car;
 import cz.muni.pa165.teamwhite.formula1.entity.Driver;
 import org.springframework.beans.factory.annotation.Autowired;
