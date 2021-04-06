@@ -175,7 +175,7 @@ public class CarTests extends AbstractTestNGSpringContextTests {
         driver.setName("Lewis");
         driver.setSurname("Hamilton");
         driver.setNationality("GB");
-        driver.setAgresive(true);
+        driver.setIsAggressive(true);
         driver.setWetDriving(10);
         driver.setReactions(10);
 
@@ -187,7 +187,7 @@ public class CarTests extends AbstractTestNGSpringContextTests {
         driver.setName("Fernando");
         driver.setSurname("Alonso");
         driver.setNationality("ES");
-        driver.setAgresive(true);
+        driver.setIsAggressive(true);
         driver.setWetDriving(9);
         driver.setReactions(8);
 

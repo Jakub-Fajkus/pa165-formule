@@ -117,8 +117,8 @@ public class Driver {
         this.nationality = nationality;
     }
 
-    public void setAggressive(boolean aggressive) {
-        isAggressive = aggressive;
+    public void setIsAggressive(boolean isAggressive) {
+        this.isAggressive = isAggressive;
     }
 
     public void setWetDriving(int wetDriving) {
