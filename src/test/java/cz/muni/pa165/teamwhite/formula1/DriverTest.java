@@ -5,8 +5,11 @@ import cz.muni.pa165.teamwhite.formula1.dao.DriverDao;
 import cz.muni.pa165.teamwhite.formula1.entity.Car;
 import cz.muni.pa165.teamwhite.formula1.entity.Driver;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
+import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
 import org.springframework.transaction.TransactionSystemException;
 import org.testng.Assert;
 import org.testng.annotations.*;
@@ -14,6 +17,7 @@ import org.testng.annotations.*;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceUnit;
+import javax.transaction.Transactional;
 import javax.validation.ConstraintViolationException;
 import java.util.List;
 
@@ -21,32 +25,15 @@ import java.util.List;
  * @author Karolina Hecova
  */
 @ContextConfiguration(classes = PersistenceSampleApplicationContext.class)
+@TestExecutionListeners(TransactionalTestExecutionListener.class)
+@Transactional
 public class DriverTest extends AbstractTestNGSpringContextTests {
-
-    @PersistenceUnit
-    private EntityManagerFactory emf;
 
     @Autowired
     private DriverDao driverDao;
 
     @Autowired
     private CarDao carDao;
-
-    @AfterMethod
-    public void afterMethod() {
-        EntityManager em = null;
-        try {
-            em = emf.createEntityManager();
-            em.getTransaction().begin();
-            em.createQuery("delete from Driver").executeUpdate();
-            em.createQuery("delete from Car").executeUpdate();
-            em.getTransaction().commit();
-        } finally {
-            if (em != null) {
-                em.close();
-            }
-        }
-    }
 
     @Test
     public void createDriverWithoutCarTest() {
@@ -74,7 +61,6 @@ public class DriverTest extends AbstractTestNGSpringContextTests {
         Assert.assertEquals(dbDriver.getReactions(), driver.getReactions());
         Assert.assertNull(dbDriver.getCar());
     }
-
 
     @Test(expectedExceptions = ConstraintViolationException.class)
     public void createDriverWithNullAttributesTest() {
@@ -136,6 +122,9 @@ public class DriverTest extends AbstractTestNGSpringContextTests {
 
         driverDao.create(driver);
 
+        car.setDriver(driver);
+        carDao.update(car);
+
         Driver dbDriver = driverDao.findById(driver.getId());
 
         Assert.assertNotNull(dbDriver);
@@ -148,6 +137,7 @@ public class DriverTest extends AbstractTestNGSpringContextTests {
         Assert.assertEquals(dbDriver.getWetDriving(), driver.getWetDriving());
         Assert.assertEquals(dbDriver.getReactions(), driver.getReactions());
         Assert.assertEquals(dbDriver.getCar().getName(), driver.getCar().getName());
+        Assert.assertEquals(dbDriver.getCar().getName(), car.getName());
     }
 
     @Test
@@ -194,36 +184,52 @@ public class DriverTest extends AbstractTestNGSpringContextTests {
 
         driverDao.create(driver);
 
-        driver.setWetDriving(8);
+        driver.setName("Luisa");
+        driverDao.update(driver);
 
         Driver dbDriver = driverDao.findById(driver.getId());
-
-        Assert.assertEquals(dbDriver.getWetDriving(), 10);
-
-        dbDriver = driverDao.update(driver);
-
-        Assert.assertEquals(dbDriver.getWetDriving(), 8);
+        Assert.assertEquals(dbDriver.getName(), "Luisa");
     }
 
-    @Test(expectedExceptions = TransactionSystemException.class)
-    public void updateNullDriverNameTest() {
+    @Test
+    public void updateDriverCarTest() {
+        Car car1 = new Car();
+        car1.setName("Mercedes");
+
+        carDao.create(car1);
+
         Driver driver = new Driver();
         driver.setName("Lewis");
         driver.setSurname("Hamilton");
         driver.setNationality("GB");
+        driver.setCar(car1);
         driver.setAggressive(true);
         driver.setWetDriving(10);
         driver.setReactions(10);
 
         driverDao.create(driver);
 
+        car1.setDriver(driver);
+        carDao.update(car1);
+
         Driver dbDriver = driverDao.findById(driver.getId());
+        Assert.assertEquals(dbDriver.getCar().getName(), car1.getName());
 
-        Assert.assertEquals(dbDriver.getId(), driver.getId());
-        Assert.assertEquals(dbDriver.getName(), driver.getName());
+        Car car2 = new Car();
+        car2.setName("Ferrari");
+        car2.setDriver(driver);
+        carDao.create(car2);
 
-        driver.setName(null);
+        driver.setCar(car2);
         driverDao.update(driver);
+
+        car1.setDriver(null);
+        carDao.update(car1);
+
+        dbDriver = driverDao.findById(driver.getId());
+
+        Assert.assertNull(carDao.findById(car1.getId()).getDriver());
+        Assert.assertEquals(dbDriver.getCar().getName(), car2.getName());
     }
 
     @Test
@@ -248,10 +254,18 @@ public class DriverTest extends AbstractTestNGSpringContextTests {
 
         driverDao.create(driver2);
 
-        Assert.assertEquals(driverDao.findAll().size(), 2);
+        List<Driver> allDrivers = driverDao.findAll();
 
-        driverDao.remove(driver2);
+        Assert.assertEquals(allDrivers.size(), 2);
+        Assert.assertTrue(allDrivers.contains(driver));
+        Assert.assertTrue(allDrivers.contains(driver2));
 
-        Assert.assertEquals(driverDao.findAll().size(), 1);
+        driverDao.remove(driver);
+
+        allDrivers = driverDao.findAll();
+
+        Assert.assertEquals(allDrivers.size(), 1);
+        Assert.assertFalse(allDrivers.contains(driver));
+        Assert.assertTrue(allDrivers.contains(driver2));
     }
 }

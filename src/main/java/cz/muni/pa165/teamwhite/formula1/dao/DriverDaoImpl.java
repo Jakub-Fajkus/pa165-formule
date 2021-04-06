@@ -12,7 +12,6 @@ import java.util.List;
  * @author Jakub Fajkus
  */
 @Repository
-@Transactional
 public class DriverDaoImpl implements DriverDao {
     @PersistenceContext
     private EntityManager em;

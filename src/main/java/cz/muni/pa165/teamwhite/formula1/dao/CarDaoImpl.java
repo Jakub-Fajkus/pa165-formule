@@ -13,7 +13,6 @@ import java.util.List;
  * @author Jiří Andrlík
  */
 @Repository
-@Transactional
 public class CarDaoImpl implements CarDao{
 
     @PersistenceContext
