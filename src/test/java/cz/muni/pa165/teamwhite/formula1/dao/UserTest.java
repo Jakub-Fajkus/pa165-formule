@@ -28,14 +28,14 @@ public class UserTest extends AbstractTestNGSpringContextTests {
 
 
     @Test
-    public void testCreate(){
+    public void testCreate() {
         User kaja = new User("kaja", "CoTeToZajima", Role.MANAGER);
         userDao.create(kaja);
         Assert.assertTrue(true);
     }
 
     @Test
-    public void testFetchById(){
+    public void testFetchById() {
         User jiri = new User("andrlos", "1234", Role.MANAGER);
         userDao.create(jiri);
         User u = userDao.findById(jiri.getId());
@@ -45,7 +45,7 @@ public class UserTest extends AbstractTestNGSpringContextTests {
     }
 
     @Test
-    public void testFetchByNameAndRemove(){
+    public void testFetchByNameAndRemove() {
         User tom = new User("lime", "4321", Role.ENGINEER);
         userDao.create(tom);
         tom = userDao.findByLogin("lime");
@@ -54,7 +54,7 @@ public class UserTest extends AbstractTestNGSpringContextTests {
     }
 
     @Test
-    public void testUpdate(){
+    public void testUpdate() {
         User jakub = new User("spasitel", "JeToBezHesla", Role.ENGINEER);
         userDao.create(jakub);
         jakub = userDao.findByLogin("spasitel");
@@ -72,19 +72,19 @@ public class UserTest extends AbstractTestNGSpringContextTests {
     }
 
     @Test
-    public void loginNotNull(){
+    public void loginNotNull() {
         User user = new User(null, "1234", Role.MANAGER);
         Assert.assertThrows(ConstraintViolationException.class, () -> userDao.create(user));
     }
 
     @Test
-    public void passwordNotNull(){
+    public void passwordNotNull() {
         User user = new User("jiri", null, Role.MANAGER);
         Assert.assertThrows(ConstraintViolationException.class, () -> userDao.create(user));
     }
 
     @Test
-    public void roleNotNull(){
+    public void roleNotNull() {
         User user = new User("jiri", "1111", null);
         Assert.assertThrows(ConstraintViolationException.class, () -> userDao.create(user));
     }
