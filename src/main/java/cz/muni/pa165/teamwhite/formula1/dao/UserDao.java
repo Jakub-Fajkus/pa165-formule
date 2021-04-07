@@ -1,6 +1,7 @@
 package cz.muni.pa165.teamwhite.formula1.dao;
 
 import cz.muni.pa165.teamwhite.formula1.entity.User;
+
 import java.util.List;
 
 
@@ -11,12 +12,14 @@ public interface UserDao {
 
     /**
      * This method creates new user in database
+     *
      * @param user - user to be added to DB
      */
     void create(User user);
 
     /**
      * This method finds user in DB by entered id
+     *
      * @param id - id of the requested user
      * @return found user
      */
@@ -24,6 +27,7 @@ public interface UserDao {
 
     /**
      * This method finds user in DB by entered login
+     *
      * @param login - login of the requested user
      * @return found user
      */
@@ -31,19 +35,22 @@ public interface UserDao {
 
     /**
      * This method finds user in DB by entered login
+     *
      * @return list of all users
      */
     List<User> findAll();
 
     /**
      * This method updates user already stored in DB
-     * @param  user to update
+     *
+     * @param user to update
      */
     void update(User user);
 
     /**
      * This method removes user from DB
-     * @param  user to be removed
+     *
+     * @param user to be removed
      */
     void remove(User user);
 

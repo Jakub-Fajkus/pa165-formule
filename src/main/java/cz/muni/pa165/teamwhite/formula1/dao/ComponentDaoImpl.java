@@ -1,8 +1,6 @@
 package cz.muni.pa165.teamwhite.formula1.dao;
 
-import cz.muni.pa165.teamwhite.formula1.entity.Car;
 import cz.muni.pa165.teamwhite.formula1.entity.Component;
-import cz.muni.pa165.teamwhite.formula1.enums.ComponentType;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -13,7 +11,7 @@ import java.util.List;
  * @author Karolina Hecova
  */
 @Repository
-public class ComponentDaoImpl implements ComponentDao{
+public class ComponentDaoImpl implements ComponentDao {
 
     @PersistenceContext
     private EntityManager em;

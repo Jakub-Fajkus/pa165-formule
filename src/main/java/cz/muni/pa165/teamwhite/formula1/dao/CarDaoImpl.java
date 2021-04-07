@@ -11,7 +11,7 @@ import java.util.List;
  * @author Jiří Andrlík
  */
 @Repository
-public class CarDaoImpl implements CarDao{
+public class CarDaoImpl implements CarDao {
 
     @PersistenceContext
     private EntityManager em;
