@@ -35,7 +35,7 @@ public class DriverTest extends AbstractTestNGSpringContextTests {
         driver.setName("Lewis");
         driver.setSurname("Hamilton");
         driver.setNationality("GB");
-        driver.setAggressive(true);
+        driver.setIsAggressive(true);
         driver.setWetDriving(10);
         driver.setReactions(10);
 
@@ -67,7 +67,7 @@ public class DriverTest extends AbstractTestNGSpringContextTests {
         Driver driver = new Driver();
         driver.setSurname("Hamilton");
         driver.setNationality("GB");
-        driver.setAggressive(true);
+        driver.setIsAggressive(true);
         driver.setWetDriving(10);
         driver.setReactions(10);
 
@@ -79,7 +79,7 @@ public class DriverTest extends AbstractTestNGSpringContextTests {
         Driver driver = new Driver();
         driver.setName("Lewis");
         driver.setNationality("GB");
-        driver.setAggressive(true);
+        driver.setIsAggressive(true);
         driver.setWetDriving(10);
         driver.setReactions(10);
 
@@ -91,7 +91,7 @@ public class DriverTest extends AbstractTestNGSpringContextTests {
         Driver driver = new Driver();
         driver.setName("Lewis");
         driver.setSurname("Hamilton");
-        driver.setAggressive(true);
+        driver.setIsAggressive(true);
         driver.setWetDriving(10);
         driver.setReactions(10);
 
@@ -110,7 +110,7 @@ public class DriverTest extends AbstractTestNGSpringContextTests {
         driver.setSurname("Hamilton");
         driver.setNationality("GB");
         driver.setCar(car);
-        driver.setAggressive(true);
+        driver.setIsAggressive(true);
         driver.setWetDriving(10);
         driver.setReactions(10);
 
@@ -140,7 +140,7 @@ public class DriverTest extends AbstractTestNGSpringContextTests {
         driver.setName("Lewis");
         driver.setSurname("Hamilton");
         driver.setNationality("GB");
-        driver.setAggressive(true);
+        driver.setIsAggressive(true);
         driver.setWetDriving(10);
         driver.setReactions(10);
 
@@ -152,7 +152,7 @@ public class DriverTest extends AbstractTestNGSpringContextTests {
         driver2.setName("Valtteri");
         driver2.setSurname("Bottas");
         driver2.setNationality("FI");
-        driver2.setAggressive(true);
+        driver2.setIsAggressive(true);
         driver2.setReactions(9);
         driver2.setWetDriving(9);
 
@@ -172,7 +172,7 @@ public class DriverTest extends AbstractTestNGSpringContextTests {
         driver.setName("Lewis");
         driver.setSurname("Hamilton");
         driver.setNationality("GB");
-        driver.setAggressive(true);
+        driver.setIsAggressive(true);
         driver.setWetDriving(10);
         driver.setReactions(10);
 
@@ -197,7 +197,7 @@ public class DriverTest extends AbstractTestNGSpringContextTests {
         driver.setSurname("Hamilton");
         driver.setNationality("GB");
         driver.setCar(car1);
-        driver.setAggressive(true);
+        driver.setIsAggressive(true);
         driver.setWetDriving(10);
         driver.setReactions(10);
 
@@ -232,7 +232,7 @@ public class DriverTest extends AbstractTestNGSpringContextTests {
         driver.setName("Lewis");
         driver.setSurname("Hamilton");
         driver.setNationality("GB");
-        driver.setAggressive(true);
+        driver.setIsAggressive(true);
         driver.setWetDriving(10);
         driver.setReactions(10);
 
@@ -242,7 +242,7 @@ public class DriverTest extends AbstractTestNGSpringContextTests {
         driver2.setName("Valtteri");
         driver2.setSurname("Bottas");
         driver2.setNationality("FI");
-        driver2.setAggressive(true);
+        driver2.setIsAggressive(true);
         driver2.setReactions(9);
         driver2.setWetDriving(9);
 
