@@ -88,11 +88,11 @@ public class Component {
         if (this == o) return true;
         if (!(o instanceof Component)) return false;
         Component component = (Component) o;
-        return getName().equals(component.getName()) && Objects.equals(getCar(), component.getCar()) && getType() == component.getType();
+        return getName().equals(component.getName()) && getType() == component.getType();
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getName(), getCar(), getType());
+        return Objects.hash(getName(), getType());
     }
 }

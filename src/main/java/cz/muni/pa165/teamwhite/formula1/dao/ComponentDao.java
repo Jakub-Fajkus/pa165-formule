@@ -38,20 +38,6 @@ public interface ComponentDao {
     Component findById(Long id);
 
     /**
-     * Finds all components in database related with given car.
-     * @param car for which we want to find all component
-     * @return list of components of given car
-     */
-    List<Component> findByCar(Car car);
-
-    /**
-     * Finds all components in database with given type.
-     * @param type of the component to be found
-     * @return list of components with given type
-     */
-    List<Component> findByType(ComponentType type);
-
-    /**
      * Removes the given component in the database.
      * @param c, component to be removed
      */

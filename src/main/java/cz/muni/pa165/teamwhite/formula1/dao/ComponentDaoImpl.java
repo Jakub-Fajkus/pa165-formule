@@ -39,20 +39,6 @@ public class ComponentDaoImpl implements ComponentDao{
     }
 
     @Override
-    public List<Component> findByCar(Car car) {
-        return em.createQuery("select c from Component c where c.car = :car", Component.class)
-                .setParameter("car", car)
-                .getResultList();
-    }
-
-    @Override
-    public List<Component> findByType(ComponentType type) {
-        return em.createQuery("select c from Component c where c.type = :type", Component.class)
-                .setParameter("type", type)
-                .getResultList();
-    }
-
-    @Override
     public void remove(Component c) {
         em.remove(this.findById(c.getId()));
     }
