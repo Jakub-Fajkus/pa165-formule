@@ -99,7 +99,7 @@ public class DriverTest extends AbstractTestNGSpringContextTests {
     }
 
     @Test
-     public void createDriverWithCarTest() {
+    public void createDriverWithCarTest() {
         Car car = new Car();
         car.setName("Mercedes");
 

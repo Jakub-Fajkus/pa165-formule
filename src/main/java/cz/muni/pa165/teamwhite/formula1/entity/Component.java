@@ -2,16 +2,15 @@ package cz.muni.pa165.teamwhite.formula1.entity;
 
 import cz.muni.pa165.teamwhite.formula1.enums.ComponentType;
 
-import javax.persistence.Enumerated;
+import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.EnumType;
-import javax.persistence.Column;
 import javax.validation.constraints.NotNull;
-
 import java.util.Objects;
 
 /**
@@ -34,13 +33,14 @@ public class Component {
     @Enumerated(EnumType.STRING)
     private ComponentType type;
 
-    public Component(){}
+    public Component() {
+    }
 
-    public Component(Long componentId){
+    public Component(Long componentId) {
         this.id = componentId;
     }
 
-    public Component(ComponentType ctype, String name, Car car){
+    public Component(ComponentType ctype, String name, Car car) {
         this.type = ctype;
         this.name = name;
         this.car = car;

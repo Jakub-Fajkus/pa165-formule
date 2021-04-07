@@ -1,7 +1,7 @@
 package cz.muni.pa165.teamwhite.formula1.entity;
 
-import javax.persistence.Entity;
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -48,7 +48,8 @@ public class Driver {
     private int reactions;
 
 
-    public Driver() {}
+    public Driver() {
+    }
 
     public Driver(Long id) {
         this.id = id;
@@ -69,20 +70,40 @@ public class Driver {
         return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public Car getCar() {
         return car;
+    }
+
+    public void setCar(Car car) {
+        this.car = car;
     }
 
     public String getName() {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String getSurname() {
         return surname;
     }
 
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
     public String getNationality() {
         return nationality;
+    }
+
+    public void setNationality(String nationality) {
+        this.nationality = nationality;
     }
 
     public boolean isAggressive() {
@@ -93,40 +114,20 @@ public class Driver {
         return wetDriving;
     }
 
-    public int getReactions() {
-        return reactions;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setCar(Car car) {
-        this.car = car;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setSurname(String surname) {
-        this.surname = surname;
-    }
-
-    public void setNationality(String nationality) {
-        this.nationality = nationality;
-    }
-
-    public void setIsAggressive(boolean isAggressive) {
-        this.isAggressive = isAggressive;
-    }
-
     public void setWetDriving(int wetDriving) {
         this.wetDriving = wetDriving;
     }
 
+    public int getReactions() {
+        return reactions;
+    }
+
     public void setReactions(int reactions) {
         this.reactions = reactions;
+    }
+
+    public void setIsAggressive(boolean isAggressive) {
+        this.isAggressive = isAggressive;
     }
 
     @Override
