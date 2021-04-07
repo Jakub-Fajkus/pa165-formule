@@ -1,7 +1,6 @@
 package cz.muni.pa165.teamwhite.formula1.dao;
 
 import cz.muni.pa165.teamwhite.formula1.entity.Car;
-import cz.muni.pa165.teamwhite.formula1.entity.Driver;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -29,12 +28,8 @@ public class CarDaoImpl implements CarDao{
 
     @Override
     public Car findByName(String name) {
-        return em.createQuery("select c from Car c where c.name = :name", Car.class).setParameter("name", name).getSingleResult();
-    }
-
-    @Override
-    public Car findByDriver(Driver driver) {
-        return em.createQuery("select c from Car c where c.driver = :driver", Car.class).setParameter("driver", driver).getSingleResult();
+        Car car = em.createQuery("select c from Car c where c.name = :name", Car.class).setParameter("name", name).getSingleResult();
+        return car;
     }
 
     @Override
