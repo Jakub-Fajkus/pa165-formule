@@ -16,7 +16,7 @@ import java.util.Objects;
 /**
  * @author Karolina Hecova
  */
-@Entity
+@Entity(name = "User_table")
 public class User {
 
     @Id

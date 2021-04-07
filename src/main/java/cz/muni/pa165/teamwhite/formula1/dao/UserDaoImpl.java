@@ -28,13 +28,13 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public User findByLogin(String userLogin) {
-        return em.createQuery("select u from User u where u.login = :login", User.class)
+        return em.createQuery("select u from User_table u where u.login = :login", User.class)
                 .setParameter("login", userLogin).getSingleResult();
     }
 
     @Override
     public List<User> findAll() {
-        return em.createQuery("select u from User u", User.class).getResultList();
+        return em.createQuery("select u from User_table u", User.class).getResultList();
     }
 
     @Override
