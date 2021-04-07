@@ -37,7 +37,7 @@ public class Driver {
 
     @Column(nullable = false)
     @NotNull
-    private boolean isAgresive;
+    private boolean isAggressive;
 
     @Column(nullable = false)
     @NotNull
@@ -55,12 +55,12 @@ public class Driver {
     }
 
     public Driver(Car car, String name, String surname, String nationality,
-                  boolean isAgresive, int wetDriving, int reactions) {
+                  boolean isAggressive, int wetDriving, int reactions) {
         this.car = car;
         this.name = name;
         this.surname = surname;
         this.nationality = nationality;
-        this.isAgresive = isAgresive;
+        this.isAggressive = isAggressive;
         this.wetDriving = wetDriving;
         this.reactions = reactions;
     }
@@ -85,8 +85,8 @@ public class Driver {
         return nationality;
     }
 
-    public boolean isAgresive() {
-        return isAgresive;
+    public boolean isAggressive() {
+        return isAggressive;
     }
 
     public int getWetDriving() {
@@ -113,12 +113,12 @@ public class Driver {
         this.surname = surname;
     }
 
-    public void setNationaliry(String nationality) {
+    public void setNationality(String nationality) {
         this.nationality = nationality;
     }
 
-    public void setAgresive(boolean agresive) {
-        isAgresive = agresive;
+    public void setAggressive(boolean aggressive) {
+        isAggressive = aggressive;
     }
 
     public void setWetDriving(int wetDriving) {
@@ -137,7 +137,7 @@ public class Driver {
                 ", name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
                 ", nationality='" + nationality + '\'' +
-                ", isAgresive=" + isAgresive +
+                ", isAggressive=" + isAggressive +
                 ", wetDriving=" + wetDriving +
                 ", reactions=" + reactions +
                 '}';
