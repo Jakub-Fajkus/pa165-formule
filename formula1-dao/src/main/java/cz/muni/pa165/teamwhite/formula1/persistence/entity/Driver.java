@@ -134,7 +134,7 @@ public class Driver {
     public String toString() {
         return "Driver{" +
                 "id=" + id +
-                ", car=" + car +
+                ", car=" + car.getName() +
                 ", name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
                 ", nationality='" + nationality + '\'' +
