@@ -86,7 +86,7 @@ public class Car {
         return "Car{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", driver=" + driver +
+                ", driver=" + driver.getName() + " " + driver.getSurname() +
                 ", components=" + components +
                 '}';
     }
@@ -96,7 +96,7 @@ public class Car {
         if (this == o) return true;
         if (!(o instanceof Car)) return false;
         Car car = (Car) o;
-        return getName().equals(car.getName()) && Objects.equals(getDriver(), car.getDriver()) && getComponents().equals(car.getComponents());
+        return getName().equals(car.getName());
     }
 
 

@@ -84,15 +84,25 @@ public class Component {
     }
 
     @Override
+    public String toString() {
+        return "Component{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", car=" + car.getName() +
+                ", type=" + type +
+                '}';
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Component)) return false;
         Component component = (Component) o;
-        return getName().equals(component.getName()) && getType() == component.getType();
+        return getName().equals(component.getName());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getName(), getType());
+        return Objects.hash(getName());
     }
 }

@@ -43,20 +43,22 @@ public class ComponentTest extends AbstractTestNGSpringContextTests {
         componentDao.create(rims);
 
         Component v12EngineDB = componentDao.findById(v12Engine.getId());
-        Assert.assertSame(v12EngineDB.getName(), v12Engine.getName());
-        Assert.assertSame(v12EngineDB.getType(), ComponentType.ENGINE);
+        Assert.assertSame(v12EngineDB, v12Engine);
 
         Component v6EngineDB = componentDao.findById(v6Engine.getId());
-        Assert.assertSame(v6EngineDB.getName(), v6Engine.getName());
-        Assert.assertSame(v6EngineDB.getType(), ComponentType.ENGINE);
+        Assert.assertSame(v6EngineDB, v6Engine);
 
         Component rimsDB = componentDao.findById(rims.getId());
-        Assert.assertSame(rimsDB.getName(), rims.getName());
-        Assert.assertSame(rimsDB.getType(), ComponentType.RIMS);
+        Assert.assertSame(rimsDB, rims);
 
         componentDao.remove(v6EngineDB);
         componentDao.remove(v12EngineDB);
         componentDao.remove(rims);
+
+        Assert.assertNull(componentDao.findById(v12Engine.getId()));
+        Assert.assertNull(componentDao.findById(v6Engine.getId()));
+        Assert.assertNull(componentDao.findById(rims.getId()));
+
     }
 
     @Test
@@ -94,10 +96,10 @@ public class ComponentTest extends AbstractTestNGSpringContextTests {
 
         Assert.assertEquals(componentDao.findById(engine.getId()).getName(), "V12 engine 667Hp");
 
-        Component updatedEngine = componentDao.update(engine); // we need to call update to force hibernate to save the data to the DB
+        componentDao.update(engine); // we need to call update to force hibernate to save the data to the DB
         Component foundEngine = componentDao.findById(engine.getId());
 
-        Assert.assertSame(updatedEngine, foundEngine);
+        Assert.assertSame(engine, foundEngine);
         Assert.assertEquals(foundEngine.getName(), engine.getName());
     }
 
