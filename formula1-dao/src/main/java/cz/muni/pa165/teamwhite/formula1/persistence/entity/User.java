@@ -94,11 +94,11 @@ public class User {
         if (this == o) return true;
         if (!(o instanceof User)) return false;
         User user = (User) o;
-        return Objects.equals(getLogin(), user.getLogin()) && Objects.equals(getPassword(), user.getPassword()) && getRole() == user.getRole();
+        return Objects.equals(getLogin(), user.getLogin());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getLogin(), getPassword(), getRole());
+        return Objects.hash(getLogin());
     }
 }
