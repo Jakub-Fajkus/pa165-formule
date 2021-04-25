@@ -13,6 +13,11 @@ public class UserAuthenticateDTO
     @NotNull
     private String password;
 
+    public UserAuthenticateDTO(String login, String password) {
+        this.login = login;
+        this.password = password;
+    }
+
     public String getLogin()
     {
         return login;
