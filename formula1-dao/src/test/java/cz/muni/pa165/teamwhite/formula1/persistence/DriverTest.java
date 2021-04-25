@@ -1,6 +1,6 @@
 package cz.muni.pa165.teamwhite.formula1.persistence;
 
-import cz.muni.pa165.teamwhite.formula1.persistence.PersistenceSampleApplicationContext;
+import cz.muni.pa165.teamwhite.formula1.persistence.PersistenceConfig;
 import cz.muni.pa165.teamwhite.formula1.persistence.entity.Car;
 import cz.muni.pa165.teamwhite.formula1.persistence.entity.Driver;
 import cz.muni.pa165.teamwhite.formula1.persistence.dao.CarDao;
@@ -20,7 +20,7 @@ import java.util.List;
 /**
  * @author Karolina Hecova
  */
-@ContextConfiguration(classes = PersistenceSampleApplicationContext.class)
+@ContextConfiguration(classes = PersistenceConfig.class)
 @TestExecutionListeners(TransactionalTestExecutionListener.class)
 @Transactional
 public class DriverTest extends AbstractTestNGSpringContextTests {
