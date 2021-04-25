@@ -18,7 +18,7 @@ import javax.validation.ConstraintViolationException;
 /**
  * @author Jiří Andrlík
  */
-@ContextConfiguration(classes = PersistenceSampleApplicationContext.class)
+@ContextConfiguration(classes = PersistenceConfig.class)
 @TestExecutionListeners(TransactionalTestExecutionListener.class)
 @Transactional
 public class UserTest extends AbstractTestNGSpringContextTests {
