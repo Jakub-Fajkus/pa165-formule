@@ -13,7 +13,7 @@
     <modules>
         <module>formula1-api</module>
         <module>formula1-dao</module>
-        <module>formula1-facade</module>
+        <module>formula1-service</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -70,6 +70,15 @@
             <groupId>org.bouncycastle</groupId>
             <artifactId>bcpkix-jdk15to18</artifactId>
             <version>1.68</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-crypto</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 

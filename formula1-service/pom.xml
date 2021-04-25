@@ -9,7 +9,21 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>formula1-facade</artifactId>
+    <artifactId>formula1-service</artifactId>
+    <dependencies>
+        <dependency>
+            <groupId>cz.muni.pa165.teamwhite</groupId>
+            <artifactId>formula1-dao</artifactId>
+            <version>${project.parent.version}</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>cz.muni.pa165.teamwhite</groupId>
+            <artifactId>formula1-api</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+    </dependencies>
 
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
