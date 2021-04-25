@@ -11,6 +11,7 @@ import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
 import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import javax.transaction.Transactional;
@@ -31,30 +32,24 @@ public class DriverTest extends AbstractTestNGSpringContextTests {
     @Autowired
     private CarDao carDao;
 
+    private Driver driver;
+    private Driver driver2;
+
+    @BeforeMethod
+    public void setup() {
+        driver = new Driver(null, "Lewis", "Hamilton", "GB", true, 10, 10);
+        driver2 = new Driver(null, "Valtteri", "Bottas", "FI", true, 9, 9);
+    }
+
     @Test
     public void createDriverWithoutCarTest() {
-        Driver driver = new Driver();
-        driver.setName("Lewis");
-        driver.setSurname("Hamilton");
-        driver.setNationality("GB");
-        driver.setIsAggressive(true);
-        driver.setWetDriving(10);
-        driver.setReactions(10);
-
         driverDao.create(driver);
 
         Driver dbDriver = driverDao.findById(driver.getId());
 
         Assert.assertNotNull(dbDriver);
         Assert.assertNotNull(dbDriver.getId());
-        Assert.assertNotEquals(dbDriver.getId(), 0L);
-        Assert.assertEquals(dbDriver.getId(), driver.getId());
-        Assert.assertEquals(dbDriver.getName(), driver.getName());
-        Assert.assertEquals(dbDriver.getSurname(), driver.getSurname());
-        Assert.assertEquals(dbDriver.getNationality(), driver.getNationality());
-        Assert.assertEquals(dbDriver.isAggressive(), driver.isAggressive());
-        Assert.assertEquals(dbDriver.getWetDriving(), driver.getWetDriving());
-        Assert.assertEquals(dbDriver.getReactions(), driver.getReactions());
+        Assert.assertSame(dbDriver, driver);
         Assert.assertNull(dbDriver.getCar());
     }
 
@@ -66,37 +61,19 @@ public class DriverTest extends AbstractTestNGSpringContextTests {
 
     @Test(expectedExceptions = ConstraintViolationException.class)
     public void createNullDriverNameTest() {
-        Driver driver = new Driver();
-        driver.setSurname("Hamilton");
-        driver.setNationality("GB");
-        driver.setIsAggressive(true);
-        driver.setWetDriving(10);
-        driver.setReactions(10);
-
+        driver.setName(null);
         driverDao.create(driver);
     }
 
     @Test(expectedExceptions = ConstraintViolationException.class)
     public void createNullDriverSurnameTest() {
-        Driver driver = new Driver();
-        driver.setName("Lewis");
-        driver.setNationality("GB");
-        driver.setIsAggressive(true);
-        driver.setWetDriving(10);
-        driver.setReactions(10);
-
+        driver.setSurname(null);
         driverDao.create(driver);
     }
 
     @Test(expectedExceptions = ConstraintViolationException.class)
     public void createNullDriverNationalityTest() {
-        Driver driver = new Driver();
-        driver.setName("Lewis");
-        driver.setSurname("Hamilton");
-        driver.setIsAggressive(true);
-        driver.setWetDriving(10);
-        driver.setReactions(10);
-
+        driver.setNationality(null);
         driverDao.create(driver);
     }
 
@@ -107,14 +84,7 @@ public class DriverTest extends AbstractTestNGSpringContextTests {
 
         carDao.create(car);
 
-        Driver driver = new Driver();
-        driver.setName("Lewis");
-        driver.setSurname("Hamilton");
-        driver.setNationality("GB");
         driver.setCar(car);
-        driver.setIsAggressive(true);
-        driver.setWetDriving(10);
-        driver.setReactions(10);
 
         driverDao.create(driver);
 
@@ -123,40 +93,15 @@ public class DriverTest extends AbstractTestNGSpringContextTests {
 
         Driver dbDriver = driverDao.findById(driver.getId());
 
-        Assert.assertNotNull(dbDriver);
-        Assert.assertNotNull(dbDriver.getId());
-        Assert.assertNotEquals(dbDriver.getId(), 0L);
-        Assert.assertEquals(dbDriver.getName(), driver.getName());
-        Assert.assertEquals(dbDriver.getSurname(), driver.getSurname());
-        Assert.assertEquals(dbDriver.getNationality(), driver.getNationality());
-        Assert.assertEquals(dbDriver.isAggressive(), driver.isAggressive());
-        Assert.assertEquals(dbDriver.getWetDriving(), driver.getWetDriving());
-        Assert.assertEquals(dbDriver.getReactions(), driver.getReactions());
         Assert.assertEquals(dbDriver.getCar().getName(), driver.getCar().getName());
         Assert.assertEquals(dbDriver.getCar().getName(), car.getName());
     }
 
     @Test
     public void findAllDriversTest() {
-        Driver driver = new Driver();
-        driver.setName("Lewis");
-        driver.setSurname("Hamilton");
-        driver.setNationality("GB");
-        driver.setIsAggressive(true);
-        driver.setWetDriving(10);
-        driver.setReactions(10);
-
         driverDao.create(driver);
 
         Assert.assertEquals(driverDao.findAll().size(), 1);
-
-        Driver driver2 = new Driver();
-        driver2.setName("Valtteri");
-        driver2.setSurname("Bottas");
-        driver2.setNationality("FI");
-        driver2.setIsAggressive(true);
-        driver2.setReactions(9);
-        driver2.setWetDriving(9);
 
         driverDao.create(driver2);
 
@@ -170,14 +115,6 @@ public class DriverTest extends AbstractTestNGSpringContextTests {
 
     @Test
     public void updateDriverTest() {
-        Driver driver = new Driver();
-        driver.setName("Lewis");
-        driver.setSurname("Hamilton");
-        driver.setNationality("GB");
-        driver.setIsAggressive(true);
-        driver.setWetDriving(10);
-        driver.setReactions(10);
-
         driverDao.create(driver);
 
         driver.setName("Luisa");
@@ -194,15 +131,7 @@ public class DriverTest extends AbstractTestNGSpringContextTests {
 
         carDao.create(car1);
 
-        Driver driver = new Driver();
-        driver.setName("Lewis");
-        driver.setSurname("Hamilton");
-        driver.setNationality("GB");
         driver.setCar(car1);
-        driver.setIsAggressive(true);
-        driver.setWetDriving(10);
-        driver.setReactions(10);
-
         driverDao.create(driver);
 
         car1.setDriver(driver);
@@ -230,24 +159,7 @@ public class DriverTest extends AbstractTestNGSpringContextTests {
 
     @Test
     public void removeDriverTest() {
-        Driver driver = new Driver();
-        driver.setName("Lewis");
-        driver.setSurname("Hamilton");
-        driver.setNationality("GB");
-        driver.setIsAggressive(true);
-        driver.setWetDriving(10);
-        driver.setReactions(10);
-
         driverDao.create(driver);
-
-        Driver driver2 = new Driver();
-        driver2.setName("Valtteri");
-        driver2.setSurname("Bottas");
-        driver2.setNationality("FI");
-        driver2.setIsAggressive(true);
-        driver2.setReactions(9);
-        driver2.setWetDriving(9);
-
         driverDao.create(driver2);
 
         List<Driver> allDrivers = driverDao.findAll();
