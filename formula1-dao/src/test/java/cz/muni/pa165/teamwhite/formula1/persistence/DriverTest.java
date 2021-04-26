@@ -1,11 +1,11 @@
 package cz.muni.pa165.teamwhite.formula1.persistence;
 
-import cz.muni.pa165.teamwhite.formula1.persistence.PersistenceSampleApplicationContext;
 import cz.muni.pa165.teamwhite.formula1.persistence.entity.Car;
 import cz.muni.pa165.teamwhite.formula1.persistence.entity.Driver;
 import cz.muni.pa165.teamwhite.formula1.persistence.dao.CarDao;
 import cz.muni.pa165.teamwhite.formula1.persistence.dao.DriverDao;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
@@ -98,6 +98,15 @@ public class DriverTest extends AbstractTestNGSpringContextTests {
     }
 
     @Test
+    public void tryToCreateTwoIdenticalDriverTest() {
+        driverDao.create(driver);
+        Assert.assertEquals(driverDao.findAll().size(), 1);
+
+        driverDao.create(driver);
+        Assert.assertEquals(driverDao.findAll().size(), 1);
+    }
+
+    @Test
     public void findAllDriversTest() {
         driverDao.create(driver);
 
@@ -122,6 +131,13 @@ public class DriverTest extends AbstractTestNGSpringContextTests {
 
         Driver dbDriver = driverDao.findById(driver.getId());
         Assert.assertEquals(dbDriver.getName(), "Luisa");
+    }
+
+    @Test
+    public void updateDriverWhichDoesNotExistInDatabaseTest() {
+        Assert.assertEquals(driverDao.findAll().size(), 0);
+        driverDao.update(driver);
+        Assert.assertEquals(driverDao.findAll().size(), 1);
     }
 
     @Test
@@ -175,5 +191,10 @@ public class DriverTest extends AbstractTestNGSpringContextTests {
         Assert.assertEquals(allDrivers.size(), 1);
         Assert.assertFalse(allDrivers.contains(driver));
         Assert.assertTrue(allDrivers.contains(driver2));
+    }
+
+    @Test(expectedExceptions = InvalidDataAccessApiUsageException.class)
+    public void removeDriverWhichDoesNotExistInDatabaseTest() {
+        driverDao.remove(driver);
     }
 }
