@@ -42,29 +42,24 @@ public class DriverServiceImplTest extends AbstractTransactionalTestNGSpringCont
     @Test
     public void testCreateDriver() {
         driverService.createDriver(driver);
-
-//        Assert.assertEquals(driver.getPassword(), "hashed");
         verify(driverDao).create(driver);
     }
 
     @Test(expectedExceptions = DuplicateKeyException.class)
     public void testCreateRethrowsDataAccessExceptionOnError() {
         doThrow(new DuplicateKeyException("failed")).when(driverDao).create(driver);
-
         driverService.createDriver(driver);
     }
 
     @Test
     public void testFindByIdReturnsUserIfItExists() {
         when(driverDao.findById(driver.getId())).thenReturn(driver);
-
         Assert.assertSame(driverService.findById(driver.getId()), driver);
     }
 
     @Test
     public void testFindByIdReturnsNullIfDriverNotFound() {
         when(driverDao.findById(42L)).thenReturn(null);
-
         Assert.assertNull(driverService.findById(42L));
     }
 
@@ -82,7 +77,6 @@ public class DriverServiceImplTest extends AbstractTransactionalTestNGSpringCont
     @Test
     public void testUpdateDriver() {
         driverService.update(driver);
-
         verify(driverDao).update(driver);
     }
 
@@ -90,18 +84,14 @@ public class DriverServiceImplTest extends AbstractTransactionalTestNGSpringCont
     public void testRemoveWhenDriverExists() {
         when(driverDao.findById(driver.getId())).thenReturn(driver);
         doNothing().when(driverDao).remove(driver);
-
         driverService.remove(driver.getId());
-
         verify(driverDao).remove(driver);
     }
 
     @Test
     public void testRemoveWhenDriverDoesNotExist() {
         when(driverDao.findById(driver.getId())).thenReturn(null);
-
         driverService.remove(driver.getId());
-
         verify(driverDao, times(0)).remove(driver);
     }
 }

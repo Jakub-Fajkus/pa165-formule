@@ -55,7 +55,16 @@ public class DriverServiceImpl implements DriverService{
     }
 
     @Override
+    public void update(Driver driver) {
+        driverDao.update(driver);
+    }
+
+    @Override
     public void remove(Long id) {
-        driverDao.remove(driverDao.findById(id));
+        Driver dbDriver = driverDao.findById(id);
+
+        if (dbDriver != null) {
+            driverDao.remove(dbDriver);
+        }
     }
 }

@@ -12,22 +12,25 @@ import java.util.List;
 public interface DriverService {
 
     /**
+     * This method finds driver in the database by entered id.
      *
-     * @param id
-     * @return
+     * @param id - id of the requested user
+     * @return found driver
      */
     Driver findById(Long id);
 
     /**
+     * This method finds all drivers in the database.
      *
-     * @return
+     * @return list of all users
      */
     List<Driver> findAll();
 
     /**
+     * Creates new driver in the database.
      *
-     * @param driver
-     * @return
+     * @param driver new driver to be created
+     * @return id of the new user
      */
     Long createDriver(Driver driver);
 
@@ -60,8 +63,16 @@ public interface DriverService {
     void setReactions(Driver driver, int reactions);
 
     /**
+     * This method updates driver already stored in the database.
      *
-     * @param id
+     * @param driver to update
+     */
+    void update(Driver driver);
+
+    /**
+     * This method removes driver from the database.
+     *
+     * @param id user id to be removed
      */
     void remove(Long id);
 }
