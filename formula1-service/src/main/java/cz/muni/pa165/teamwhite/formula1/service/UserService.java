@@ -49,7 +49,7 @@ public interface UserService {
     User findByLogin(String login);
 
     /**
-     * This method finds user in DB by entered login
+     * This method finds all users
      *
      * @return list of all users
      */
