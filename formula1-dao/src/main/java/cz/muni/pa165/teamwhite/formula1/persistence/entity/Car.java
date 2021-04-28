@@ -13,6 +13,8 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import static java.util.Objects.isNull;
+
 /**
  * @author Jakub Fajkus
  */
@@ -86,7 +88,7 @@ public class Car {
         return "Car{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", driver=" + driver.getName() + " " + driver.getSurname() +
+                ", driver=" + (isNull(driver)?"None":driver.getName() + " " + driver.getSurname()) +
                 ", components=" + components +
                 '}';
     }
