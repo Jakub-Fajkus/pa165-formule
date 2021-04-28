@@ -11,7 +11,7 @@ import java.util.List;
  */
 public interface CarService {
     /**
-     * Creates new car with the given unencrypted password.
+     * Creates new car.
      * @param car - new car to be created
      * @return id of the new car
      */
