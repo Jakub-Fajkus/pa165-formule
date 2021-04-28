@@ -12,8 +12,10 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import javax.persistence.NoResultException;
+import javax.persistence.PersistenceException;
 import javax.transaction.Transactional;
 import javax.validation.ConstraintViolationException;
+import java.util.List;
 
 /**
  * @author Jiří Andrlík
@@ -87,5 +89,27 @@ public class UserTest extends AbstractTestNGSpringContextTests {
     public void roleNotNull() {
         User user = new User("jiri", "1111", null);
         Assert.assertThrows(ConstraintViolationException.class, () -> userDao.create(user));
+    }
+
+    @Test
+    public void findAllAndRemove() {
+        List<User> users = userDao.findAll();
+        Assert.assertEquals(users.size(), 0);
+        userDao.create(new User("tom", "yearOfCanonizationOfSaintDominic", Role.MANAGER));
+        userDao.create(new User("jakub", "leSecretPassword", Role.ENGINEER));
+        users = userDao.findAll();
+        Assert.assertEquals(users.size(), 2);
+        for(User u : users){
+            userDao.remove(u);
+        }
+        users = userDao.findAll();
+        Assert.assertEquals(users.size(), 0);
+    }
+
+    @Test
+    public void addDuplicateRecordToDB(){
+        userDao.create(new User("kaja", "leHeslo", Role.ENGINEER));
+        User duplicate = new User("kaja", "newPassword", Role.ENGINEER);
+        Assert.assertThrows(PersistenceException.class, () -> userDao.create(duplicate));
     }
 }

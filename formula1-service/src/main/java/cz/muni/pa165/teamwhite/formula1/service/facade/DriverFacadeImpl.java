@@ -7,15 +7,12 @@ import cz.muni.pa165.teamwhite.formula1.service.DriverService;
 import cz.muni.pa165.teamwhite.formula1.service.mapping.BeanMappingService;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.transaction.Transactional;
 import java.util.List;
 
 /**
- * @author Karolina Hecova
+ * @author Jiri Andrlik
  */
-@Transactional
 public class DriverFacadeImpl implements DriverFacade {
-
     @Autowired
     private DriverService driverService;
 

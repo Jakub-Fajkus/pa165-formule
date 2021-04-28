@@ -1,45 +1,67 @@
 package cz.muni.pa165.teamwhite.formula1.service;
 
+
+import cz.muni.pa165.teamwhite.formula1.persistence.entity.Car;
 import cz.muni.pa165.teamwhite.formula1.persistence.entity.Driver;
 
 import java.util.List;
 
+/**
+ * @author Jiri Andrlik
+ */
 public interface DriverService {
 
     /**
-     * Creates new driver in the database.
      *
-     * @param driver new driver to be created
-     * @return id of the new user
-     */
-    Long createDriver(Driver driver);
-
-    /**
-     * This method finds driver in the database by entered id.
-     *
-     * @param id - id of the requested user
-     * @return found driver
+     * @param id
+     * @return
      */
     Driver findById(Long id);
 
     /**
-     * This method finds all drivers in the database.
      *
-     * @return list of all users
+     * @return
      */
     List<Driver> findAll();
 
     /**
-     * This method updates driver already stored in the database.
      *
-     * @param driver to update
+     * @param driver
+     * @return
      */
-    void update(Driver driver);
+    Long createDriver(Driver driver);
 
     /**
-     * This method removes driver from the database.
      *
-     * @param id user id to be removed
+     * @param driver
+     * @param car
+     */
+    void setCar(Driver driver, Car car);
+
+    /**
+     *
+     * @param driver
+     * @param aggresivity
+     */
+    void setIsAggresive(Driver driver, boolean aggresivity);
+
+    /**
+     *
+     * @param driver
+     * @param wetDriving
+     */
+    void setWetDriving(Driver driver, int wetDriving);
+
+    /**
+     *
+     * @param driver
+     * @param reactions
+     */
+    void setReactions(Driver driver, int reactions);
+
+    /**
+     *
+     * @param id
      */
     void remove(Long id);
 }
