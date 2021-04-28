@@ -9,6 +9,7 @@ import cz.muni.pa165.teamwhite.formula1.persistence.entity.Driver;
 import cz.muni.pa165.teamwhite.formula1.persistence.enums.ComponentType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
+import org.springframework.orm.jpa.JpaSystemException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
@@ -169,6 +170,15 @@ public class CarTests extends AbstractTestNGSpringContextTests {
         Assert.assertEquals(carDao.findAll().size(), 1);
     }
 
+    @Test(expectedExceptions = JpaSystemException.class)
+    public void insertSameObjectTwice() {
+        Car mercedes1 = createCarMercedesDao();
+        Car mercedes2 = createCarMercedesDao();
+
+        carDao.create(mercedes1);
+        carDao.create(mercedes2);
+    }
+
     private Car createCarFerrari() {
         Car ferrari = new Car();
         ferrari.setName("F1 Scuderia Ferrari 2021 - car1");
@@ -236,9 +246,8 @@ public class CarTests extends AbstractTestNGSpringContextTests {
     }
 
     private Component createEngine() {
-        Component engine = new Component(ComponentType.ENGINE, "BlueFire3000");
+        return new Component(ComponentType.ENGINE, "BlueFire3000");
 
-        return engine;
     }
 
     private Component createEngineDao() {
@@ -249,9 +258,7 @@ public class CarTests extends AbstractTestNGSpringContextTests {
     }
 
     private Component createTransmission() {
-        Component transmission = new Component(ComponentType.TRANSMISSION, "7 gears");
-
-        return transmission;
+        return new Component(ComponentType.TRANSMISSION, "7 gears");
     }
 
     private Component createTransmissionDao() {
