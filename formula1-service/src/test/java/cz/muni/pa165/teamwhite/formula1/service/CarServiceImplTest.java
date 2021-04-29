@@ -2,6 +2,9 @@ package cz.muni.pa165.teamwhite.formula1.service;
 
 import cz.muni.pa165.teamwhite.formula1.persistence.dao.CarDao;
 import cz.muni.pa165.teamwhite.formula1.persistence.entity.Car;
+import cz.muni.pa165.teamwhite.formula1.persistence.entity.Component;
+import cz.muni.pa165.teamwhite.formula1.persistence.entity.Driver;
+import cz.muni.pa165.teamwhite.formula1.persistence.enums.ComponentType;
 import org.hibernate.service.spi.ServiceException;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -16,7 +19,12 @@ import org.testng.annotations.Test;
 import java.util.ArrayList;
 import java.util.HashSet;
 
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.when;
+
 
 /**
  * @author Jiri Andrlik
@@ -31,6 +39,9 @@ public class CarServiceImplTest extends AbstractTransactionalTestNGSpringContext
 
     private final Car formula = new Car("manager", null, new HashSet<>());
 
+    private final Driver michal = new Driver(null, "Michal", "Koupil", "Czech", true, 2, 8);
+
+    private final Component suspension = new Component(ComponentType.SUSPENSION, "fkinSpring");
     @BeforeMethod
     public void setUp() throws ServiceException
     {
@@ -38,7 +49,7 @@ public class CarServiceImplTest extends AbstractTransactionalTestNGSpringContext
     }
 
     @Test
-    public void testCreateUserCreatesCar() {
+    public void testCreateCar() {
         carService.createCar(formula);
         verify(carDao).create(formula);
     }
@@ -102,5 +113,19 @@ public class CarServiceImplTest extends AbstractTransactionalTestNGSpringContext
         carService.remove(formula.getId());
 
         verify(carDao, times(0)).remove(formula);
+    }
+
+    @Test
+    public void testSetDriverToCar(){
+        carService.setDriver(formula, michal);
+
+        verify(carDao).update(formula);
+    }
+
+    @Test
+    public void testAddComponent(){
+        carService.addComponent(formula, suspension);
+
+        verify(carDao).update(formula);
     }
 }
