@@ -26,8 +26,8 @@ import javax.sql.DataSource;
 @Configuration
 @EnableTransactionManagement
 @EnableJpaRepositories
-@ComponentScan(basePackageClasses = {ComponentDao.class}, basePackages = "cz.muni.pa165.teamwhite.formula1.persistence")
-public class PersistenceSampleApplicationContext {
+@ComponentScan(basePackageClasses = {ComponentDao.class}, basePackages = "cz.muni.pa165.teamwhite.formula1")
+public class PersistenceConfig {
 
     /**
      * Enables automatic translation of exceptions to DataAccessExceptions.

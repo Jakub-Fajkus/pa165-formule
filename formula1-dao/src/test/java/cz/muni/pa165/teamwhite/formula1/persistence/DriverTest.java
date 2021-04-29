@@ -21,7 +21,7 @@ import java.util.List;
 /**
  * @author Karolina Hecova
  */
-@ContextConfiguration(classes = PersistenceSampleApplicationContext.class)
+@ContextConfiguration(classes = PersistenceConfig.class)
 @TestExecutionListeners(TransactionalTestExecutionListener.class)
 @Transactional
 public class DriverTest extends AbstractTestNGSpringContextTests {
