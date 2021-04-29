@@ -102,8 +102,9 @@ public class DriverTest extends AbstractTestNGSpringContextTests {
         driverDao.create(driver);
         Assert.assertEquals(driverDao.findAll().size(), 1);
 
-        driverDao.create(driver);
-        Assert.assertEquals(driverDao.findAll().size(), 1);
+        Driver copyDriver = new Driver(null, "Lewis", "Hamilton", "GB", true, 10, 10);
+        driverDao.create(copyDriver);
+        Assert.assertEquals(driverDao.findAll().size(), 2);
     }
 
     @Test
