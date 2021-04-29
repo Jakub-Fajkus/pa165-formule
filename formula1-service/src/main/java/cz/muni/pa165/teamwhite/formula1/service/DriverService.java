@@ -44,9 +44,9 @@ public interface DriverService {
     /**
      *
      * @param driver
-     * @param aggresivity
+     * @param aggressive
      */
-    void setIsAggresive(Driver driver, boolean aggresivity);
+    void setIsAggressive(Driver driver, boolean aggressive);
 
     /**
      *

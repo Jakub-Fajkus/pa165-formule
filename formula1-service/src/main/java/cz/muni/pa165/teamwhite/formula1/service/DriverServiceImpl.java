@@ -37,8 +37,8 @@ public class DriverServiceImpl implements DriverService{
     }
 
     @Override
-    public void setIsAggresive(Driver driver, boolean aggresivity) {
-        driver.setIsAggressive(aggresivity);
+    public void setIsAggressive(Driver driver, boolean aggressive) {
+        driver.setIsAggressive(aggressive);
         driverDao.update(driver);
     }
 

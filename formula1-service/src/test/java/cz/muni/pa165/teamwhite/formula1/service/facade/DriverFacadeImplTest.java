@@ -24,6 +24,7 @@ import static org.mockito.Mockito.when;
  */
 @ContextConfiguration(classes = ServiceConfiguration.class)
 public class DriverFacadeImplTest extends AbstractTransactionalTestNGSpringContextTests {
+
     @Mock
     private DriverService driverService;
 
@@ -33,34 +34,37 @@ public class DriverFacadeImplTest extends AbstractTransactionalTestNGSpringConte
     @InjectMocks
     private final DriverFacadeImpl driverFacade = new DriverFacadeImpl();
 
-    private final Driver driver = new Driver(null, "Lewis", "Hamilton", "GB", true, 10, 10);
-    private final Driver driver2 = new Driver(null, "Valtteri", "Bottas", "FI", true, 9, 9);
+    private Driver driver;
+    private Driver driver2;
 
-    private final DriverDTO driverDTO = new DriverDTO(null, "Lewis", "Hamilton", "GB", true, 10, 10);
-    private final DriverDTO driverDTO2 = new DriverDTO(null, "Valtteri", "Bottas", "FI", true, 9, 9);
-
-    List<Driver> driverList = List.of(driver, driver2);
-    List<DriverDTO> driverDTOList = List.of(driverDTO, driverDTO2);
+    private DriverDTO driverDTO;
+    private DriverDTO driverDTO2;
 
     @BeforeMethod
     public void setUp() {
+        driver = new Driver(null, "Lewis", "Hamilton", "GB", true, 10, 10);
+        driver2 = new Driver(null, "Valtteri", "Bottas", "FI", true, 9, 9);
+        driverDTO = new DriverDTO(null, "Lewis", "Hamilton", "GB", true, 10, 10);
+        driverDTO2 = new DriverDTO(null, "Valtteri", "Bottas", "FI", true, 9, 9);
+
         MockitoAnnotations.openMocks(this);
-    }
-
-    @Test
-    public void testGetAllDrivers() {
-        when(driverService.findAll()).thenReturn(driverList);
-        when(beanMappingService.mapTo(driverList, DriverDTO.class)).thenReturn(driverDTOList);
-
-        Assert.assertSame(driverFacade.getAllDrivers(), driverDTOList);
     }
 
     @Test
     public void testCreateDriver() {
         when(beanMappingService.mapTo(driverDTO, Driver.class)).thenReturn(driver);
         when(driverService.createDriver(driver)).thenReturn(666L);
-
         Assert.assertEquals((long) driverFacade.createDriver(driverDTO), 666L);
+    }
+
+    @Test
+    public void testGetAllDrivers() {
+        List<Driver> driverList = List.of(driver, driver2);
+        List<DriverDTO> driverDTOList = List.of(driverDTO, driverDTO2);
+
+        when(driverService.findAll()).thenReturn(driverList);
+        when(beanMappingService.mapTo(driverList, DriverDTO.class)).thenReturn(driverDTOList);
+        Assert.assertSame(driverFacade.getAllDrivers(), driverDTOList);
     }
 
     @Test
@@ -73,7 +77,6 @@ public class DriverFacadeImplTest extends AbstractTransactionalTestNGSpringConte
     public void testGetDriverById() {
         when(driverService.findById(driver.getId())).thenReturn(driver);
         when(beanMappingService.mapTo(driver, DriverDTO.class)).thenReturn(driverDTO);
-
         Assert.assertEquals(driverFacade.getDriverById(driver.getId()), driverDTO);
     }
 }
