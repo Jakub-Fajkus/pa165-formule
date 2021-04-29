@@ -29,7 +29,7 @@ public interface ComponentService {
     /**
      * This method finds component in database by entered id of searched component
      *
-     * @param id - id of desired component
+     * @param id - id of component to be found
      * @return found component
      */
     Component findById(Long id);
@@ -37,7 +37,7 @@ public interface ComponentService {
     /**
      * This method component with given id from DB
      *
-     * @param id component id to be removed
+     * @param id id of component to be removed from DB
      */
     void remove(Long id);
 }

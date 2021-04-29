@@ -45,6 +45,7 @@ public class ComponentServiceImplTest extends AbstractTransactionalTestNGSpringC
     @Test
     public void testCreateUComponent() {
         componentService.createComponent(engine);
+
         verify(componentDao).create(engine);
 
     }
@@ -52,6 +53,7 @@ public class ComponentServiceImplTest extends AbstractTransactionalTestNGSpringC
     @Test
     public void testUpdateComponent() {
         componentService.update(spoiler);
+
         verify(componentDao).update(spoiler);
     }
 
@@ -59,18 +61,21 @@ public class ComponentServiceImplTest extends AbstractTransactionalTestNGSpringC
     public void testFindAllComponents() {
         ArrayList<Component> list = new ArrayList<>();
         when(componentDao.findAll()).thenReturn(list);
+
         Assert.assertEquals(componentService.findAll(), list);
     }
 
     @Test
     public void testFindComponentByIdComponentExists() {
         when(componentDao.findById(10L)).thenReturn(spoiler);
+
         Assert.assertSame(componentService.findById(spoiler.getId()), spoiler);
     }
 
     @Test
     public void testFindComponentByIdComponentNotExists() {
         when(componentDao.findById(1L)).thenReturn(null);
+
         Assert.assertNull(componentService.findById(1L));
     }
 
@@ -79,13 +84,15 @@ public class ComponentServiceImplTest extends AbstractTransactionalTestNGSpringC
         when(componentDao.findById(engine.getId())).thenReturn(engine);
         doNothing().when(componentDao).remove(engine);
         componentService.remove(engine.getId());
+
         verify(componentDao).remove(engine);
     }
 
     @Test
-    public void testRemoveWhenUserDoesNotExist() {
+    public void testRemoveComponentIfNotExists() {
         when(componentDao.findById(engine.getId())).thenReturn(null);
         componentService.remove(engine.getId());
+
         verify(componentDao, times(0)).remove(engine);
     }
 }
