@@ -34,7 +34,9 @@ public class ComponentServiceImpl implements ComponentService{
 
     @Override
     public void remove(Long id) {
-        //TODO maybe check if is something for deletion
-        componentDao.remove(componentDao.findById(id));
+        Component toDelete = componentDao.findById(id);
+        if (toDelete != null){
+            componentDao.remove(toDelete);
+        }
     }
 }

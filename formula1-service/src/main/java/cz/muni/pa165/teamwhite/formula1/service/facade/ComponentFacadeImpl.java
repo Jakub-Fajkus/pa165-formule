@@ -6,9 +6,7 @@ import cz.muni.pa165.teamwhite.formula1.facade.ComponentFacade;
 import cz.muni.pa165.teamwhite.formula1.persistence.entity.Component;
 import cz.muni.pa165.teamwhite.formula1.service.ComponentService;
 import cz.muni.pa165.teamwhite.formula1.service.mapping.BeanMappingService;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.transaction.Transactional;
 import java.util.List;
