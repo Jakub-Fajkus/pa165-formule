@@ -39,8 +39,8 @@ public interface UserFacade {
 
 	/**
 	 * Try to authenticate a user. Return true only if the hashed password matches the records.
-	 * @parem user to be created
-	 * @return true if the user was created, otherwise false
+	 * @param user to be authenticated
+	 * @return true if the user was successfully authenticated, otherwise false
 	 */
 	boolean authenticate(UserAuthenticateDTO user);
 
