@@ -2,6 +2,7 @@ package cz.muni.pa165.teamwhite.formula1.service;
 
 import cz.muni.pa165.teamwhite.formula1.persistence.dao.DriverDao;
 import cz.muni.pa165.teamwhite.formula1.persistence.entity.Driver;
+import cz.muni.pa165.teamwhite.formula1.service.exception.Formula1ServiceException;
 import cz.muni.pa165.teamwhite.formula1.service.mapping.BeanMappingService;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -53,7 +54,7 @@ public class DriverServiceImplTest extends AbstractTransactionalTestNGSpringCont
         verify(driverDao).create(driver);
     }
 
-    @Test(expectedExceptions = DuplicateKeyException.class)
+    @Test(expectedExceptions = Formula1ServiceException.class)
     public void testCreateRethrowsDataAccessExceptionOnError() {
         doThrow(new DuplicateKeyException("failed")).when(driverDao).create(driver);
         driverService.createDriver(driver);
@@ -108,19 +109,22 @@ public class DriverServiceImplTest extends AbstractTransactionalTestNGSpringCont
 
     @Test
     public void testSetIsAggressive() {
-        driverService.setIsAggressive(driver, false);
-        Assert.assertFalse(driver.isAggressive());
+        driver.setIsAggressive(false);
+        driverService.update(driver);
+        verify(driverDao).update(driver);
     }
 
     @Test
     public void testSetWetDriving() {
-        driverService.setWetDriving(driver, 5);
-        Assert.assertEquals(driver.getWetDriving(), 5);
+        driver.setWetDriving(5);
+        driverService.update(driver);
+        verify(driverDao).update(driver);
     }
 
     @Test
     public void testSetReactions() {
-        driverService.setReactions(driver, 5);
-        Assert.assertEquals(driver.getReactions(), 5);
+        driver.setReactions(5);
+        driverService.update(driver);
+        verify(driverDao).update(driver);
     }
 }

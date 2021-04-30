@@ -1,7 +1,6 @@
 package cz.muni.pa165.teamwhite.formula1.service;
 
 
-import cz.muni.pa165.teamwhite.formula1.persistence.entity.Car;
 import cz.muni.pa165.teamwhite.formula1.persistence.entity.Driver;
 
 import java.util.List;
@@ -33,34 +32,6 @@ public interface DriverService {
      * @return id of the new user
      */
     Long createDriver(Driver driver);
-
-    /**
-     * Sets car to the driver
-     * @param driver to be updated
-     * @param car to be assigned
-     */
-    void setCar(Driver driver, Car car);
-
-    /**
-     * Sets aggresivity of the driver
-     * @param driver to be updated
-     * @param aggressive level that is assigned to the driver
-     */
-    void setIsAggressive(Driver driver, boolean aggressive);
-
-    /**
-     * Sets wet driving skill level to the driver
-     * @param driver to be updated
-     * @param wetDriving skills level that is assigned to the driver
-     */
-    void setWetDriving(Driver driver, int wetDriving);
-
-    /**
-     * Sets reactions level to the driver
-     * @param driver to be updated
-     * @param reactions level that is assigned to the driver
-     */
-    void setReactions(Driver driver, int reactions);
 
     /**
      * This method updates driver already stored in the database.
