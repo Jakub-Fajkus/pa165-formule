@@ -2,15 +2,18 @@ package cz.muni.pa165.teamwhite.formula1.service;
 
 import cz.muni.pa165.teamwhite.formula1.persistence.dao.CarDao;
 import cz.muni.pa165.teamwhite.formula1.persistence.entity.Car;
+import cz.muni.pa165.teamwhite.formula1.persistence.entity.Component;
 import cz.muni.pa165.teamwhite.formula1.service.exception.Formula1ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 /**
  * @author Karolina Hecova
  */
+@Service
 public class CarServiceImpl implements CarService {
     @Autowired
     private CarDao carDao;
@@ -18,6 +21,10 @@ public class CarServiceImpl implements CarService {
     @Override
     public Long createCar(Car car) {
         try {
+            for (Component component: car.getComponents()) {
+                component.setCar(car);
+            }
+
             carDao.create(car);
         } catch (DataAccessException e) {
             throw new Formula1ServiceException("Could not create a car: " + car, e);
@@ -46,6 +53,10 @@ public class CarServiceImpl implements CarService {
     @Override
     public void update(Car car) {
         try {
+            for (Component component: car.getComponents()) {
+                component.setCar(car);
+            }
+
             carDao.update(car);
         } catch (DataAccessException e) {
             throw new Formula1ServiceException("Could not update a car: " + car, e);

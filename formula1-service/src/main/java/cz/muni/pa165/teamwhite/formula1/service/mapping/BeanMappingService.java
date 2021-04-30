@@ -10,6 +10,9 @@ public interface BeanMappingService {
 	
     public  <T> List<T> mapTo(Collection<?> objects, Class<T> mapToClass);
 
+    public  void mapToObject(Object u, Object v);
+
     public  <T> T mapTo(Object u, Class<T> mapToClass);
+
     public Mapper getMapper();
 }

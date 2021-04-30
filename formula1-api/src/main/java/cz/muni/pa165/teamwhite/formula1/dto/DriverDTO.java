@@ -9,26 +9,27 @@ import java.util.Objects;
 public class DriverDTO {
     private Long id;
 
-    @NotNull
-    private final CarDTO car;
+    private CarDTO car;
 
     @NotNull
-    private final String name;
+    private String name;
 
     @NotNull
-    private final String surname;
+    private String surname;
 
     @NotNull
-    private final String nationality;
+    private String nationality;
 
     @NotNull
-    private final boolean isAggressive;
+    private boolean isAggressive;
 
     @NotNull
-    private final int wetDriving;
+    private int wetDriving;
 
     @NotNull
-    private final int reactions;
+    private int reactions;
+
+    public DriverDTO() {}
 
     public DriverDTO(CarDTO car, String name, String surname, String nationality,
                      boolean isAggressive, int wetDriving, int reactions) {
@@ -85,7 +86,7 @@ public class DriverDTO {
     public String toString() {
         return "DriverDTO{" +
                 "id=" + id +
-                ", car=" + car.getName() +
+                ", car=" + ((Objects.isNull(car)) ? "none" : car.getName()) +
                 ", name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
                 ", nationality='" + nationality + '\'' +
