@@ -43,34 +43,4 @@ public interface CarFacade {
 	 */
 	CarDTO getCarById(Long carId);
 
-	/**
-	 * Sets a new main driver for the car.
-	 *
-	 * The previous driver will be removed from the car.
-	 *
-	 * @param car
-	 * @param driver The new driver
-	 */
-	void setDriver(CarDTO car, DriverDTO driver);
-
-	/**
-	 * Adds a new component to the car.
-	 *
-	 * If the car already contains a component of of the same type, it will be replaced with the new component.
-	 *
-	 * @param car
-	 * @param component
-	 */
-	void addComponent(CarDTO car, ComponentDTO component);
-
-	/**
-	 * Removes component from the car.
-	 *
-	 * If the component is not in the car, no action is performed.
-	 *
-	 * @param car
-	 * @param component
-	 */
-	void removeComponent(CarDTO car, ComponentDTO component);
-
 }

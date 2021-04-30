@@ -43,19 +43,4 @@ public class CarFacadeImpl implements CarFacade {
     public CarDTO getCarById(Long carId) {
         return beanMappingService.mapTo(carService.findById(carId), CarDTO.class);
     }
-
-    @Override
-    public void setDriver(CarDTO car, DriverDTO driver) {
-        carService.setDriver(beanMappingService.mapTo(car, Car.class), beanMappingService.mapTo(driver, Driver.class));
-    }
-
-    @Override
-    public void addComponent(CarDTO car, ComponentDTO component) {
-        carService.addComponent(beanMappingService.mapTo(car, Car.class), beanMappingService.mapTo(component, Component.class));
-    }
-
-    @Override
-    public void removeComponent(CarDTO car, ComponentDTO component) {
-        carService.removeComponent(beanMappingService.mapTo(car, Car.class), beanMappingService.mapTo(component, Component.class));
-    }
 }
