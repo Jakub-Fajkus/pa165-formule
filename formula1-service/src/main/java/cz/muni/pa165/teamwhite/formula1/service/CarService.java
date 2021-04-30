@@ -1,8 +1,6 @@
 package cz.muni.pa165.teamwhite.formula1.service;
 
 import cz.muni.pa165.teamwhite.formula1.persistence.entity.Car;
-import cz.muni.pa165.teamwhite.formula1.persistence.entity.Component;
-import cz.muni.pa165.teamwhite.formula1.persistence.entity.Driver;
 
 import java.util.List;
 
@@ -45,25 +43,4 @@ public interface CarService {
      * @param id car id to be removed
      */
     void remove(Long id);
-
-    /**
-     * Sets given driver to the given car.
-     * @param car which we want to set driver
-     * @param driver which we want to set car
-     */
-    void setDriver(Car car, Driver driver);
-
-    /**
-     * Sets given component to the car.
-     * @param car to which we want to set component
-     * @param component to be set to the car
-     */
-    void addComponent(Car car, Component component);
-
-    /**
-     * Removes given component from the car.
-     * @param car from which we want to remove component
-     * @param component to be removed from the car
-     */
-    void removeComponent(Car car, Component component);
 }

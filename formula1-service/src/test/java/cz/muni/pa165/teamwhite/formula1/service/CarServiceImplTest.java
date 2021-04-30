@@ -5,11 +5,13 @@ import cz.muni.pa165.teamwhite.formula1.persistence.entity.Car;
 import cz.muni.pa165.teamwhite.formula1.persistence.entity.Component;
 import cz.muni.pa165.teamwhite.formula1.persistence.entity.Driver;
 import cz.muni.pa165.teamwhite.formula1.persistence.enums.ComponentType;
+import cz.muni.pa165.teamwhite.formula1.service.exception.Formula1ServiceException;
 import org.hibernate.service.spi.ServiceException;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.dao.DuplicateKeyException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTransactionalTestNGSpringContextTests;
 import org.testng.Assert;
@@ -54,7 +56,7 @@ public class CarServiceImplTest extends AbstractTransactionalTestNGSpringContext
         verify(carDao).create(formula);
     }
 
-    @Test(expectedExceptions = DuplicateKeyException.class)
+    @Test(expectedExceptions = Formula1ServiceException.class)
     public void testCreateRethrowsDataAccessExceptionOnError() {
         doThrow(new DuplicateKeyException("failed")).when(carDao).create(formula);
 
@@ -95,6 +97,13 @@ public class CarServiceImplTest extends AbstractTransactionalTestNGSpringContext
         verify(carDao).update(formula);
     }
 
+    @Test(expectedExceptions = Formula1ServiceException.class)
+    public void testUpdateGoesBad() {
+        doThrow(new DataIntegrityViolationException("failed")).when(carDao).update(formula);
+
+        carService.update(formula);
+    }
+
     @Test
     public void testRemoveWhenCarExists() {
         when(carDao.findById(formula.getId())).thenReturn(formula);
@@ -117,14 +126,18 @@ public class CarServiceImplTest extends AbstractTransactionalTestNGSpringContext
 
     @Test
     public void testSetDriverToCar(){
-        carService.setDriver(formula, michal);
+        formula.setDriver(michal);
+
+        carService.update(formula);
 
         verify(carDao).update(formula);
     }
 
     @Test
     public void testAddComponent(){
-        carService.addComponent(formula, suspension);
+        formula.addComponent(suspension);
+
+        carService.update(formula);
 
         verify(carDao).update(formula);
     }

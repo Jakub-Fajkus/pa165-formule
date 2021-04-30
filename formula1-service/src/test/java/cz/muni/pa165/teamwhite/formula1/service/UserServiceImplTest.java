@@ -2,6 +2,7 @@ package cz.muni.pa165.teamwhite.formula1.service;
 
 import cz.muni.pa165.teamwhite.formula1.persistence.dao.UserDao;
 import cz.muni.pa165.teamwhite.formula1.persistence.entity.User;
+import cz.muni.pa165.teamwhite.formula1.service.exception.Formula1ServiceException;
 import org.hibernate.service.spi.ServiceException;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -18,7 +19,6 @@ import java.util.ArrayList;
 
 import static org.mockito.Mockito.*;
 
-//import static org.mockito.Mockito.*;
 
 /**
  * @author Jakub Fajkus
@@ -55,7 +55,7 @@ public class UserServiceImplTest extends AbstractTransactionalTestNGSpringContex
         verify(userDao).create(userManager);
     }
 
-    @Test(expectedExceptions = DuplicateKeyException.class)
+    @Test(expectedExceptions = Formula1ServiceException.class)
     public void testCreateRethrowsDataAccessExceptionOnError() {
         doThrow(new DuplicateKeyException("failed")).when(userDao).create(userManager);
 
