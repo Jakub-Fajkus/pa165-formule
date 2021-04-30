@@ -1,5 +1,7 @@
 package cz.muni.pa165.teamwhite.formula1.persistence.entity;
 
+import cz.muni.pa165.teamwhite.formula1.persistence.validation.UniqueComponentByType;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -32,6 +34,7 @@ public class Car {
     private Driver driver;
 
     @OneToMany
+    @UniqueComponentByType
     private Set<Component> components = new HashSet<>();
 
     public Car() {

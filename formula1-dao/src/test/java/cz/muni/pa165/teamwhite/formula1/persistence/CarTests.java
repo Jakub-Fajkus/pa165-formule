@@ -19,6 +19,8 @@ import org.testng.annotations.Test;
 
 import javax.transaction.Transactional;
 import javax.validation.ConstraintViolationException;
+import javax.validation.ValidationException;
+import java.util.Set;
 
 /**
  * @author Tomas Sedlacek
@@ -177,6 +179,16 @@ public class CarTests extends AbstractTestNGSpringContextTests {
 
         carDao.create(mercedes1);
         carDao.create(mercedes2);
+    }
+
+    @Test(expectedExceptions = ValidationException.class)
+    public void testValidationForSameComponentTypesWorksCreatingCar() {
+        Car car = createCarFerrari();
+        car.addComponent(new Component(ComponentType.ENGINE, "engine"));
+        car.addComponent(new Component(ComponentType.ENGINE, "turboengine"));
+        car.addComponent(new Component(ComponentType.TRANSMISSION, "trans"));
+
+        carDao.create(car);
     }
 
     private Car createCarFerrari() {
