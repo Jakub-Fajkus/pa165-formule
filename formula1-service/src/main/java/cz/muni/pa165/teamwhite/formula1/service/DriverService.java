@@ -35,30 +35,30 @@ public interface DriverService {
     Long createDriver(Driver driver);
 
     /**
-     *
-     * @param driver
-     * @param car
+     * Sets car to the driver
+     * @param driver to be updated
+     * @param car to be assigned
      */
     void setCar(Driver driver, Car car);
 
     /**
-     *
-     * @param driver
-     * @param aggressive
+     * Sets aggresivity of the driver
+     * @param driver to be updated
+     * @param aggressive level that is assigned to the driver
      */
     void setIsAggressive(Driver driver, boolean aggressive);
 
     /**
-     *
-     * @param driver
-     * @param wetDriving
+     * Sets wet driving skill level to the driver
+     * @param driver to be updated
+     * @param wetDriving skills level that is assigned to the driver
      */
     void setWetDriving(Driver driver, int wetDriving);
 
     /**
-     *
-     * @param driver
-     * @param reactions
+     * Sets reactions level to the driver
+     * @param driver to be updated
+     * @param reactions level that is assigned to the driver
      */
     void setReactions(Driver driver, int reactions);
 
