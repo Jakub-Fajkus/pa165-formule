@@ -31,9 +31,9 @@ public interface CarFacade {
 	/**
 	 * Deletes a car by its id
 	 *
-	 * @param car Car id
+	 * @param carId Car id
 	 */
-	void deleteCar(Long car);
+	void deleteCar(Long carId);
 
 	/**
 	 * Gets car by its id
