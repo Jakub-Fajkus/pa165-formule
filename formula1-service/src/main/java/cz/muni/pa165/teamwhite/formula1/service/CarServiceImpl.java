@@ -1,6 +1,7 @@
 package cz.muni.pa165.teamwhite.formula1.service;
 
 import cz.muni.pa165.teamwhite.formula1.persistence.dao.CarDao;
+import cz.muni.pa165.teamwhite.formula1.persistence.dao.DriverDao;
 import cz.muni.pa165.teamwhite.formula1.persistence.entity.Car;
 import cz.muni.pa165.teamwhite.formula1.persistence.entity.Component;
 import cz.muni.pa165.teamwhite.formula1.service.exception.Formula1ServiceException;
@@ -18,11 +19,23 @@ public class CarServiceImpl implements CarService {
     @Autowired
     private CarDao carDao;
 
+    @Autowired
+    private DriverService driverService;
+
     @Override
     public Long createCar(Car car) {
         try {
             for (Component component: car.getComponents()) {
                 component.setCar(car);
+            }
+
+            if (car.getDriver() != null) {
+                car.getDriver().setCar(car);
+                if (car.getDriver().getId() != null) {
+                    driverService.update(car.getDriver());
+                } else {
+                    driverService.createDriver(car.getDriver());
+                }
             }
 
             carDao.create(car);

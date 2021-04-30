@@ -4,8 +4,10 @@ import cz.muni.pa165.teamwhite.formula1.dto.CarDTO;
 import cz.muni.pa165.teamwhite.formula1.facade.CarFacade;
 import cz.muni.pa165.teamwhite.formula1.persistence.entity.Car;
 import cz.muni.pa165.teamwhite.formula1.persistence.entity.Component;
+import cz.muni.pa165.teamwhite.formula1.persistence.entity.Driver;
 import cz.muni.pa165.teamwhite.formula1.service.CarService;
 import cz.muni.pa165.teamwhite.formula1.service.ComponentService;
+import cz.muni.pa165.teamwhite.formula1.service.DriverService;
 import cz.muni.pa165.teamwhite.formula1.service.mapping.BeanMappingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,6 +31,9 @@ public class CarFacadeImpl implements CarFacade {
 
     @Autowired
     private ComponentService componentService;
+
+    @Autowired
+    private DriverService driverService;
 
     @Override
     public List<CarDTO> getAllCars() {
@@ -54,9 +59,18 @@ public class CarFacadeImpl implements CarFacade {
     public CarDTO update(@NotNull CarDTO carDTO) {
         Car dbCar = carService.findById(carDTO.getId());
 
-        for (Component component: dbCar.getComponents()) {
-            component.setCar(null);
-            componentService.update(component);
+        if (carDTO.getComponents() != null) {
+            for (Component component: dbCar.getComponents()) {
+                component.setCar(null);
+                componentService.update(component);
+            }
+        }
+
+        if (carDTO.getDriver() != null) {
+            Driver dbDriver = driverService.findById(dbCar.getDriver().getId());
+
+            dbDriver.setCar(null);
+            driverService.update(dbDriver);
         }
 
         beanMappingService.mapToObject(carDTO, dbCar);

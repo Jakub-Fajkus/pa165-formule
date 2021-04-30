@@ -6,6 +6,7 @@ import cz.muni.pa165.teamwhite.formula1.dto.DriverDTO;
 import cz.muni.pa165.teamwhite.formula1.enums.ComponentType;
 import cz.muni.pa165.teamwhite.formula1.facade.CarFacade;
 import cz.muni.pa165.teamwhite.formula1.facade.ComponentFacade;
+import cz.muni.pa165.teamwhite.formula1.facade.DriverFacade;
 import cz.muni.pa165.teamwhite.formula1.service.ServiceConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -16,6 +17,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -32,6 +34,9 @@ public class CarFacadeImplTest extends AbstractTestNGSpringContextTests {
     @Autowired
     private ComponentFacade componentFacade;
 
+    @Autowired
+    private DriverFacade driverFacade;
+
     @Test
     public void testCreateACarAndThenUpdateOnlyItsName() {
         CarDTO createdDTO = new CarDTO("mercedes", new DriverDTO(null, "Valtteri", "Bottas", "FI", true, 9, 9), null);
@@ -39,6 +44,9 @@ public class CarFacadeImplTest extends AbstractTestNGSpringContextTests {
 
         CarDTO updated = carFacade.update(new CarDTO(id, "McLaren", null, null));
 
+        DriverDTO botas = carFacade.getCarById(id).getDriver();
+
+        Assert.assertEquals(botas.getCar(), updated);
         Assert.assertEquals(updated.getName(), "McLaren");
         Assert.assertEquals(updated.getDriver(), createdDTO.getDriver());
         Assert.assertEquals(updated.getComponents(), createdDTO.getComponents());
@@ -50,12 +58,17 @@ public class CarFacadeImplTest extends AbstractTestNGSpringContextTests {
         CarDTO createdDTO = new CarDTO("mercedes", new DriverDTO(null, "Valtteri", "Bottas", "FI", true, 9, 9), null);
         Long id = carFacade.createCar(createdDTO);
 
-        DriverDTO newDriver = new DriverDTO(null, "Pepik", "Novaku", "CZE", false, 0, 0);
-        CarDTO updated = carFacade.update(new CarDTO(id, "mercedes", newDriver, null));
+        Long botasId = carFacade.getCarById(id).getDriver().getId();
 
+        DriverDTO newDriver = new DriverDTO(null, "Pepik", "Novaku", "CZE", false, 0, 0);
+        CarDTO updated = carFacade.update(new CarDTO(id, null, newDriver, null));
+
+        Assert.assertNull(driverFacade.getDriverById(botasId).getCar());
         Assert.assertEquals(updated.getName(), "mercedes");
         Assert.assertEquals(updated.getDriver(), newDriver);
         Assert.assertEquals(updated.getComponents(), createdDTO.getComponents());
+
+        driverFacade.getAllDrivers();
     }
 
 
@@ -64,9 +77,12 @@ public class CarFacadeImplTest extends AbstractTestNGSpringContextTests {
         CarDTO createdDTO = new CarDTO("mercedes", new DriverDTO(null, "Valtteri", "Bottas", "FI", true, 9, 9), null);
         Long id = carFacade.createCar(createdDTO);
 
+        Long botasId = carFacade.getCarById(id).getDriver().getId();
+
         DriverDTO newDriver = new DriverDTO(null, "Pepik", "Novaku", "CZE", false, 0, 0);
         CarDTO updated = carFacade.update(new CarDTO(id, "McLaren", newDriver, null));
 
+        Assert.assertNull(driverFacade.getDriverById(botasId).getCar());
         Assert.assertEquals(updated.getName(), "McLaren");
         Assert.assertEquals(updated.getDriver(), newDriver);
         Assert.assertEquals(updated.getComponents(), createdDTO.getComponents());
@@ -79,11 +95,14 @@ public class CarFacadeImplTest extends AbstractTestNGSpringContextTests {
         Long id = carFacade.createCar(createdDTO);
 
         ComponentDTO component = new ComponentDTO(ComponentType.ENGINE, "engine", null);
-        CarDTO updated = carFacade.update(new CarDTO(id, "mercedes", null, Set.of(component)));
+        CarDTO updated = carFacade.update(new CarDTO(id, null, null, Set.of(component)));
 
         Assert.assertEquals(updated.getName(), "mercedes");
         Assert.assertEquals(updated.getDriver(), createdDTO.getDriver());
         Assert.assertEquals(updated.getComponents(), Set.of(component));
+
+        ComponentDTO comp = (ComponentDTO) updated.getComponents().toArray()[0];
+        Assert.assertEquals(componentFacade.getComponentById(comp.getId()).getCar(), updated);
 
         Assert.assertEquals(1, componentFacade.getAllComponents().size());
     }

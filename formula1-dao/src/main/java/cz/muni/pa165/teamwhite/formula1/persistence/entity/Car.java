@@ -31,10 +31,10 @@ public class Car {
     @NotNull
     private String name;
 
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Driver driver;
 
-    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}) //je to k cemu?!
     @UniqueComponentByType
     private Set<Component> components = new HashSet<>();
 

@@ -37,9 +37,6 @@ public class ServiceConfiguration {
         DozerBeanMapper dozer = new DozerBeanMapper();
         dozer.addMapping(new DozerCustomConfig());
 
-//        dozer.setCustomFieldMapper((source, destination, sourceFieldValue, classMap, fieldMapping) ->
-//                sourceFieldValue == null);
-
         return dozer;
     }
 
@@ -66,6 +63,7 @@ public class ServiceConfiguration {
                     .fields(field("isAggressive").accessible(), field("isAggressive").accessible())
                     .fields(field("wetDriving").accessible(), field("wetDriving").accessible())
                     .fields(field("reactions").accessible(), field("reactions").accessible())
+                    .fields(field("car").accessible(), field("car").accessible())
             ;
 
             mapping(UserDTO.class, User.class, TypeMappingOptions.mapNull(false))
