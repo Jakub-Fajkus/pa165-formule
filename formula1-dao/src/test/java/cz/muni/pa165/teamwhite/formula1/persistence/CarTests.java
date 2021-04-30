@@ -8,6 +8,8 @@ import cz.muni.pa165.teamwhite.formula1.persistence.entity.Component;
 import cz.muni.pa165.teamwhite.formula1.persistence.entity.Driver;
 import cz.muni.pa165.teamwhite.formula1.persistence.enums.ComponentType;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.InvalidDataAccessApiUsageException;
+import org.springframework.orm.jpa.JpaSystemException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
@@ -43,80 +45,72 @@ public class CarTests extends AbstractTestNGSpringContextTests {
 
     @Test
     public void createTwoCars() {
-        Driver lewis = createDriverLewis();
-        Driver fernando = createDriverFernando();
+        Driver lewis = createDriverLewisDao();
+        Driver fernando = createDriverFernandoDao();
 
-        Car car1 = new Car();
-        car1.setName("monopost2021");
-        car1.setDriver(lewis);
+        Car mercedes = createCarMercedesDao();
+        mercedes.setDriver(lewis);
 
-        Car car2 = new Car();
-        car2.setName("monopost2020");
-        car2.setDriver(fernando);
+        Car ferrari = createcarFerrariDao();
+        ferrari.setDriver(fernando);
 
-        lewis.setCar(car1);
-        fernando.setCar(car2);
+        lewis.setCar(mercedes);
+        fernando.setCar(ferrari);
 
-        Component transmission = createTransmission();
-        Component engine = createEngine();
+        Component transmission = createTransmissionDao();
+        Component engine = createEngineDao();
 
-        car1.addComponent(transmission);
-        car2.addComponent(engine);
+        mercedes.addComponent(engine);
+        ferrari.addComponent(transmission);
 
-        driverDao.create(lewis);
-        driverDao.create(fernando);
+        driverDao.update(lewis);
+        driverDao.update(fernando);
 
-        componentDao.create(engine);
-        componentDao.create(transmission);
+        componentDao.update(engine);
+        componentDao.update(transmission);
 
-        carDao.create(car1);
-        carDao.create(car2);
+        carDao.update(ferrari);
+        carDao.update(mercedes);
 
         Assert.assertEquals(carDao.findAll().size(), 2);
     }
 
     @Test
     public void findByIdTest() {
-        Driver lewis = createDriverLewis();
-        Car monopost2021 = new Car();
+        Driver lewis = createDriverLewisDao();
+        Car mercedes = createCarMercedesDao();
 
-        monopost2021.setName("monopost 2021");
-        monopost2021.setDriver(lewis);
-        lewis.setCar(monopost2021);
+        mercedes.setDriver(lewis);
+        lewis.setCar(mercedes);
 
-        driverDao.create(lewis);
-        carDao.create(monopost2021);
+        driverDao.update(lewis);
+        carDao.update(mercedes);
 
-        Car found = carDao.findById(monopost2021.getId());
-        Assert.assertEquals(found, monopost2021);
+        Car found = carDao.findById(mercedes.getId());
+        Assert.assertEquals(found, mercedes);
     }
 
     @Test
     public void findByNameTest() {
-        Driver lewis = createDriverLewis();
-        Car monopost2021 = new Car();
+        Driver lewis = createDriverLewisDao();
+        Car mercedes = createCarMercedesDao();
 
-        monopost2021.setName("monopost 2021");
-        monopost2021.setDriver(lewis);
-        lewis.setCar(monopost2021);
+        mercedes.setDriver(lewis);
+        lewis.setCar(mercedes);
 
-        driverDao.create(lewis);
-        carDao.create(monopost2021);
+        driverDao.update(lewis);
+        carDao.update(mercedes);
 
-        Car found = carDao.findByName(monopost2021.getName());
-        Assert.assertEquals(found, monopost2021);
+        Car found = carDao.findByName(mercedes.getName());
+        Assert.assertEquals(found, mercedes);
     }
 
     @Test
     public void findAllTest() {
-        Car car1 = new Car();
-        car1.setName("monopost1");
-        carDao.create(car1);
+        Car ferrari = createcarFerrariDao();
         Assert.assertEquals(carDao.findAll().size(), 1);
 
-        Car car2 = new Car();
-        car2.setName("monopost2");
-        carDao.create(car2);
+        Car mercedes = createCarMercedesDao();
         Assert.assertEquals(carDao.findAll().size(), 2);
 
         Car car3 = new Car();
@@ -127,29 +121,28 @@ public class CarTests extends AbstractTestNGSpringContextTests {
 
     @Test
     public void updateCar() {
-        Car car = new Car();
-        car.setName("AMG Petronas 2020");
+        Car ferrari = createcarFerrariDao();
 
-        Driver lewis = createDriverLewis();
-        Driver fernando = createDriverFernando();
+        Driver lewis = createDriverLewisDao();
+        Driver fernando = createDriverFernandoDao();
 
-        car.setDriver(lewis);
-        lewis.setCar(car);
-
-        driverDao.create(lewis);
-        driverDao.create(fernando);
-        carDao.create(car);
-
-        car.setName("AMG petronas ultra fast uber new car");
-        car.setDriver(fernando);
-        lewis.setCar(null);
-        fernando.setCar(car);
+        ferrari.setDriver(lewis);
+        lewis.setCar(ferrari);
 
         driverDao.update(lewis);
         driverDao.update(fernando);
-        carDao.update(car);
+        carDao.update(ferrari);
 
-        Car found = carDao.findById(car.getId());
+        ferrari.setName("AMG petronas ultra fast uber new car");
+        ferrari.setDriver(fernando);
+        lewis.setCar(null);
+        fernando.setCar(ferrari);
+
+        driverDao.update(lewis);
+        driverDao.update(fernando);
+        carDao.update(ferrari);
+
+        Car found = carDao.findById(ferrari.getId());
         Assert.assertEquals(found.getName(), "AMG petronas ultra fast uber new car");
         Assert.assertNull(lewis.getCar());
         Assert.assertEquals(found.getDriver(), fernando);
@@ -157,22 +150,64 @@ public class CarTests extends AbstractTestNGSpringContextTests {
 
     @Test
     public void removeCarTest() {
-        Car carFerrari = new Car();
-        carFerrari.setName("F1 Scuderia Ferrari 2021 - car1");
-        carDao.create(carFerrari);
-
-        Car carMercedes = new Car();
-        carMercedes.setName("Petronas Mercedes - car1");
-        carDao.create(carMercedes);
+        Car ferrari = createcarFerrariDao();
+        Car mercedes = createCarMercedesDao();
 
         Assert.assertEquals(carDao.findAll().size(), 2);
 
-        carDao.remove(carFerrari);
+        carDao.remove(ferrari);
 
         Assert.assertEquals(carDao.findAll().size(), 1);
     }
 
-    public Driver createDriverLewis() {
+    @Test(expectedExceptions = InvalidDataAccessApiUsageException.class)
+    public void removeCarNotInDbTest() {
+        Car carInDb = createCarMercedesDao();
+
+        Car carNotInDb = createCarFerrari();
+
+        carDao.remove(carNotInDb);
+        Assert.assertEquals(carDao.findAll().size(), 1);
+    }
+
+    @Test(expectedExceptions = JpaSystemException.class)
+    public void insertSameObjectTwice() {
+        Car mercedes1 = createCarMercedesDao();
+        Car mercedes2 = createCarMercedesDao();
+
+        carDao.create(mercedes1);
+        carDao.create(mercedes2);
+    }
+
+    private Car createCarFerrari() {
+        Car ferrari = new Car();
+        ferrari.setName("F1 Scuderia Ferrari 2021 - car1");
+
+        return ferrari;
+    }
+
+    private Car createcarFerrariDao() {
+        Car ferrari = createCarFerrari();
+        carDao.create(ferrari);
+
+        return ferrari;
+    }
+
+    private Car createCaMercedes() {
+        Car mercedes = new Car();
+        mercedes.setName("Petronas Mercedes - car1");
+
+        return mercedes;
+    }
+
+    private Car createCarMercedesDao() {
+        Car mercedes = createCaMercedes();
+        carDao.create(mercedes);
+
+        return mercedes;
+    }
+
+    private Driver createDriverLewis() {
         Driver driver = new Driver();
         driver.setName("Lewis");
         driver.setSurname("Hamilton");
@@ -184,7 +219,14 @@ public class CarTests extends AbstractTestNGSpringContextTests {
         return driver;
     }
 
-    public Driver createDriverFernando() {
+    private Driver createDriverLewisDao() {
+        Driver lewis = createDriverLewis();
+        driverDao.create(lewis);
+
+        return lewis;
+    }
+
+    private Driver createDriverFernando() {
         Driver driver = new Driver();
         driver.setName("Fernando");
         driver.setSurname("Alonso");
@@ -196,14 +238,33 @@ public class CarTests extends AbstractTestNGSpringContextTests {
         return driver;
     }
 
-    public Component createEngine() {
-        Component engine = new Component(ComponentType.ENGINE, "BlueFire3000");
-        return engine;
+    private Driver createDriverFernandoDao() {
+        Driver fernando = createDriverFernando();
+        driverDao.create(fernando);
+
+        return fernando;
+    }
+
+    private Component createEngine() {
+        return new Component(ComponentType.ENGINE, "BlueFire3000");
 
     }
 
-    public Component createTransmission() {
-        Component transmission = new Component(ComponentType.TRANSMISSION, "7 gears");
+    private Component createEngineDao() {
+        Component engine = createEngine();
+        componentDao.create(engine);
+
+        return engine;
+    }
+
+    private Component createTransmission() {
+        return new Component(ComponentType.TRANSMISSION, "7 gears");
+    }
+
+    private Component createTransmissionDao() {
+        Component transmission = createTransmission();
+        componentDao.create(transmission);
+
         return transmission;
     }
 }
