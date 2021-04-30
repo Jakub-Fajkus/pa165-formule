@@ -183,12 +183,6 @@ public class CarTests extends AbstractTestNGSpringContextTests {
 
     @Test(expectedExceptions = ValidationException.class)
     public void testValidationForSameComponentTypesWorksCreatingCar() {
-        Set<Component> componentSet = Set.of(
-                new Component(ComponentType.ENGINE, "engine"),
-                new Component(ComponentType.ENGINE, "turboengine"),
-                new Component(ComponentType.TRANSMISSION, "trans")
-        );
-
         Car car = createCarFerrari();
         car.addComponent(new Component(ComponentType.ENGINE, "engine"));
         car.addComponent(new Component(ComponentType.ENGINE, "turboengine"));
