@@ -4,6 +4,8 @@ import cz.muni.pa165.teamwhite.formula1.persistence.dao.UserDao;
 import cz.muni.pa165.teamwhite.formula1.persistence.entity.User;
 import cz.muni.pa165.teamwhite.formula1.persistence.enums.Role;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.dao.UncategorizedDataAccessException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
@@ -52,7 +54,7 @@ public class UserTest extends AbstractTestNGSpringContextTests {
         userDao.create(tom);
         tom = userDao.findByLogin("lime");
         userDao.remove(tom);
-        Assert.assertThrows(NoResultException.class, () -> userDao.findByLogin("lime"));
+        Assert.assertThrows(EmptyResultDataAccessException.class, () -> userDao.findByLogin("lime"));
     }
 
     @Test
@@ -110,6 +112,6 @@ public class UserTest extends AbstractTestNGSpringContextTests {
     public void addDuplicateRecordToDB(){
         userDao.create(new User("kaja", "leHeslo", Role.ENGINEER));
         User duplicate = new User("kaja", "newPassword", Role.ENGINEER);
-        Assert.assertThrows(PersistenceException.class, () -> userDao.create(duplicate));
+        Assert.assertThrows(UncategorizedDataAccessException.class, () -> userDao.create(duplicate));
     }
 }
