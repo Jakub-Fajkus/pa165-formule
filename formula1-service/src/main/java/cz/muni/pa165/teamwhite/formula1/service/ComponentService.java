@@ -4,6 +4,10 @@ import cz.muni.pa165.teamwhite.formula1.persistence.entity.Component;
 
 import java.util.List;
 
+/**
+ * @author Tomas Sedlacek
+ */
+
 public interface ComponentService {
     /**
      * Creates new component
