@@ -11,6 +11,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.dao.DuplicateKeyException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTransactionalTestNGSpringContextTests;
 import org.testng.Assert;
@@ -94,6 +95,13 @@ public class CarServiceImplTest extends AbstractTransactionalTestNGSpringContext
         carService.update(formula);
 
         verify(carDao).update(formula);
+    }
+
+    @Test(expectedExceptions = Formula1ServiceException.class)
+    public void testUpdateGoesBad() {
+        doThrow(new DataIntegrityViolationException("failed")).when(carDao).update(formula);
+
+        carService.update(formula);
     }
 
     @Test
