@@ -8,4 +8,4 @@ A Formula 1 team is in need to manage its participation to the world championshi
 ![Use case diagram](use_case_diagram.jpg "Use case diagram")
 
 ## Entity class diagram
-![Entity class diagram](class_diagram.jpg "Entity class diagram")
+![Entity class diagram](class_diagram.png "Entity class diagram")

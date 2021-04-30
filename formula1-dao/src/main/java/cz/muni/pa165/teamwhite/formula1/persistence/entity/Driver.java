@@ -9,6 +9,8 @@ import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
+import static java.util.Objects.isNull;
+
 
 /**
  * @author Tomas Sedlacek
@@ -134,7 +136,7 @@ public class Driver {
     public String toString() {
         return "Driver{" +
                 "id=" + id +
-                ", car=" + car.getName() +
+                ", car=" + (isNull(car)?"None":car.getName()) +
                 ", name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
                 ", nationality='" + nationality + '\'' +
