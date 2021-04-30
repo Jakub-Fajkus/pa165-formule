@@ -10,12 +10,17 @@ import cz.muni.pa165.teamwhite.formula1.persistence.entity.Driver;
 import cz.muni.pa165.teamwhite.formula1.service.CarService;
 import cz.muni.pa165.teamwhite.formula1.service.mapping.BeanMappingService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
  * @author Karolina Hecova
  */
+@Transactional
+@Service
 public class CarFacadeImpl implements CarFacade {
 
     @Autowired
