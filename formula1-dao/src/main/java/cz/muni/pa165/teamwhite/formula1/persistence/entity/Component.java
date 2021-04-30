@@ -13,6 +13,8 @@ import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
+import static java.util.Objects.isNull;
+
 /**
  * @author Jiří Andrlík
  */
@@ -88,7 +90,7 @@ public class Component {
         return "Component{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", car=" + car.getName() +
+                ", car=" + (isNull(car)?"None":car.getName()) +
                 ", type=" + type +
                 '}';
     }
