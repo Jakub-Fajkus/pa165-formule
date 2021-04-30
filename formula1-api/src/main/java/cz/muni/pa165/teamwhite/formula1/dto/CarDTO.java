@@ -57,7 +57,7 @@ public class CarDTO {
         return "Car{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", driver=" + (isNull(driver)?"None":driver.getName() + " " + driver.getSurname()) +
+                ", driver=" + (isNull(driver) ? "None" : driver.getName() + " " + driver.getSurname()) +
                 ", components=" + components +
                 '}';
     }
