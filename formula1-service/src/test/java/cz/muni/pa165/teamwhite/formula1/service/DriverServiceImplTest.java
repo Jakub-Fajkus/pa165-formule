@@ -1,6 +1,7 @@
 package cz.muni.pa165.teamwhite.formula1.service;
 
 import cz.muni.pa165.teamwhite.formula1.persistence.dao.DriverDao;
+import cz.muni.pa165.teamwhite.formula1.persistence.entity.Car;
 import cz.muni.pa165.teamwhite.formula1.persistence.entity.Driver;
 import cz.muni.pa165.teamwhite.formula1.service.exception.Formula1ServiceException;
 import cz.muni.pa165.teamwhite.formula1.service.mapping.BeanMappingService;
@@ -110,6 +111,15 @@ public class DriverServiceImplTest extends AbstractTransactionalTestNGSpringCont
     @Test
     public void testSetIsAggressive() {
         driver.setIsAggressive(false);
+        driverService.update(driver);
+        verify(driverDao).update(driver);
+    }
+
+    @Test
+    public void testSetCar() {
+        Car car = new Car();
+        car.setName("Mercedes");
+        driver.setCar(car);
         driverService.update(driver);
         verify(driverDao).update(driver);
     }
