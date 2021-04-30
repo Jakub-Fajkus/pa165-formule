@@ -5,6 +5,7 @@ import cz.muni.pa165.teamwhite.formula1.persistence.entity.Car;
 import cz.muni.pa165.teamwhite.formula1.persistence.entity.Component;
 import cz.muni.pa165.teamwhite.formula1.persistence.entity.Driver;
 import cz.muni.pa165.teamwhite.formula1.persistence.enums.ComponentType;
+import cz.muni.pa165.teamwhite.formula1.service.exception.Formula1ServiceException;
 import org.hibernate.service.spi.ServiceException;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -54,7 +55,7 @@ public class CarServiceImplTest extends AbstractTransactionalTestNGSpringContext
         verify(carDao).create(formula);
     }
 
-    @Test(expectedExceptions = DuplicateKeyException.class)
+    @Test(expectedExceptions = Formula1ServiceException.class)
     public void testCreateRethrowsDataAccessExceptionOnError() {
         doThrow(new DuplicateKeyException("failed")).when(carDao).create(formula);
 
@@ -117,14 +118,18 @@ public class CarServiceImplTest extends AbstractTransactionalTestNGSpringContext
 
     @Test
     public void testSetDriverToCar(){
-        carService.setDriver(formula, michal);
+        formula.setDriver(michal);
+
+        carService.update(formula);
 
         verify(carDao).update(formula);
     }
 
     @Test
     public void testAddComponent(){
-        carService.addComponent(formula, suspension);
+        formula.addComponent(suspension);
+
+        carService.update(formula);
 
         verify(carDao).update(formula);
     }

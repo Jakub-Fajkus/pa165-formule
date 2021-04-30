@@ -2,9 +2,9 @@ package cz.muni.pa165.teamwhite.formula1.service;
 
 import cz.muni.pa165.teamwhite.formula1.persistence.dao.CarDao;
 import cz.muni.pa165.teamwhite.formula1.persistence.entity.Car;
-import cz.muni.pa165.teamwhite.formula1.persistence.entity.Component;
-import cz.muni.pa165.teamwhite.formula1.persistence.entity.Driver;
+import cz.muni.pa165.teamwhite.formula1.service.exception.Formula1ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 
 import java.util.List;
 
@@ -17,49 +17,50 @@ public class CarServiceImpl implements CarService {
 
     @Override
     public Long createCar(Car car) {
-        carDao.create(car);
+        try {
+            carDao.create(car);
+        } catch (DataAccessException e) {
+            throw new Formula1ServiceException("Could not create a car: " + car, e);
+        }
         return car.getId();
     }
 
     @Override
     public List<Car> findAll() {
-        return carDao.findAll();
-    }
-
-    @Override
-    public Car findById(Long id) {
-        return carDao.findById(id);
-    }
-
-    @Override
-    public void update(Car car) {
-        carDao.update(car);
-    }
-
-    @Override
-    public void remove(Long id) {
-        Car dbCar = carDao.findById(id);
-
-        if (dbCar != null) {
-            carDao.remove(dbCar);
+        try {
+            return carDao.findAll();
+        } catch (DataAccessException e) {
+            throw new Formula1ServiceException("Could not find a car", e);
         }
     }
 
     @Override
-    public void setDriver(Car car, Driver driver) {
-        car.setDriver(driver);
-        carDao.update(car);
+    public Car findById(Long id) {
+        try {
+            return carDao.findById(id);
+        } catch (DataAccessException e) {
+            throw new Formula1ServiceException("Could not find a car with id: " + id, e);
+        }
     }
 
     @Override
-    public void addComponent(Car car, Component component) {
-        car.addComponent(component);
-        carDao.update(car);
+    public void update(Car car) {
+        try {
+            carDao.update(car);
+        } catch (DataAccessException e) {
+            throw new Formula1ServiceException("Could not update a car: " + car, e);
+        }
     }
 
     @Override
-    public void removeComponent(Car car, Component component) {
-        car.removeComponent(component);
-        carDao.update(car);
+    public void remove(Long id) {
+        Car dbCar = findById(id);
+        try {
+            if (dbCar != null) {
+                carDao.remove(dbCar);
+            }
+        } catch (DataAccessException e) {
+            throw new Formula1ServiceException("Could not delete a car with id: " + id, e);
+        }
     }
 }
