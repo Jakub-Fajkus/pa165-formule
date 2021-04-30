@@ -50,6 +50,11 @@ public class Car {
         this.components = components;
     }
 
+
+//    public void setId(Long id) {
+//        this.id = id;
+//    } //todo: ve vsech entitach!
+
     public Long getId() {
         return id;
     }

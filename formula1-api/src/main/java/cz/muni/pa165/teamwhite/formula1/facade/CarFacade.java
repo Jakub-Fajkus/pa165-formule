@@ -43,4 +43,12 @@ public interface CarFacade {
 	 */
 	CarDTO getCarById(Long carId);
 
+	/**
+	 * Updates given car and returns a new dto with updated car data
+	 *
+	 * @param carDTO carDTO containing only fields that we want to change
+	 * @return A new DTO with all fields
+	 */
+	CarDTO update(CarDTO carDTO);
+
 }

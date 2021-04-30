@@ -6,6 +6,8 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import static java.util.Objects.isNull;
+
 /**
  * @author Jiri Andrlik
  */
@@ -18,6 +20,15 @@ public class CarDTO {
     private DriverDTO driver;
 
     private Set<ComponentDTO> components = new HashSet<>();
+
+    public CarDTO() {} //todo: vsude do DTO
+
+    public CarDTO(Long id, String name, DriverDTO driver, Set<ComponentDTO> components) {
+        this.id = id;
+        this.name = name;
+        this.driver = driver;
+        this.components = components;
+    }
 
     public CarDTO(String name, DriverDTO driver, Set<ComponentDTO> components) {
         this.name = name;
@@ -33,32 +44,12 @@ public class CarDTO {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public DriverDTO getDriver() {
         return driver;
     }
 
-    public void setDriver(DriverDTO driver) {
-        this.driver = driver;
-    }
-
     public Set<ComponentDTO> getComponents() {
-        return Collections.unmodifiableSet(components);
-    }
-
-    public void addComponent(ComponentDTO component) {
-        this.components.add(component);
-    }
-
-    public void removeComponent(ComponentDTO component) {
-        if (!this.components.contains(component)) {
-            throw new IllegalArgumentException("Component " + component + " is not in this car!");
-        }
-
-        this.components.remove(component);
+        return Collections.unmodifiableSet(components != null ? components : Set.of());
     }
 
     @Override
@@ -66,7 +57,7 @@ public class CarDTO {
         return "Car{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", driver=" + driver.getName() + " " + driver.getSurname() +
+                ", driver=" + (isNull(driver)?"None":driver.getName() + " " + driver.getSurname()) +
                 ", components=" + components +
                 '}';
     }

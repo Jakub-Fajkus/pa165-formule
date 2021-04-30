@@ -5,12 +5,14 @@ import cz.muni.pa165.teamwhite.formula1.persistence.entity.Car;
 import cz.muni.pa165.teamwhite.formula1.service.exception.Formula1ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 /**
  * @author Karolina Hecova
  */
+@Service
 public class CarServiceImpl implements CarService {
     @Autowired
     private CarDao carDao;

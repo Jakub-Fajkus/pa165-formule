@@ -7,12 +7,14 @@ import cz.muni.pa165.teamwhite.formula1.service.exception.Formula1ServiceExcepti
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 /**
  * @author Jakub Fajkus
  */
+@Service
 public class UserServiceImpl implements UserService {
     @Autowired
     private UserDao userDao;

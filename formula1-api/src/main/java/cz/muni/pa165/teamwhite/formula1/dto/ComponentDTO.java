@@ -14,7 +14,6 @@ public class ComponentDTO {
     @NotNull
     private String name;
 
-    @NotNull
     private CarDTO car;
 
     @NotNull
@@ -52,7 +51,7 @@ public class ComponentDTO {
         return "ComponentDTO{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", car=" + car.getName() +
+                ", car=" + ((Objects.isNull(car)) ? "none" : car.getName()) +
                 ", type=" + type +
                 '}';
     }
