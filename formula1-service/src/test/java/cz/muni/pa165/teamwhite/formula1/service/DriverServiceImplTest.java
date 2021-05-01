@@ -4,7 +4,6 @@ import cz.muni.pa165.teamwhite.formula1.persistence.dao.DriverDao;
 import cz.muni.pa165.teamwhite.formula1.persistence.entity.Car;
 import cz.muni.pa165.teamwhite.formula1.persistence.entity.Driver;
 import cz.muni.pa165.teamwhite.formula1.service.exception.Formula1ServiceException;
-import cz.muni.pa165.teamwhite.formula1.service.mapping.BeanMappingService;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -23,14 +22,14 @@ import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.times;
 
+/**
+ * @author Karolina Hecova
+ */
 @ContextConfiguration(classes = ServiceConfiguration.class)
 public class DriverServiceImplTest extends AbstractTransactionalTestNGSpringContextTests {
 
     @Mock
     private DriverDao driverDao;
-
-    @Mock
-    private BeanMappingService beanMappingService;
 
     @InjectMocks
     private final DriverServiceImpl driverService = new DriverServiceImpl();

@@ -1,5 +1,6 @@
 package cz.muni.pa165.teamwhite.formula1.facade;
 
+import cz.muni.pa165.teamwhite.formula1.dto.CarDTO;
 import cz.muni.pa165.teamwhite.formula1.dto.UserDTO;
 import cz.muni.pa165.teamwhite.formula1.dto.UserAuthenticateDTO;
 
@@ -12,12 +13,14 @@ public interface UserFacade {
 
 	/**
 	 * Gets list of all users.
+	 *
 	 * @return list of all users
 	 */
 	List<UserDTO> getAllUsers();
 
 	/**
 	 * Creates new user with the given unencrypted password.
+	 *
 	 * @param userDTO new user to be created
 	 * @param unencryptedPassword unencrypted password
 	 * @return id of the new user
@@ -32,6 +35,7 @@ public interface UserFacade {
 
 	/**
 	 * Gets user by given id.
+	 *
 	 * @param userId id of the wanted user
 	 * @return user
 	 */
@@ -39,6 +43,7 @@ public interface UserFacade {
 
 	/**
 	 * Try to authenticate a user. Return true only if the hashed password matches the records.
+	 *
 	 * @param user to be authenticated
 	 * @return true if the user was successfully authenticated, otherwise false
 	 */
@@ -46,8 +51,17 @@ public interface UserFacade {
 
 	/**
 	 * Check if the given user is manager.
+	 *
 	 * @param user to be tested as manager
 	 * @return true if the given user is manager, otherwise false
 	 */
 	boolean isManager(UserDTO user);
+
+	/**
+	 * Updates given user and returns a new dto with updated user data.
+	 *
+	 * @param userDTO containing only fields that we want to change
+	 * @return A new DTO with all fields
+	 */
+	UserDTO update(UserDTO userDTO);
 }
