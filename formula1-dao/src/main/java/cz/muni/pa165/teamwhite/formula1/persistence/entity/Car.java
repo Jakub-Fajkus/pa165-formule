@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.CascadeType;
 import javax.validation.constraints.NotNull;
 import java.util.Collections;
 import java.util.HashSet;
@@ -30,10 +31,10 @@ public class Car {
     @NotNull
     private String name;
 
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Driver driver;
 
-    @OneToMany
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}) //je to k cemu?!
     @UniqueComponentByType
     private Set<Component> components = new HashSet<>();
 
@@ -48,6 +49,11 @@ public class Car {
         this.name = name;
         this.driver = driver;
         this.components = components;
+    }
+
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Long getId() {
@@ -91,7 +97,7 @@ public class Car {
         return "Car{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", driver=" + (isNull(driver)?"None":driver.getName() + " " + driver.getSurname()) +
+                ", driver=" + (isNull(driver) ? "None" : driver.getName() + " " + driver.getSurname()) +
                 ", components=" + components +
                 '}';
     }

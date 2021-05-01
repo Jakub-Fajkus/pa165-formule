@@ -7,6 +7,7 @@ import cz.muni.pa165.teamwhite.formula1.persistence.entity.Component;
 import cz.muni.pa165.teamwhite.formula1.service.ComponentService;
 import cz.muni.pa165.teamwhite.formula1.service.mapping.BeanMappingService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -17,6 +18,7 @@ import java.util.List;
 
 
 @Transactional
+@Service
 public class ComponentFacadeImpl implements ComponentFacade {
     @Autowired
     private ComponentService componentService;

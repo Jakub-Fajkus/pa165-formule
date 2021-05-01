@@ -19,6 +19,8 @@ public class UserDTO {
     @NotNull
     private Role role;
 
+    public UserDTO() {}
+
     public UserDTO(String login, String password, Role role) {
         this.login = login;
         this.password = password;

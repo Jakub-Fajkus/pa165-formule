@@ -7,6 +7,7 @@ import cz.muni.pa165.teamwhite.formula1.persistence.entity.User;
 import cz.muni.pa165.teamwhite.formula1.service.UserService;
 import cz.muni.pa165.teamwhite.formula1.service.mapping.BeanMappingService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -15,6 +16,7 @@ import java.util.List;
  * @author Jakub Fajkus
  */
 @Transactional
+@Service
 public class UserFacadeImpl implements UserFacade {
     @Autowired
     private UserService userService;

@@ -1,81 +1,141 @@
 package cz.muni.pa165.teamwhite.formula1.service.facade;
 
 import cz.muni.pa165.teamwhite.formula1.dto.CarDTO;
-import cz.muni.pa165.teamwhite.formula1.persistence.entity.Car;
-import cz.muni.pa165.teamwhite.formula1.service.CarService;
+import cz.muni.pa165.teamwhite.formula1.dto.ComponentDTO;
+import cz.muni.pa165.teamwhite.formula1.dto.DriverDTO;
+import cz.muni.pa165.teamwhite.formula1.enums.ComponentType;
+import cz.muni.pa165.teamwhite.formula1.facade.CarFacade;
+import cz.muni.pa165.teamwhite.formula1.facade.ComponentFacade;
+import cz.muni.pa165.teamwhite.formula1.facade.DriverFacade;
 import cz.muni.pa165.teamwhite.formula1.service.ServiceConfiguration;
-import cz.muni.pa165.teamwhite.formula1.service.mapping.BeanMappingService;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.testng.AbstractTransactionalTestNGSpringContextTests;
+import org.springframework.test.context.TestExecutionListeners;
+import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
+import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
 import org.testng.Assert;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import java.util.HashSet;
+import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
-
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import java.util.Set;
 
 /**
- * @author Jiri Andrlik
+ * @author Jakub Fajkus
  */
 @ContextConfiguration(classes = ServiceConfiguration.class)
-public class CarFacadeImplTest extends AbstractTransactionalTestNGSpringContextTests {
-    @Mock
-    private CarService carService;
+@Transactional
+@TestExecutionListeners(TransactionalTestExecutionListener.class)
+public class CarFacadeImplTest extends AbstractTestNGSpringContextTests {
+    @Autowired
+    private CarFacade carFacade;
 
-    @Mock
-    private BeanMappingService beanMappingService;
+    @Autowired
+    private ComponentFacade componentFacade;
 
-    @InjectMocks
-    private final CarFacadeImpl carFacade = new CarFacadeImpl();
-
-    private final Car formula = new Car("formula", null, new HashSet<>());
-
-    private final CarDTO formulaDTO = new CarDTO("formula", null, new HashSet<>());
-
-    List<Car> carList = List.of(formula);
-    List<CarDTO> carDTOList = List.of(formulaDTO);
-
-    @BeforeMethod
-    public void setUp() {
-        MockitoAnnotations.openMocks(this);
-
-    }
+    @Autowired
+    private DriverFacade driverFacade;
 
     @Test
-    public void testGetAllCars() {
-        when(carService.findAll()).thenReturn(carList);
-        when(beanMappingService.mapTo(carList, CarDTO.class)).thenReturn(carDTOList);
+    public void testCreateACarAndThenUpdateOnlyItsName() {
+        CarDTO createdDTO = new CarDTO("mercedes", new DriverDTO(null, "Valtteri", "Bottas", "FI", true, 9, 9), null);
+        Long id = carFacade.createCar(createdDTO);
 
-        Assert.assertSame(carFacade.getAllCars(), carDTOList);
+        CarDTO updated = carFacade.update(new CarDTO(id, "McLaren", null, null));
+
+        DriverDTO botas = carFacade.getCarById(id).getDriver();
+
+        Assert.assertEquals(botas.getCar(), updated);
+        Assert.assertEquals(updated.getName(), "McLaren");
+        Assert.assertEquals(updated.getDriver(), createdDTO.getDriver());
+        Assert.assertEquals(updated.getComponents(), createdDTO.getComponents());
     }
 
-    @Test
-    public void testCreateCar() {
-        when(beanMappingService.mapTo(formulaDTO, Car.class)).thenReturn(formula);
-        when(carService.createCar(formula)).thenReturn(42L);
 
-        Assert.assertEquals((long) carFacade.createCar(formulaDTO), 42L);
+    @Test
+    public void testCreateACarAndThenUpdateOnlyItsDriver() {
+        CarDTO createdDTO = new CarDTO("mercedes", new DriverDTO(null, "Valtteri", "Bottas", "FI", true, 9, 9), null);
+        Long id = carFacade.createCar(createdDTO);
+
+        Long botasId = carFacade.getCarById(id).getDriver().getId();
+
+        DriverDTO newDriver = new DriverDTO(null, "Pepik", "Novaku", "CZE", false, 0, 0);
+        CarDTO updated = carFacade.update(new CarDTO(id, null, newDriver, null));
+
+        Assert.assertNull(driverFacade.getDriverById(botasId).getCar());
+        Assert.assertEquals(updated.getName(), "mercedes");
+        Assert.assertEquals(updated.getDriver(), newDriver);
+        Assert.assertEquals(updated.getComponents(), createdDTO.getComponents());
+
+        driverFacade.getAllDrivers();
     }
 
+
     @Test
-    public void testDeleteCar() {
+    public void testCreateACarAndThenUpdateBothItsNameAndDriver() {
+        CarDTO createdDTO = new CarDTO("mercedes", new DriverDTO(null, "Valtteri", "Bottas", "FI", true, 9, 9), null);
+        Long id = carFacade.createCar(createdDTO);
 
-        carFacade.deleteCar(42L);
+        Long botasId = carFacade.getCarById(id).getDriver().getId();
 
-        verify(carService).remove(42L);
+        DriverDTO newDriver = new DriverDTO(null, "Pepik", "Novaku", "CZE", false, 0, 0);
+        CarDTO updated = carFacade.update(new CarDTO(id, "McLaren", newDriver, null));
+
+        Assert.assertNull(driverFacade.getDriverById(botasId).getCar());
+        Assert.assertEquals(updated.getName(), "McLaren");
+        Assert.assertEquals(updated.getDriver(), newDriver);
+        Assert.assertEquals(updated.getComponents(), createdDTO.getComponents());
     }
 
-    @Test
-    public void testGetCarById() {
-        when(carService.findById(formula.getId())).thenReturn(formula);
-        when(beanMappingService.mapTo(formula, CarDTO.class)).thenReturn(formulaDTO);
 
-        Assert.assertEquals(carFacade.getCarById(formula.getId()), formulaDTO);
+    @Test
+    public void testCreateACarWithoutComponentsAndThenAddAComponent() {
+        CarDTO createdDTO = new CarDTO("mercedes", null, null);
+        Long id = carFacade.createCar(createdDTO);
+
+        ComponentDTO component = new ComponentDTO(ComponentType.ENGINE, "engine", null);
+        CarDTO updated = carFacade.update(new CarDTO(id, null, null, Set.of(component)));
+
+        Assert.assertEquals(updated.getName(), "mercedes");
+        Assert.assertEquals(updated.getDriver(), createdDTO.getDriver());
+        Assert.assertEquals(updated.getComponents(), Set.of(component));
+
+        ComponentDTO comp = (ComponentDTO) updated.getComponents().toArray()[0];
+        Assert.assertEquals(componentFacade.getComponentById(comp.getId()).getCar(), updated);
+
+        Assert.assertEquals(1, componentFacade.getAllComponents().size());
+    }
+
+
+    @Test
+    public void testCreateACarWithComponentsAndThenSetNewComponents() {
+        ComponentDTO oldComponent1 = new ComponentDTO(ComponentType.ENGINE, "engine", null);
+        ComponentDTO oldComponent2 = new ComponentDTO(ComponentType.TRANSMISSION, "trans", null);
+
+        CarDTO createdDTO = new CarDTO("mercedes", null, Set.of(oldComponent1, oldComponent2));
+        Long id = carFacade.createCar(createdDTO);
+
+        ComponentDTO newComponent = new ComponentDTO(ComponentType.ENGINE, "newEngine", null);
+        CarDTO updated = carFacade.update(new CarDTO(id, "mercedes", null, Set.of(newComponent)));
+
+        Assert.assertEquals(updated.getName(), "mercedes");
+        Assert.assertEquals(updated.getDriver(), createdDTO.getDriver());
+        Assert.assertEquals(updated.getComponents(), Set.of(newComponent));
+
+        List<ComponentDTO> components = componentFacade.getAllComponents();
+        Assert.assertEquals(3, components.size());
+
+        Assert.assertTrue(components.contains(oldComponent1));
+        Assert.assertTrue(components.contains(oldComponent2));
+        Assert.assertTrue(components.contains(newComponent));
+
+        ComponentDTO dbOldComponent1 = components.get(components.indexOf(oldComponent1));
+        ComponentDTO dbOldComponent2 = components.get(components.indexOf(oldComponent2));
+        ComponentDTO dbNewComponent = components.get(components.indexOf(newComponent));
+
+        Assert.assertNull(dbOldComponent1.getCar());
+        Assert.assertNull(dbOldComponent2.getCar());
+        Assert.assertEquals(createdDTO, dbNewComponent.getCar());
     }
 }

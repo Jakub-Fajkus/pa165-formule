@@ -23,18 +23,18 @@ public class UserAuthenticateDTO
         return login;
     }
 
-    public void setUserId(String login)
-    {
-        this.login = login;
-    }
+//    public void setUserId(String login)
+//    {
+//        this.login = login;
+//    }
 
     public String getPassword()
     {
         return password;
     }
 
-    public void setPassword(String password)
-    {
-        this.password = password;
-    }
+//    public void setPassword(String password)
+//    {
+//        this.password = password;
+//    }
 }
