@@ -20,7 +20,7 @@ import javax.transaction.Transactional;
 @ContextConfiguration(classes = ServiceConfiguration.class)
 @Transactional
 @TestExecutionListeners(TransactionalTestExecutionListener.class)
-public class UnitFacadeImplTest extends AbstractTestNGSpringContextTests {
+public class UserFacadeImplTest extends AbstractTestNGSpringContextTests {
     @Autowired
     UserFacade userFacade;
 
