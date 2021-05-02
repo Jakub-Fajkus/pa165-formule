@@ -2,14 +2,7 @@ package cz.muni.pa165.teamwhite.formula1.persistence.entity;
 
 import cz.muni.pa165.teamwhite.formula1.persistence.enums.ComponentType;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
@@ -28,7 +21,7 @@ public class Component {
     @NotNull
     private String name;
 
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Car car;
 
     @NotNull
@@ -84,6 +77,7 @@ public class Component {
     public void setName(String name) {
         this.name = name;
     }
+
 
     @Override
     public String toString() {
