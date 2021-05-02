@@ -3,7 +3,9 @@ package cz.muni.pa165.teamwhite.formula1.service.facade;
 
 import cz.muni.pa165.teamwhite.formula1.dto.ComponentDTO;
 import cz.muni.pa165.teamwhite.formula1.facade.ComponentFacade;
+import cz.muni.pa165.teamwhite.formula1.persistence.entity.Car;
 import cz.muni.pa165.teamwhite.formula1.persistence.entity.Component;
+import cz.muni.pa165.teamwhite.formula1.service.CarService;
 import cz.muni.pa165.teamwhite.formula1.service.ComponentService;
 import cz.muni.pa165.teamwhite.formula1.service.mapping.BeanMappingService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,9 @@ import java.util.List;
 public class ComponentFacadeImpl implements ComponentFacade {
     @Autowired
     private ComponentService componentService;
+
+    @Autowired
+    private CarService carService;
 
     @Autowired
     private BeanMappingService beanMappingService;
@@ -44,5 +49,19 @@ public class ComponentFacadeImpl implements ComponentFacade {
     @Override
     public void deleteComponent(Long componentId) {
         componentService.remove(componentId);
+    }
+
+    @Override
+    public ComponentDTO update(ComponentDTO componentDto) {
+        Component dbComponent = componentService.findById(componentDto.getId());
+        Car inDb = dbComponent.getCar();
+        if (componentDto.getCar() != null && inDb != null && inDb.getComponents().contains(beanMappingService.mapTo(componentDto, Component.class))) {
+            inDb.removeComponent(componentService.findById(componentDto.getId()));
+            carService.update(inDb);
+        }
+        beanMappingService.mapToObject(componentDto, dbComponent);
+        componentService.update(dbComponent);
+
+        return getComponentById(componentDto.getId());
     }
 }

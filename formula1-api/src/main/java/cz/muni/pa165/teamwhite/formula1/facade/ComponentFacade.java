@@ -38,4 +38,12 @@ public interface ComponentFacade {
 	 * @param componentId component to be deleted
 	 */
 	void deleteComponent(Long componentId);
+
+	/**
+	 * updates given component and return updated componentDTO
+	 *
+	 * @param componentDTO componentDTO to be modified
+	 * @return modified componentDTo
+	 */
+	ComponentDTO update(ComponentDTO componentDTO);
 }
