@@ -21,18 +21,18 @@ public class DriverDTO {
     private String nationality;
 
     @NotNull
-    private boolean isAggressive;
+    private Boolean isAggressive;
 
     @NotNull
-    private int wetDriving;
+    private Integer wetDriving;
 
     @NotNull
-    private int reactions;
+    private Integer reactions;
 
     public DriverDTO() {}
 
     public DriverDTO(CarDTO car, String name, String surname, String nationality,
-                     boolean isAggressive, int wetDriving, int reactions) {
+                     Boolean isAggressive, Integer wetDriving, Integer reactions) {
         this.car = car;
         this.name = name;
         this.surname = surname;
@@ -43,7 +43,7 @@ public class DriverDTO {
     }
 
     public DriverDTO(Long id, CarDTO car, String name, String surname, String nationality,
-                     boolean isAggressive, int wetDriving, int reactions) {
+                     Boolean isAggressive, Integer wetDriving, Integer reactions) {
 
         this(car, name, surname, nationality, isAggressive, wetDriving, reactions);
 
@@ -70,15 +70,15 @@ public class DriverDTO {
         return nationality;
     }
 
-    public boolean isAggressive() {
+    public Boolean isAggressive() {
         return isAggressive;
     }
 
-    public int getWetDriving() {
+    public Integer getWetDriving() {
         return wetDriving;
     }
 
-    public int getReactions() {
+    public Integer getReactions() {
         return reactions;
     }
 

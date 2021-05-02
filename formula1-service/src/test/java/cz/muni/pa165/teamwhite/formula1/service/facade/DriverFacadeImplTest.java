@@ -1,82 +1,101 @@
 package cz.muni.pa165.teamwhite.formula1.service.facade;
 
+import cz.muni.pa165.teamwhite.formula1.dto.CarDTO;
 import cz.muni.pa165.teamwhite.formula1.dto.DriverDTO;
-import cz.muni.pa165.teamwhite.formula1.persistence.entity.Driver;
-import cz.muni.pa165.teamwhite.formula1.service.DriverService;
+import cz.muni.pa165.teamwhite.formula1.facade.CarFacade;
+import cz.muni.pa165.teamwhite.formula1.facade.DriverFacade;
 import cz.muni.pa165.teamwhite.formula1.service.ServiceConfiguration;
-import cz.muni.pa165.teamwhite.formula1.service.mapping.BeanMappingService;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.junit.Assert;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.testng.AbstractTransactionalTestNGSpringContextTests;
-import org.testng.Assert;
-import org.testng.annotations.BeforeMethod;
+import org.springframework.test.context.TestExecutionListeners;
+import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
+import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
 import org.testng.annotations.Test;
 
-import java.util.List;
-
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import javax.transaction.Transactional;
+import java.util.Set;
 
 /**
- * @author Karolina Hecova
+ * @author Jiri Andrlik
  */
 @ContextConfiguration(classes = ServiceConfiguration.class)
-public class DriverFacadeImplTest extends AbstractTransactionalTestNGSpringContextTests {
+@Transactional
+@TestExecutionListeners(TransactionalTestExecutionListener.class)
+public class DriverFacadeImplTest extends AbstractTestNGSpringContextTests {
+    @Autowired
+    private DriverFacade driverFacade;
 
-    @Mock
-    private DriverService driverService;
+    @Autowired
+    private CarFacade carFacade;
 
-    @Mock
-    private BeanMappingService beanMappingService;
+    @Test
+    public void testCreateAndThenUpdateOnlyName() {
+        DriverDTO driverDTO = new DriverDTO(null, "Valtteri", "Bottas", "Czech", true, 9, 9);
+        Long id = driverFacade.createDriver(driverDTO);
+        DriverDTO updated = driverFacade.update(new DriverDTO(id, null, "Michael", null, null, null, null, null));
 
-    @InjectMocks
-    private final DriverFacadeImpl driverFacade = new DriverFacadeImpl();
-
-    private Driver driver;
-    private Driver driver2;
-
-    private DriverDTO driverDTO;
-    private DriverDTO driverDTO2;
-
-    @BeforeMethod
-    public void setUp() {
-        driver = new Driver(null, "Lewis", "Hamilton", "GB", true, 10, 10);
-        driver2 = new Driver(null, "Valtteri", "Bottas", "FI", true, 9, 9);
-        driverDTO = new DriverDTO(null, "Lewis", "Hamilton", "GB", true, 10, 10);
-        driverDTO2 = new DriverDTO(null, "Valtteri", "Bottas", "FI", true, 9, 9);
-
-        MockitoAnnotations.openMocks(this);
+        Assert.assertEquals("Michael", updated.getName());
+        Assert.assertEquals("Czech", updated.getNationality());
     }
 
     @Test
-    public void testCreateDriver() {
-        when(beanMappingService.mapTo(driverDTO, Driver.class)).thenReturn(driver);
-        when(driverService.createDriver(driver)).thenReturn(666L);
-        Assert.assertEquals((long) driverFacade.createDriver(driverDTO), 666L);
+    public void testCreateAndThenUpdateOnlySurname() {
+        DriverDTO driverDTO = new DriverDTO(null, "Valtteri", "Bottas", "Czech", true, 9, 9);
+        Long id = driverFacade.createDriver(driverDTO);
+        DriverDTO updated = driverFacade.update(new DriverDTO(id, null, null, "Schumacher", null, null, null, null));
+
+        Assert.assertEquals("Schumacher", updated.getSurname());
+        Assert.assertEquals("Czech", updated.getNationality());
     }
 
     @Test
-    public void testGetAllDrivers() {
-        List<Driver> driverList = List.of(driver, driver2);
-        List<DriverDTO> driverDTOList = List.of(driverDTO, driverDTO2);
+    public void testCreateAndThenUpdateOnlyNationality() {
+        DriverDTO driverDTO = new DriverDTO(null, "Valtteri", "Bottas", "FI", true, 9, 9);
+        Long id = driverFacade.createDriver(driverDTO);
+        DriverDTO updated = driverFacade.update(new DriverDTO(id, null, null, null, "Czech", null, null, null));
 
-        when(driverService.findAll()).thenReturn(driverList);
-        when(beanMappingService.mapTo(driverList, DriverDTO.class)).thenReturn(driverDTOList);
-        Assert.assertSame(driverFacade.getAllDrivers(), driverDTOList);
+        Assert.assertEquals(updated.getName(), "Valtteri");
+        Assert.assertEquals(updated.getNationality(), "Czech");
     }
 
     @Test
-    public void testDeleteDriver() {
-        driverFacade.deleteDriver(666L);
-        verify(driverService).remove(666L);
+    public void testCreateAndThenUpdateOnlyAggressivity() {
+        DriverDTO driverDTO = new DriverDTO(null, "Valtteri", "Bottas", "FI", true, 9, 9);
+        Long id = driverFacade.createDriver(driverDTO);
+        DriverDTO updated = driverFacade.update(new DriverDTO(id, null, null, null, null, false, null, null));
+
+        Assert.assertEquals(updated.getName(), "Valtteri");
+        Assert.assertEquals(updated.isAggressive(), false);
     }
 
     @Test
-    public void testGetDriverById() {
-        when(driverService.findById(driver.getId())).thenReturn(driver);
-        when(beanMappingService.mapTo(driver, DriverDTO.class)).thenReturn(driverDTO);
-        Assert.assertEquals(driverFacade.getDriverById(driver.getId()), driverDTO);
+    public void testCreateAndThenUpdateOnlyWetdriving() {
+        DriverDTO driverDTO = new DriverDTO(null, "Valtteri", "Bottas", "FI", true, 9, 9);
+        Long id = driverFacade.createDriver(driverDTO);
+        DriverDTO updated = driverFacade.update(new DriverDTO(id, null, null, null, null, null, 2, null));
+
+        Assert.assertEquals(updated.getReactions().intValue(), 9);
+        Assert.assertEquals(updated.getWetDriving().intValue(), 2);
     }
+
+    @Test
+    public void testCreateAndThenUpdateOnlyReactions() {
+        DriverDTO driverDTO = new DriverDTO(null, "Valtteri", "Bottas", "FI", true, 9, 9);
+        Long id = driverFacade.createDriver(driverDTO);
+        DriverDTO updated = driverFacade.update(new DriverDTO(id, null, null, null, null, null, null, 2));
+
+        Assert.assertEquals(updated.getReactions().intValue(), 2);
+        Assert.assertEquals(updated.getWetDriving().intValue(), 9);
+    }
+
+    @Test
+    public void testCreateAndThenUpdateOnlyCar() {
+        DriverDTO driverDTO = new DriverDTO(null, "Valtteri", "Bottas", "Czech", true, 9, 9);
+        Long id = driverFacade.createDriver(driverDTO);
+        DriverDTO updated = driverFacade.update(new DriverDTO(id, new CarDTO("audi", driverDTO, Set.of()), null, null, null, null, null, null));
+
+        Assert.assertEquals("audi", updated.getCar().getName());
+    }
+
 }
