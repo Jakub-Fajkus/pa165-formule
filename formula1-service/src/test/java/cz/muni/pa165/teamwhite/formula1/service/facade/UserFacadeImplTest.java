@@ -1,101 +1,98 @@
 package cz.muni.pa165.teamwhite.formula1.service.facade;
 
-import cz.muni.pa165.teamwhite.formula1.dto.UserAuthenticateDTO;
 import cz.muni.pa165.teamwhite.formula1.dto.UserDTO;
 import cz.muni.pa165.teamwhite.formula1.enums.Role;
-import cz.muni.pa165.teamwhite.formula1.persistence.entity.User;
+import cz.muni.pa165.teamwhite.formula1.facade.UserFacade;
 import cz.muni.pa165.teamwhite.formula1.service.ServiceConfiguration;
-import cz.muni.pa165.teamwhite.formula1.service.UserService;
-import cz.muni.pa165.teamwhite.formula1.service.mapping.BeanMappingService;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.testng.AbstractTransactionalTestNGSpringContextTests;
+import org.springframework.test.context.TestExecutionListeners;
+import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
+import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
 import org.testng.Assert;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import java.util.List;
-
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import javax.transaction.Transactional;
 
 /**
- * @author Jakub Fajkus
+ * @author Karolina Hecova
  */
 @ContextConfiguration(classes = ServiceConfiguration.class)
-public class UserFacadeImplTest extends AbstractTransactionalTestNGSpringContextTests {
-    @Mock
-    private UserService userService;
+@Transactional
+@TestExecutionListeners(TransactionalTestExecutionListener.class)
+public class UserFacadeImplTest extends AbstractTestNGSpringContextTests {
+    @Autowired
+    UserFacade userFacade;
 
-    @Mock
-    private BeanMappingService beanMappingService;
+    @Test
+    public void testCreateUserAndThenUpdateOnlyLogin() {
+        UserDTO user = new UserDTO("franta", null, Role.MANAGER);
+        Long id = userFacade.createUser(user, "tajneHeslo");
 
-    @InjectMocks
-    private final UserFacadeImpl userFacade = new UserFacadeImpl();
+        user = userFacade.getUserById(id);
 
-    private final User userManager = new User("manager", "hash", cz.muni.pa165.teamwhite.formula1.persistence.enums.Role.MANAGER);
-    private final User userBFU = new User("pepa", "hash", cz.muni.pa165.teamwhite.formula1.persistence.enums.Role.ENGINEER);
+        UserDTO updatedUser = userFacade.update(new UserDTO(id, "pepa", null, null));
 
-    private final UserDTO userDTOManager = new UserDTO("manager", "hash", Role.MANAGER);
-    private final UserDTO userDTOBFU = new UserDTO("pepa", "hash", Role.ENGINEER);
-
-    List<User> userList = List.of(userManager, userBFU);
-    List<UserDTO> userDTOList = List.of(userDTOManager, userDTOBFU);
-
-    @BeforeMethod
-    public void setUp() {
-        MockitoAnnotations.openMocks(this);
-
+        Assert.assertEquals(updatedUser.getLogin(), "pepa");
+        Assert.assertEquals(updatedUser.getPassword(), user.getPassword());
+        Assert.assertEquals(updatedUser.getRole(), user.getRole());
     }
 
     @Test
-    public void testGetAllUsers() {
-        when(userService.findAll()).thenReturn(userList);
-        when(beanMappingService.mapTo(userList, UserDTO.class)).thenReturn(userDTOList);
+    public void testCreateUserAndThenUpdateOnlyRole() {
+        UserDTO user = new UserDTO("franta", null, Role.MANAGER);
+        Long id = userFacade.createUser(user, "tajneHeslo");
 
-        Assert.assertSame(userFacade.getAllUsers(), userDTOList);
+        user = userFacade.getUserById(id);
+
+        UserDTO updatedUser = userFacade.update(new UserDTO(id, null, null, Role.ENGINEER));
+
+        Assert.assertEquals(updatedUser.getLogin(), user.getLogin());
+        Assert.assertEquals(updatedUser.getPassword(), user.getPassword());
+        Assert.assertEquals(updatedUser.getRole(), Role.ENGINEER);
     }
 
     @Test
-    public void testCreateUser() {
-        when(beanMappingService.mapTo(userDTOManager, User.class)).thenReturn(userManager);
-        when(userService.createUser(userManager, "pass")).thenReturn(42L);
+    public void testCreateUserAndThenUpdateOnlyPassword() {
+        UserDTO user = new UserDTO("franta", null, Role.MANAGER);
+        Long id = userFacade.createUser(user, "tajneHeslo");
 
-        Assert.assertEquals((long) userFacade.createUser(userDTOManager, "pass"), 42L);
+        user = userFacade.getUserById(id);
+
+        UserDTO updatedUser = userFacade.update(new UserDTO(id, null, "prisneTajneHeslo", null));
+
+        Assert.assertEquals(updatedUser.getLogin(), user.getLogin());
+        Assert.assertNotEquals(updatedUser.getPassword(), "prisneTajneHeslo");
+        Assert.assertNotEquals(updatedUser.getPassword(), user.getPassword());
+        Assert.assertEquals(updatedUser.getRole(), user.getRole());
     }
 
     @Test
-    public void testDeleteUser() {
+    public void testCreateUserAndThenUpdateLoginAndRole() {
+        UserDTO user = new UserDTO("franta", null, Role.MANAGER);
+        Long id = userFacade.createUser(user, "tajneHeslo");
 
-        userFacade.deleteUser(42L);
+        user = userFacade.getUserById(id);
 
-        verify(userService).remove(42L);
+        UserDTO updatedUser = userFacade.update(new UserDTO(id, "pepa", null, Role.ENGINEER));
+
+        Assert.assertEquals(updatedUser.getLogin(), "pepa");
+        Assert.assertEquals(updatedUser.getPassword(), user.getPassword());
+        Assert.assertEquals(updatedUser.getRole(), Role.ENGINEER);
     }
 
     @Test
-    public void testGetUserById() {
-        when(userService.findById(userManager.getId())).thenReturn(userManager);
-        when(beanMappingService.mapTo(userManager, UserDTO.class)).thenReturn(userDTOManager);
+    public void testCreateUserAndThenUpdateLoginRoleAndPassword() {
+        UserDTO user = new UserDTO("franta", null, Role.MANAGER);
+        Long id = userFacade.createUser(user, "tajneHeslo");
 
-        Assert.assertEquals(userFacade.getUserById(userManager.getId()), userDTOManager);
-    }
+        user = userFacade.getUserById(id);
 
-    @Test
-    public void testAuthenticate() {
-        UserAuthenticateDTO authenticateDTO = new UserAuthenticateDTO(userManager.getLogin(), "pass");
-        when(userService.authenticate(authenticateDTO.getLogin(), authenticateDTO.getPassword())).thenReturn(true);
+        UserDTO updatedUser = userFacade.update(new UserDTO(id, "pepa", "prisneTajneHeslo", Role.ENGINEER));
 
-        Assert.assertTrue(userFacade.authenticate(authenticateDTO));
-    }
-
-    @Test
-    public void testIsManager() {
-        when(beanMappingService.mapTo(userDTOManager, User.class)).thenReturn(userManager);
-
-        when(userService.isManager(userManager)).thenReturn(true);
-
-        Assert.assertTrue(userFacade.isManager(userDTOManager));
+        Assert.assertEquals(updatedUser.getLogin(), "pepa");
+        Assert.assertNotEquals(updatedUser.getPassword(), "prisneTajneHeslo");
+        Assert.assertNotEquals(updatedUser.getPassword(), user.getPassword());
+        Assert.assertEquals(updatedUser.getRole(), Role.ENGINEER);
     }
 }

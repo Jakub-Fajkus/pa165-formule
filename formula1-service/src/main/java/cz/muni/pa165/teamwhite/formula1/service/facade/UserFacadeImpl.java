@@ -7,9 +7,11 @@ import cz.muni.pa165.teamwhite.formula1.persistence.entity.User;
 import cz.muni.pa165.teamwhite.formula1.service.UserService;
 import cz.muni.pa165.teamwhite.formula1.service.mapping.BeanMappingService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
@@ -23,7 +25,6 @@ public class UserFacadeImpl implements UserFacade {
 
     @Autowired
     private BeanMappingService beanMappingService;
-
 
     @Override
     public List<UserDTO> getAllUsers() {
@@ -53,5 +54,20 @@ public class UserFacadeImpl implements UserFacade {
     @Override
     public boolean isManager(UserDTO user) {
         return userService.isManager(beanMappingService.mapTo(user, User.class));
+    }
+
+    @Override
+    public UserDTO update(@NotNull UserDTO userDTO) {
+        User dbUser = userService.findById(userDTO.getId());
+
+        beanMappingService.mapToObject(userDTO, dbUser);
+
+        if (userDTO.getPassword() != null) {
+            userService.changeUserPassword(dbUser, userDTO.getPassword());
+        }
+
+        userService.update(dbUser);
+
+        return getUserById(userDTO.getId());
     }
 }

@@ -44,6 +44,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public void changeUserPassword(User user, String plaintextPassword) {
+        user.setPassword(encoder.encode(plaintextPassword));
+
+        this.update(user);
+    }
+
+    @Override
     public boolean isManager(User user) {
         User dbUser = findById(user.getId());
 

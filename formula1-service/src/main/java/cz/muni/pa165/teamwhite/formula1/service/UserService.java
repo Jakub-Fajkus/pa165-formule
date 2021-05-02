@@ -26,6 +26,14 @@ public interface UserService {
     boolean authenticate(String login, String plaintextPassword);
 
     /**
+     * Change user's password
+     * @param user User that will have a new password
+     * @param plaintextPassword The new password in plaintext
+     */
+    void changeUserPassword(User user, String plaintextPassword);
+
+
+    /**
      * Check if the given user is manager.
      * @param user to be tested as manager
      * @return true if the given user is manager, otherwise false
