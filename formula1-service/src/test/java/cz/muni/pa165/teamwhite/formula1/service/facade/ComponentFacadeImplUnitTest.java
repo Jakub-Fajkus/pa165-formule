@@ -27,7 +27,7 @@ import static org.mockito.Mockito.when;
 
 
 @ContextConfiguration(classes = ServiceConfiguration.class)
-public class ComponentFacadeImplTest extends AbstractTransactionalTestNGSpringContextTests {
+public class ComponentFacadeImplUnitTest extends AbstractTransactionalTestNGSpringContextTests {
 
     @Mock
     private ComponentService componentService;

@@ -13,13 +13,25 @@ import java.util.List;
  * @author Tomas Sedlacek
  */
 @Service
-public class ComponentServiceImpl implements ComponentService{
+public class ComponentServiceImpl implements ComponentService {
     @Autowired
     private ComponentDao componentDao;
+
+    @Autowired
+    private CarService carService;
 
     @Override
     public Long createComponent(Component component) {
         try {
+            if (component.getCar() != null) {
+                component.getCar().addComponent(component);
+                if (component.getCar().getId() != null) {
+                    carService.update(component.getCar());
+                } else {
+                    carService.createCar(component.getCar());
+                }
+            }
+
             componentDao.create(component);
         } catch (DataAccessException e) {
             throw new Formula1ServiceException("Could not create component: " + component, e);
@@ -31,6 +43,10 @@ public class ComponentServiceImpl implements ComponentService{
     @Override
     public void update(Component component) {
         try {
+            if (component.getCar() != null) {
+                component.getCar().addComponent(component);
+                carService.update(component.getCar());
+            }
             componentDao.update(component);
         } catch (DataAccessException e) {
             throw new Formula1ServiceException("Could not update component: " + component, e);
