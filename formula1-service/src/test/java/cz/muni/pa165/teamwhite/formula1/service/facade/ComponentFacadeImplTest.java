@@ -1,13 +1,10 @@
 package cz.muni.pa165.teamwhite.formula1.service.facade;
 
-
 import cz.muni.pa165.teamwhite.formula1.dto.CarDTO;
 import cz.muni.pa165.teamwhite.formula1.dto.ComponentDTO;
-import cz.muni.pa165.teamwhite.formula1.dto.DriverDTO;
 import cz.muni.pa165.teamwhite.formula1.enums.ComponentType;
 import cz.muni.pa165.teamwhite.formula1.facade.CarFacade;
 import cz.muni.pa165.teamwhite.formula1.facade.ComponentFacade;
-import cz.muni.pa165.teamwhite.formula1.persistence.entity.Component;
 import cz.muni.pa165.teamwhite.formula1.service.ServiceConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -18,7 +15,6 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import javax.transaction.Transactional;
-import java.util.Set;
 
 /**
  * @author Tomas Sedlacek
@@ -27,7 +23,7 @@ import java.util.Set;
 @ContextConfiguration(classes = ServiceConfiguration.class)
 @Transactional
 @TestExecutionListeners(TransactionalTestExecutionListener.class)
-public class CompontFacedeImpTest extends AbstractTestNGSpringContextTests {
+public class ComponentFacadeImplTest extends AbstractTestNGSpringContextTests {
     @Autowired
     private CarFacade carFacade;
 
@@ -71,12 +67,9 @@ public class CompontFacedeImpTest extends AbstractTestNGSpringContextTests {
         ComponentDTO createdDTO = new ComponentDTO(ComponentType.ENGINE, "component", new CarDTO("mercedes", null, null));
         Long id = componentFacade.createComponent(createdDTO);
 
-        Long oldCarId = componentFacade.getComponentById(id).getCar().getId();
-
         CarDTO newCar =  new CarDTO("ferrari", null, null);
         carFacade.createCar(newCar);
         ComponentDTO updated = componentFacade.update(new ComponentDTO(id, null, null, newCar));
-        CarDTO old = carFacade.getCarById(id);
         CarDTO ferrari = componentFacade.getComponentById(id).getCar();
 
         Assert.assertEquals(ferrari.getComponents().size(), 1);
@@ -88,15 +81,15 @@ public class CompontFacedeImpTest extends AbstractTestNGSpringContextTests {
 
     @Test
     public void testCreateAComponentWithoutCarAndThenAddToCar() {
-        ComponentDTO newComonentDTO = new ComponentDTO(ComponentType.ENGINE, "engine", null);
-        Long componentId = componentFacade.createComponent(newComonentDTO);
+        ComponentDTO newComponentDTO = new ComponentDTO(ComponentType.ENGINE, "engine", null);
+        Long componentId = componentFacade.createComponent(newComponentDTO);
 
         CarDTO carForComponent = new CarDTO("mercedes", null, null);
 
         ComponentDTO updated = componentFacade.update(new ComponentDTO(componentId, null, null, carForComponent));
 
-        Assert.assertEquals(updated.getType(), newComonentDTO.getType());
-        Assert.assertEquals(updated.getName(), newComonentDTO.getName());
+        Assert.assertEquals(updated.getType(), newComponentDTO.getType());
+        Assert.assertEquals(updated.getName(), newComponentDTO.getName());
         Assert.assertEquals(updated.getCar(), carForComponent);
     }
 
