@@ -24,9 +24,6 @@ public class UserFacadeImpl implements UserFacade {
     private UserService userService;
 
     @Autowired
-    private PasswordEncoder encoder;
-
-    @Autowired
     private BeanMappingService beanMappingService;
 
     @Override
@@ -62,16 +59,11 @@ public class UserFacadeImpl implements UserFacade {
     @Override
     public UserDTO update(@NotNull UserDTO userDTO) {
         User dbUser = userService.findById(userDTO.getId());
-        String passwordHash = null;
-
-        if (userDTO.getPassword() != null) {
-            passwordHash = encoder.encode(userDTO.getPassword());
-        }
 
         beanMappingService.mapToObject(userDTO, dbUser);
 
-        if (passwordHash != null) {
-            dbUser.setPassword(passwordHash);
+        if (userDTO.getPassword() != null) {
+            userService.changeUserPassword(dbUser, userDTO.getPassword());
         }
 
         userService.update(dbUser);
