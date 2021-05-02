@@ -34,4 +34,12 @@ public interface DriverFacade {
 	 * @return DriverDTO of the driver
 	 */
 	DriverDTO getDriverById(Long driverId);
+
+	/**
+	 * updates given driver and returns driver DTO with updated data
+	 *
+	 * @param driverDTO containing only fields that you want to set
+	 * @return a new DTO with all fields
+	 */
+	DriverDTO update(DriverDTO driverDTO);
 }
