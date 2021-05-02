@@ -52,34 +52,6 @@ public class DriverFacadeImpl implements DriverFacade {
     public DriverDTO update(@NotNull DriverDTO driverDTO) {
         Driver dbDriver = driverService.findById(driverDTO.getId());
 
-        if (driverDTO.getCar() != null){
-            dbDriver.setCar(carService.findById(driverDTO.getCar().getId()));
-        }
-
-        if (driverDTO.getName() != null){
-            dbDriver.setName(driverDTO.getName());
-        }
-
-        if (driverDTO.getSurname() != null){
-            dbDriver.setSurname(driverDTO.getSurname());
-        }
-
-        if (driverDTO.getNationality() != null){
-            dbDriver.setNationality(driverDTO.getNationality());
-        }
-
-        if (driverDTO.isAggressive() != null){
-            dbDriver.setIsAggressive(driverDTO.isAggressive());
-        }
-
-        if (driverDTO.getWetDriving() != null){
-            dbDriver.setWetDriving(driverDTO.getWetDriving());
-        }
-
-        if (driverDTO.getReactions() != null){
-            dbDriver.setReactions(driverDTO.getReactions());
-        }
-
         beanMappingService.mapToObject(driverDTO, dbDriver);
         driverService.update(dbDriver);
 
