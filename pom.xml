@@ -15,6 +15,7 @@
         <module>formula1-dao</module>
         <module>formula1-service</module>
         <module>formula1-sample-data</module>
+        <module>formula1-rest</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
