@@ -14,6 +14,7 @@
         <module>formula1-api</module>
         <module>formula1-dao</module>
         <module>formula1-service</module>
+        <module>formula1-spring-mvc</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
