@@ -21,7 +21,7 @@ public class Component {
     @NotNull
     private String name;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToOne()
     private Car car;
 
     @NotNull
