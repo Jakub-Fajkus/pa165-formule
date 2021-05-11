@@ -23,6 +23,8 @@ public class ComponentServiceImpl implements ComponentService {
     @Override
     public Long createComponent(Component component) {
         try {
+            componentDao.create(component);
+
             if (component.getCar() != null) {
                 component.getCar().addComponent(component);
                 if (component.getCar().getId() != null) {
@@ -31,8 +33,6 @@ public class ComponentServiceImpl implements ComponentService {
                     carService.createCar(component.getCar());
                 }
             }
-
-            componentDao.create(component);
         } catch (DataAccessException e) {
             throw new Formula1ServiceException("Could not create component: " + component, e);
         }
