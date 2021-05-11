@@ -7,7 +7,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
 import javax.annotation.PostConstruct;
-import java.io.IOException;
 
 @Configuration
 @Import(ServiceConfiguration.class)
@@ -19,7 +18,7 @@ public class SampleDataConfiguration {
     SampleDataLoadingFacade sampleDataLoadingFacade;
 
     @PostConstruct
-    public void dataLoading() throws IOException {
+    public void dataLoading() {
         sampleDataLoadingFacade.loadData();
     }
 }

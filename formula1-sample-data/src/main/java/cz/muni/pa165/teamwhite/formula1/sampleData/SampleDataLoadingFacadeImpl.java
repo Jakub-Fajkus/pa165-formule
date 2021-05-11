@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.IOException;
+import java.util.HashSet;
 import java.util.Set;
 
 @org.springframework.stereotype.Component
@@ -37,44 +37,41 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade {
     private ComponentService componentService;
 
     @Override
-    public void loadData() throws IOException {
+    public void loadData() {
         log.debug("Creating users");
-
         createUser("manager", "passmanager", Role.MANAGER);
         createUser("engineer1", "passengineer1", Role.ENGINEER);
         createUser("engineer2", "passengineer2", Role.ENGINEER);
 
         log.debug("Creating drivers");
-
         Driver lewis = createDriver(null, "Lewis", "Hamilton", "GB", true, 10, 10);
         Driver valtteri = createDriver(null, "Valtteri", "Bottas", "FI", true, 9, 9);
-        Driver lando = createDriver(null, "Lando", "Norris", "GB", false, 9, 5);
-        Driver daniel = createDriver(null, "Daniel", "Ricciardo", "AUS", true, 10, 1);
-        Driver lance = createDriver(null, "Lance", "Stroll", "CAD", false, 2, 8);
+        createDriver(null, "Lando", "Norris", "GB", false, 9, 5);
+        createDriver(null, "Daniel", "Ricciardo", "AUS", true, 10, 1);
+        createDriver(null, "Lance", "Stroll", "CAD", false, 2, 8);
 
         log.debug("Creating cars");
-
-        Car car1 = createCar("Race car #1", lewis, Set.of());
-        Car car2 = createCar("Race car #2", valtteri, Set.of());
+        Car car1 = createCar("Race car #1", lewis, new HashSet<>());
+        Car car2 = createCar("Race car #2", valtteri, new HashSet<>());
 
         log.debug("Creating components");
-        car1.addComponent(this.createComponent(ComponentType.ENGINE, "V12 engine v1", car1));
-        car1.addComponent(this.createComponent(ComponentType.REARSPOILER, "Carbon fibre spoiler v1", car1));
-        car1.addComponent(this.createComponent(ComponentType.RIMS, "Magnesium rims v1", car1));
-        car1.addComponent(this.createComponent(ComponentType.SUSPENSION, "Spaceship grade suspension v1", car1));
-        car1.addComponent(this.createComponent(ComponentType.TRANSMISSION, "Superquick transmission v1", car1));
+        this.createComponent(ComponentType.ENGINE, "V12 engine v1", car1);
+        this.createComponent(ComponentType.REARSPOILER, "Carbon fibre spoiler v1", car1);
+        this.createComponent(ComponentType.RIMS, "Magnesium rims v1", car1);
+        this.createComponent(ComponentType.SUSPENSION, "Spaceship grade suspension v1", car1);
+        this.createComponent(ComponentType.TRANSMISSION, "Superquick transmission v1", car1);
 
-        car2.addComponent(this.createComponent(ComponentType.ENGINE, "V8 engine v1", car2));
-        car2.addComponent(this.createComponent(ComponentType.REARSPOILER, "Experimental carbon fibre spoiler v1", car2));
-        car2.addComponent(this.createComponent(ComponentType.RIMS, "Aluminium rims v1", car2));
-        car2.addComponent(this.createComponent(ComponentType.SUSPENSION, "new F1 suspension v1", car2));
-        car2.addComponent(this.createComponent(ComponentType.TRANSMISSION, "Automatic transmission v1", car2));
+        this.createComponent(ComponentType.ENGINE, "V8 engine v1", car2);
+        this.createComponent(ComponentType.REARSPOILER, "Experimental carbon fibre spoiler v1", car2);
+        this.createComponent(ComponentType.RIMS, "Aluminium rims v1", car2);
+        this.createComponent(ComponentType.SUSPENSION, "new F1 suspension v1", car2);
+        this.createComponent(ComponentType.TRANSMISSION, "Automatic transmission v1", car2);
 
         createComponent(ComponentType.ENGINE, "V16 engine", null);
         createComponent(ComponentType.ENGINE, "V10 engine", null);
         createComponent(ComponentType.ENGINE, "V6 engine", null);
-        createComponent(ComponentType.ENGINE, "V4 engine", null);
-        createComponent(ComponentType.ENGINE, "V4 engine", null);
+        createComponent(ComponentType.ENGINE, "I4 engine", null);
+        createComponent(ComponentType.ENGINE, "I3 engine", null);
 
         createComponent(ComponentType.TRANSMISSION, "6 speed manual", null);
         createComponent(ComponentType.TRANSMISSION, "vintage automatic transmission", null);
@@ -103,11 +100,9 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade {
         return driver;
     }
 
-    private Component createComponent(ComponentType type, String name, Car car) {
+    private void createComponent(ComponentType type, String name, Car car) {
         Component component = new Component(type, name, car);
         componentService.createComponent(component);
-
-        return component;
     }
 
     private Car createCar(String name, Driver driver, Set<Component> components) {
