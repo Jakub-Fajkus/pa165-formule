@@ -7,6 +7,7 @@ import cz.muni.pa165.teamwhite.formula1.persistence.entity.Car;
 import cz.muni.pa165.teamwhite.formula1.persistence.entity.Component;
 import cz.muni.pa165.teamwhite.formula1.service.CarService;
 import cz.muni.pa165.teamwhite.formula1.service.ComponentService;
+import cz.muni.pa165.teamwhite.formula1.service.exception.EntityNotFoundException;
 import cz.muni.pa165.teamwhite.formula1.service.mapping.BeanMappingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -43,7 +44,12 @@ public class ComponentFacadeImpl implements ComponentFacade {
 
     @Override
     public ComponentDTO getComponentById(Long componentId) {
-        return beanMappingService.mapTo(componentService.findById(componentId), ComponentDTO.class);
+        Component component = componentService.findById(componentId);
+
+        if (component == null) {
+            throw new EntityNotFoundException("Component with id " + componentId + " was not found");
+        }
+        return beanMappingService.mapTo(component, ComponentDTO.class);
     }
 
     @Override

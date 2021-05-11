@@ -8,6 +8,7 @@ import cz.muni.pa165.teamwhite.formula1.persistence.entity.Driver;
 import cz.muni.pa165.teamwhite.formula1.service.CarService;
 import cz.muni.pa165.teamwhite.formula1.service.ComponentService;
 import cz.muni.pa165.teamwhite.formula1.service.DriverService;
+import cz.muni.pa165.teamwhite.formula1.service.exception.EntityNotFoundException;
 import cz.muni.pa165.teamwhite.formula1.service.mapping.BeanMappingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -52,7 +53,13 @@ public class CarFacadeImpl implements CarFacade {
 
     @Override
     public CarDTO getCarById(Long carId) {
-        return beanMappingService.mapTo(carService.findById(carId), CarDTO.class);
+        Car car = carService.findById(carId);
+
+        if (car == null) {
+            throw new EntityNotFoundException("Car with id " + carId + " was not found");
+        }
+
+        return beanMappingService.mapTo(car, CarDTO.class);
     }
 
     @Override
