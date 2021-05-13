@@ -108,6 +108,13 @@
                                 <version>${tomcat.version}</version>
                             </artifactInstaller>
                         </container>
+                        <deployables>
+                            <deployable>
+                                <properties>
+                                    <context>/pa165</context>
+                                </properties>
+                            </deployable>
+                        </deployables>
                     </configuration>
                 </plugin>
             </plugins>
