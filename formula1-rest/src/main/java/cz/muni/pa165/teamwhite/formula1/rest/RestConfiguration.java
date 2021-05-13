@@ -21,20 +21,26 @@ import org.dozer.loader.api.BeanMappingBuilder;
 import org.springframework.context.annotation.*;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.util.StringUtils;
+import org.springframework.web.servlet.config.annotation.*;
+import springfox.documentation.builders.PathSelectors;
+import springfox.documentation.builders.RequestHandlerSelectors;
+import springfox.documentation.spi.DocumentationType;
+import springfox.documentation.spring.web.plugins.Docket;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Locale;
 
 @EnableWebMvc
+@EnableSwagger2
 @Configuration
 @Import({ServiceConfiguration.class, SampleDataConfiguration.class})
 @ComponentScan(basePackageClasses = {RestResponse.class}, basePackages = {"cz.muni.pa165.teamwhite.formula1.rest", "cz.muni.pa165.teamwhite.formula1.rest.controller"})
 public class RestConfiguration implements WebMvcConfigurer {
+    private final String baseUrl = "";
+
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new AllowOriginInterceptor());
@@ -43,6 +49,15 @@ public class RestConfiguration implements WebMvcConfigurer {
     @Override
     public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
         configurer.enable();
+    }
+
+    @Bean
+    public Docket api() {
+        return new Docket(DocumentationType.SWAGGER_2)
+                .select()
+                .apis(RequestHandlerSelectors.any())
+                .paths(PathSelectors.any())
+                .build();
     }
 
     @Bean
@@ -84,6 +99,29 @@ public class RestConfiguration implements WebMvcConfigurer {
             ;
         }
     }
+
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        String baseUrl = StringUtils.trimTrailingCharacter(this.baseUrl, '/');
+
+        registry.
+                addResourceHandler(baseUrl + "/swagger-ui/**")
+                .addResourceLocations("classpath:/META-INF/resources/webjars/springfox-swagger-ui/")
+                .resourceChain(false);
+
+        registry.addResourceHandler(baseUrl + "swagger-ui.html")
+                .addResourceLocations("classpath:/META-INF/resources/");
+
+        registry.addResourceHandler("/webjars/**")
+                .addResourceLocations("classpath:/META-INF/resources/webjars/");
+    }
+
+    @Override
+    public void addViewControllers(ViewControllerRegistry registry) {
+        registry.addViewController(baseUrl + "/swagger-ui/")
+                .setViewName("forward:" + baseUrl + "/swagger-ui/index.html");
+    }
+
 
     @Bean
     @Primary
