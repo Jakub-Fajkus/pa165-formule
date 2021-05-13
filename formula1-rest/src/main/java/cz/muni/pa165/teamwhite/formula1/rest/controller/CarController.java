@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+@RequestMapping(ApiUris.ROOT_URI)
 @RestController
 public class CarController {
     @Autowired

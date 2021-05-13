@@ -9,6 +9,9 @@ package cz.muni.pa165.teamwhite.formula1.rest;
  * @author brossi
  */
 public abstract class ApiUris {
+
+    public static final String ROOT_URI = "/rest";
+
     public static final String ROOT_URI_USERS = "/users";
 
     public static final String ROOT_URI_COMPONENTS = "/components";
