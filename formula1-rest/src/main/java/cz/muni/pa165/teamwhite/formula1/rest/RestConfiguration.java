@@ -12,15 +12,14 @@ import cz.muni.pa165.teamwhite.formula1.rest.dto.CarAPIDTO;
 import cz.muni.pa165.teamwhite.formula1.rest.dto.ComponentAPIDTO;
 import cz.muni.pa165.teamwhite.formula1.rest.dto.DriverAPIDTO;
 import cz.muni.pa165.teamwhite.formula1.rest.mixin.UserDTOMixin;
+import cz.muni.pa165.teamwhite.formula1.rest.security.SecurityConfiguration;
 import cz.muni.pa165.teamwhite.formula1.sampleData.SampleDataConfiguration;
 import cz.muni.pa165.teamwhite.formula1.service.DozerCustomConfig;
 import cz.muni.pa165.teamwhite.formula1.service.ServiceConfiguration;
-import io.swagger.annotations.ApiKeyAuthDefinition;
-import io.swagger.annotations.SecurityDefinition;
-import io.swagger.annotations.SwaggerDefinition;
 import org.dozer.DozerBeanMapper;
 import org.dozer.Mapper;
 import org.dozer.loader.api.BeanMappingBuilder;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.*;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
@@ -37,7 +36,6 @@ import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -45,10 +43,13 @@ import java.util.Locale;
 @EnableWebMvc
 @EnableSwagger2
 @Configuration
-@Import({ServiceConfiguration.class, SampleDataConfiguration.class})
+@Import({ServiceConfiguration.class, SampleDataConfiguration.class, SecurityConfiguration.class})
 @ComponentScan(basePackageClasses = {RestResponse.class}, basePackages = {"cz.muni.pa165.teamwhite.formula1.rest", "cz.muni.pa165.teamwhite.formula1.rest.controller"})
 public class RestConfiguration implements WebMvcConfigurer {
     private final String baseUrl = "";
+
+    @Autowired
+    SecurityConfiguration securityConfiguration;
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
@@ -60,26 +61,11 @@ public class RestConfiguration implements WebMvcConfigurer {
         configurer.enable();
     }
 
-    private ApiKey apiKey() {
-        return new ApiKey("JWT", "Authorization", "header");
-    }
-
-    private SecurityContext securityContext() {
-        return SecurityContext.builder().securityReferences(defaultAuth()).build();
-    }
-
-    private List<SecurityReference> defaultAuth() {
-        AuthorizationScope authorizationScope = new AuthorizationScope("global", "accessEverything");
-        AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
-        authorizationScopes[0] = authorizationScope;
-        return Collections.singletonList(new SecurityReference("JWT", authorizationScopes));
-    }
-
     @Bean
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
-                .securityContexts(Collections.singletonList(securityContext()))
-                .securitySchemes(Collections.singletonList(apiKey()))
+                .securityContexts(Collections.singletonList(securityConfiguration.securityContext()))
+                .securitySchemes(Collections.singletonList(securityConfiguration.apiKey()))
                 .select()
                 .apis(RequestHandlerSelectors.any())
                 .paths(PathSelectors.any())
