@@ -2,6 +2,7 @@ package cz.muni.pa165.teamwhite.formula1.service;
 
 import cz.muni.pa165.teamwhite.formula1.persistence.dao.ComponentDao;
 import cz.muni.pa165.teamwhite.formula1.persistence.entity.Component;
+import cz.muni.pa165.teamwhite.formula1.service.exception.EntityNotFoundException;
 import cz.muni.pa165.teamwhite.formula1.service.exception.Formula1ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -72,7 +73,7 @@ public class ComponentServiceImpl implements ComponentService {
         try {
             found = componentDao.findById(id);
         } catch (DataAccessException e) {
-            throw new Formula1ServiceException("Could not find component with ID: " + id, e);
+            throw new EntityNotFoundException("Could not find component with ID: " + id, e);
         }
 
         return found;

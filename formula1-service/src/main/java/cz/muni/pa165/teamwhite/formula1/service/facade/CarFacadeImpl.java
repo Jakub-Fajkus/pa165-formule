@@ -1,6 +1,7 @@
 package cz.muni.pa165.teamwhite.formula1.service.facade;
 
 import cz.muni.pa165.teamwhite.formula1.dto.CarDTO;
+import cz.muni.pa165.teamwhite.formula1.dto.ComponentDTO;
 import cz.muni.pa165.teamwhite.formula1.facade.CarFacade;
 import cz.muni.pa165.teamwhite.formula1.persistence.entity.Car;
 import cz.muni.pa165.teamwhite.formula1.persistence.entity.Component;
@@ -66,21 +67,41 @@ public class CarFacadeImpl implements CarFacade {
     public CarDTO update(@NotNull CarDTO carDTO) {
         Car dbCar = carService.findById(carDTO.getId());
 
+        if (dbCar == null) {
+            throw new EntityNotFoundException("Car with id " + carDTO.getId() + " was not found");
+        }
+
         if (carDTO.getComponents() != null) {
             for (Component component: dbCar.getComponents()) {
                 component.setCar(null);
+                dbCar.removeComponent(component);
                 componentService.update(component);
+            }
+
+            for (ComponentDTO component:carDTO.getComponents()) {
+                dbCar.addComponent(componentService.findById(component.getId()));
             }
         }
 
         if (carDTO.getDriver() != null) {
-            Driver dbDriver = driverService.findById(dbCar.getDriver().getId());
+            if (dbCar.getDriver() != null) {
+                Driver oldDriver = driverService.findById(dbCar.getDriver().getId()); //todo: dbCar.getDriver() may be null
 
-            dbDriver.setCar(null);
-            driverService.update(dbDriver);
+                oldDriver.setCar(null);
+                driverService.update(oldDriver);
+            }
+
+            Driver newDriver = driverService.findById(carDTO.getDriver().getId());
+            dbCar.setDriver(newDriver);
+            newDriver.setCar(dbCar);
+            driverService.update(newDriver);
+
         }
 
-        beanMappingService.mapToObject(carDTO, dbCar);
+        if (carDTO.getName() != null) {
+            dbCar.setName(carDTO.getName());
+        }
+
         carService.update(dbCar);
 
         return getCarById(carDTO.getId());

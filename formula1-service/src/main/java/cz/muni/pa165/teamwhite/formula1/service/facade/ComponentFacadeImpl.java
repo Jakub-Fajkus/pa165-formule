@@ -49,6 +49,7 @@ public class ComponentFacadeImpl implements ComponentFacade {
         if (component == null) {
             throw new EntityNotFoundException("Component with id " + componentId + " was not found");
         }
+
         return beanMappingService.mapTo(component, ComponentDTO.class);
     }
 
@@ -60,6 +61,11 @@ public class ComponentFacadeImpl implements ComponentFacade {
     @Override
     public ComponentDTO update(ComponentDTO componentDto) {
         Component dbComponent = componentService.findById(componentDto.getId());
+
+        if (dbComponent == null) {
+            throw new EntityNotFoundException("Component with id " + componentDto.getId() + " was not found");
+        }
+
         Car inDb = dbComponent.getCar();
         if (componentDto.getCar() != null && inDb != null && inDb.getComponents().contains(beanMappingService.mapTo(componentDto, Component.class))) {
             inDb.removeComponent(componentService.findById(componentDto.getId()));
