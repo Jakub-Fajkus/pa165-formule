@@ -41,6 +41,14 @@ public interface UserFacade {
 	UserDTO getUserById(Long userId);
 
 	/**
+	 * Gets user by given login.
+	 *
+	 * @param login login of the user
+	 * @return user
+	 */
+	UserDTO getUserByLogin(String login);
+
+	/**
 	 * Try to authenticate a user. Return true only if the hashed password matches the records.
 	 *
 	 * @param user to be authenticated

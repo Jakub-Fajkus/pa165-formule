@@ -54,6 +54,17 @@ public class UserFacadeImpl implements UserFacade {
     }
 
     @Override
+    public UserDTO getUserByLogin(String login) {
+        User user = userService.findByLogin(login);
+
+        if (user == null) {
+            throw new EntityNotFoundException("User with login " + login + " was not found");
+        }
+
+        return beanMappingService.mapTo(user, UserDTO.class);
+    }
+
+    @Override
     public boolean authenticate(UserAuthenticateDTO user) {
         return userService.authenticate(user.getLogin(), user.getPassword());
     }
