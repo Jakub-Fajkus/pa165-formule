@@ -1,8 +1,10 @@
 package cz.muni.pa165.teamwhite.formula1.rest.controller;
 
 import cz.muni.pa165.teamwhite.formula1.dto.CarDTO;
+import cz.muni.pa165.teamwhite.formula1.dto.ComponentDTO;
 import cz.muni.pa165.teamwhite.formula1.dto.DriverDTO;
 import cz.muni.pa165.teamwhite.formula1.facade.CarFacade;
+import cz.muni.pa165.teamwhite.formula1.facade.ComponentFacade;
 import cz.muni.pa165.teamwhite.formula1.facade.DriverFacade;
 import cz.muni.pa165.teamwhite.formula1.rest.ApiUris;
 import cz.muni.pa165.teamwhite.formula1.rest.ResponseStatuses;
@@ -16,11 +18,15 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.annotation.security.RolesAllowed;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Api(value = ApiUris.ROOT_URI_CARS)
 @RequestMapping(ApiUris.ROOT_URI)
@@ -32,6 +38,9 @@ public class CarController {
 
     @Autowired
     private DriverFacade driverFacade;
+
+    @Autowired
+    private ComponentFacade componentFacade;
 
     @Autowired
     private BeanMappingService dozer;
@@ -59,11 +68,28 @@ public class CarController {
     @PatchMapping(value = ApiUris.ROOT_URI_CAR, produces = MediaType.APPLICATION_JSON_VALUE)
     public RestResponse<CarAPIDTO> updateCar(@ApiParam(value = "The id of a car") @PathVariable Long id, @RequestBody UpdateCarAPIDTO car) {
         DriverDTO driverDTO = car.getDriver() == null ? null : driverFacade.getDriverById(car.getDriver());
-        CarDTO update = carFacade.update(new CarDTO(id, car.getName(), driverDTO, null));
 
-        return new RestResponse<>(dozer.mapTo(update, CarAPIDTO.class), ResponseStatuses.OK);
+        carFacade.update(new CarDTO(id, car.getName(), driverDTO, null));
+
+        return getCar(id);
     }
 
-    //todo operations to alll
+    @ApiOperation(value = "Replace components of car with given id")
+    @PutMapping(value = ApiUris.ROOT_URI_CAR_COMPONENTS, produces = MediaType.APPLICATION_JSON_VALUE)
+    public RestResponse<List<ComponentAPIDTO>> replaceComponents(@ApiParam(value = "The id of a car") @PathVariable Long id, @RequestBody Long[] components) {
+        Set<ComponentDTO> componentsList = new HashSet<>();
+        for(Long componentId : components) {
+            ComponentDTO foundComponent = componentFacade.getComponentById(componentId);
 
+            if (foundComponent == null) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Component with id " + componentId + " not found");
+            }
+
+            componentsList.add(foundComponent);
+        }
+
+        carFacade.update(new CarDTO(id, null, null, componentsList));
+
+        return getComponentsForCar(id);
+    }
 }

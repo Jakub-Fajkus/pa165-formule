@@ -85,7 +85,7 @@ public class CarFacadeImpl implements CarFacade {
 
         if (carDTO.getDriver() != null) {
             if (dbCar.getDriver() != null) {
-                Driver oldDriver = driverService.findById(dbCar.getDriver().getId()); //todo: dbCar.getDriver() may be null
+                Driver oldDriver = driverService.findById(dbCar.getDriver().getId());
 
                 oldDriver.setCar(null);
                 driverService.update(oldDriver);
