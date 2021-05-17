@@ -33,8 +33,6 @@ export default { //todo: hide somehow from the menu
                 console.log("All drivers: ", response);
 
                 this.drivers = response.data.data;
-
-                functions.showSuccessNotification("Driver successfully edited")
             })
             .catch(error => {
                 console.log("Car detail error: ", error);

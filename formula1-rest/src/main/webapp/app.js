@@ -1,6 +1,7 @@
 import homepage from './public/pages/home.js'
 import * as pages from './public/pages/index.js'
 import store from './store.js'
+import functions from './functions.js'
 
 export default {
     name: 'App',
@@ -15,13 +16,24 @@ export default {
 
     methods: {
         tabClicked(index) {
-            //todo: roles!!
             console.log("tabClicked")
-            console.log("JWT:", store.$jwt);
+            console.log("JWT:", store.$jwt, store.$username, store.$role);
             if (store.$jwt == null) {
                 this.page = "pageLogin";
             } else {
-                this.page = index;
+                if (store.$role != "ROLE_MANAGER") {
+                    let whitelist = ["pageLogin"];
+
+                    if (whitelist.indexOf(index) !== -1) {/* in whitelist*/ //todo: add all pages allowed for the engineer
+                        this.page = index;
+                    } else { /*restricted*/
+                        this.page = "pageLogin";
+                        functions.showErrorNotification("Unauthorized access. Please login into a manager account.")
+                    }
+
+                } else {
+                    this.page = index;
+                }
             }
         },
 
@@ -60,7 +72,7 @@ export default {
             // if (page.value != urlpage) {const url = page.value ? page.value : './'; window.history.pushState({url: url}, '', url);                                }
             // window.onpopstate = function() {page.value = window.location.pathname.split("/").pop()};
         })
-        return {page, pages, console}
+        return {page, pages, store}
     },
 
     template: `
@@ -107,9 +119,11 @@ export default {
           <div class="collapse navbar-collapse justify-content-end">
             <ul class="navbar-nav">
               <li class="nav-item">
-                <a class="nav-link" href="javascript:;">
-                  <i class="material-icons">notifications</i> Notifications
-                </a>
+                <a class="nav-link" href="javascript:;" @click="store.$jwt = store.$role = store.$username = null">
+                  <i class="material-icons">logout</i>
+                  <p class="d-lg-none d-md-block">
+                    Log out
+                  </p>
               </li>
               <!-- your navbar here -->
             </ul>
