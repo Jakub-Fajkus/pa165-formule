@@ -8,8 +8,19 @@ export default {
 
     data() {
         return {
-            logged: store.$jwt != null,
-            jwt: store.$jwt,
+            page: "home",
+        }
+    },
+
+    methods: {
+        tabClicked(index) {
+            console.log("tabClicked")
+            console.log("JWT:", store.$jwt);
+            if (store.$jwt == null) {
+                this.page = "pageLogin";
+            } else {
+                this.page = index;
+            }
         }
     },
 
@@ -38,31 +49,22 @@ export default {
             if (store.$jwt == null) {
             }
 
-            console.log(urlpage, page);
-            console.log("JWT:", store.$jwt);
-
-
             if (page.value == null) {page.value = urlpage}
             // if (page.value != urlpage) {const url = page.value ? page.value : './'; window.history.pushState({url: url}, '', url);                                }
             // window.onpopstate = function() {page.value = window.location.pathname.split("/").pop()};
         })
-        console.log("JWT:", store.$jwt);
         return {page, pages, console}
     },
 
     template: `
         <div id="sidebar">
-        JWT: {{ jwt }}
             <nav>
                 <button v-on:click="page = ''">Home</button>
                 <template v-for="item, index in pages" key="item.name">
-                    <button v-if="logged" v-on:click="page = index">
+                    <button @click="tabClicked(index)">
                         {{ item.name }}
                     </button>
                     
-                    <button v-if="!logged" v-on:click="page = 'pageLogin'">
-                        {{ item.name }}
-                    </button>
                 </template>               
             </nav><hr>
         </div>
