@@ -2,6 +2,7 @@ import componentLogin from '../components/componentLogin.js'
 
 export default {
     name: 'Login',
+    icon: 'login',
     components: {componentLogin},
 
     setup() {        
@@ -11,7 +12,6 @@ export default {
 
     template: `
         <div>
-            {{ title }}
             <componentLogin></componentLogin>
         </div>
     `,
