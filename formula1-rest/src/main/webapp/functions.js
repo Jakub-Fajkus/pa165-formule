@@ -17,7 +17,30 @@ export default {
             return ((order === 'desc') ? (comparison * -1) : comparison);
         };
     },
-    
+
+    showNotification(type, message, icon) {
+        // md.showNotification('top','right')
+        $.notify({
+            icon: icon,
+            message: message
+
+        }, {
+            type: type,
+            timer: 5000,
+            placement: {
+                from: 'top',
+                align: 'right'
+            }
+        });
+    },
+
+    showErrorNotification(message) {
+        this.showNotification("danger", message, "add_alert");
+    },
+
+    showSuccessNotification(message) {
+        this.showNotification("success", message, "add_alert");
+    }
     
 
 }

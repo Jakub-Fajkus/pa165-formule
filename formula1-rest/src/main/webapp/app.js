@@ -9,6 +9,7 @@ export default {
     data() {
         return {
             page: "home",
+            pageParams: {}
         }
     },
 
@@ -22,8 +23,16 @@ export default {
             } else {
                 this.page = index;
             }
+        },
+
+        onShowCarDetail(carId) {
+            console.log("parent onShowCarDetail " + carId);
+
+            this.page = "pageCarDetail";
+            this.pageParams = {id: carId};
         }
     },
+
 
     setup() {
         const {watchEffect, onMounted, ref} = Vue;
@@ -46,9 +55,6 @@ export default {
         //url management
         watchEffect(() => {
             let urlpage = window.location.pathname.split("/").pop();
-
-            if (store.$jwt == null) {
-            }
 
             if (page.value == null) {page.value = urlpage}
             // if (page.value != urlpage) {const url = page.value ? page.value : './'; window.history.pushState({url: url}, '', url);                                }
@@ -114,7 +120,7 @@ export default {
       <div class="content">
         <div class="container-fluid">
           <!-- your content here -->
-          <component :is="page || 'homepage'"></component>
+          <component :is="page || 'homepage'" @show-car-detail="onShowCarDetail" :pageParams="pageParams"></component>
         </div>
       </div>
       <footer class="footer">

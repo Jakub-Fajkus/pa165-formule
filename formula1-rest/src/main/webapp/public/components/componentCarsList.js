@@ -1,5 +1,5 @@
 import store from '../../store.js'
-
+import functions from '../../functions.js'
 
 export default {
     name: 'Car list',
@@ -41,6 +41,8 @@ export default {
                         })
                     }).catch(function (error) {
                         console.log("Error catch", error);
+
+                        functions.showErrorNotification(error);
                     });
                 })
 
@@ -51,6 +53,7 @@ export default {
             })
             .catch(function (error) {
                 console.log("Error catch", error);
+                functions.showErrorNotification(error);
             });
     },
 
@@ -101,7 +104,7 @@ export default {
                                     {{car.driver.name}}
                                   </td>
                                   <td>
-                                    <button class="btn btn-primary pull-right">Detail</button>
+                                    <button @click="$emit('show-car-detail', car.id)" class="btn btn-primary pull-right">Detail</button>
                                   </td>
                                 </tr>
                             </template>

@@ -10,10 +10,18 @@ export default {
         return {title}
     },
 
+    methods: {
+        onShowCarDetail(carId) {
+            console.log("onShowCarDetail " + carId);
+
+            this.$emit('show-car-detail', carId);
+        }
+    },
+
     template: `
         <div>
             {{ title }}
-            <componentCarsList></componentCarsList>
+            <componentCarsList @show-car-detail="onShowCarDetail"></componentCarsList>
         </div>
     `,
 };
