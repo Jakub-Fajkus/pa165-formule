@@ -14,6 +14,7 @@ export default {
 
     methods: {
         tabClicked(index) {
+            //todo: roles!!
             console.log("tabClicked")
             console.log("JWT:", store.$jwt);
             if (store.$jwt == null) {
@@ -39,9 +40,9 @@ export default {
                 if (key.charAt(0) == "$") {
                     if (localStorage.getItem(key)) store[key] = localStorage.getItem(key);
                 }}
-            )           
+            )
         })
-        
+
         //url management
         watchEffect(() => {
             let urlpage = window.location.pathname.split("/").pop();
@@ -58,7 +59,7 @@ export default {
 
     template: `
 
-        <div class="sidebar" data-color="green" data-background-color="white">
+        <div class="sidebar" data-color="green" data-background-color="black">
       <!--
       Tip 1: You can change the color of the sidebar using: data-color="purple | azure | green | orange | danger"
 
@@ -67,9 +68,9 @@ export default {
 
       <div class="sidebar-wrapper">
         <ul class="nav">
-          <li class="nav-item active">
+          <li class="nav-item">
             <a v-on:click="page = ''" class="nav-link" href="#0">
-              <i class="material-icons">Dashboard</i>
+              <i class="material-icons">dashboard</i>
               <p>Dashboard</p>
             </a>
           </li>
@@ -77,7 +78,7 @@ export default {
           <template v-for="item, index in pages" key="item.name">
               <li class="nav-item ">
                 <a @click="tabClicked(index)" class="nav-link" href="#0">
-                  <i class="material-icons">{{ item.name }}</i>
+                  <i class="material-icons">{{ item.icon }}</i>
                   <p v-on:click="page = ''">{{ item.name }}</p>
                 </a>
               </li>
@@ -91,9 +92,6 @@ export default {
       <!-- Navbar -->
       <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
         <div class="container-fluid">
-          <div class="navbar-wrapper">
-            <a class="navbar-brand" href="javascript:;">Dashboard</a>
-          </div>
           <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
             <span class="sr-only">Toggle navigation</span>
             <span class="navbar-toggler-icon icon-bar"></span>
@@ -131,10 +129,9 @@ export default {
             </ul>
           </nav>
           <div class="copyright float-right">
-            &copy;
             <script>
               document.write(new Date().getFullYear())
-            </script>, made with <i class="material-icons">favorite</i> by
+            </script>made with <i class="material-icons">favorite</i> by
             <a href="https://www.creative-tim.com" target="_blank">Creative Tim</a> for a better web.
           </div>
           <!-- your footer here -->

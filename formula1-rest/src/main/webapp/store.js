@@ -3,10 +3,6 @@ export default Vue.reactive({
     $jwt: null,
 
     
-    //component1
-    $counter: 0,
-
-
     //component2
     message: null,
 
