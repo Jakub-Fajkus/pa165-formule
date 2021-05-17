@@ -27,7 +27,7 @@ public class AuthEntryPointJwt implements AuthenticationEntryPoint, AccessDenied
     public void commence(HttpServletRequest request, HttpServletResponse response,
                          AuthenticationException authException) throws IOException, ServletException {
 
-        logger.error("Unauthorized error: {}", authException.getMessage());
+        logger.error("Unauthorized error: {}", authException.getMessage(), authException);
 
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
@@ -36,7 +36,7 @@ public class AuthEntryPointJwt implements AuthenticationEntryPoint, AccessDenied
 
     @Override
     public void handle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AccessDeniedException e) throws IOException, ServletException {
-        logger.error("Access denied error: {}", e.getMessage());
+        logger.error("Access denied error: {}", e.getMessage(), e);
 
         httpServletResponse.setContentType(MediaType.APPLICATION_JSON_VALUE);
         httpServletResponse.setStatus(HttpServletResponse.SC_FORBIDDEN);
