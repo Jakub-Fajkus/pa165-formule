@@ -6,6 +6,13 @@ export default {
     name: 'App',
     components: Object.assign({homepage}, pages),
 
+    data() {
+        return {
+            logged: store.$jwt != null,
+            jwt: store.$jwt,
+        }
+    },
+
     setup() {
         const {watchEffect, onMounted, ref} = Vue;
         const page = ref(null);
@@ -26,21 +33,34 @@ export default {
         
         //url management
         watchEffect(() => {
-            const urlpage = window.location.pathname.split("/").pop();
+            let urlpage = window.location.pathname.split("/").pop();
+
+            if (store.$jwt == null) {
+            }
+
+            console.log(urlpage, page);
+            console.log("JWT:", store.$jwt);
+
+
             if (page.value == null) {page.value = urlpage}
-            if (page.value != urlpage) {const url = page.value ? page.value : './'; window.history.pushState({url: url}, '', url);                                }
-            window.onpopstate = function() {page.value = window.location.pathname.split("/").pop()}; 
+            // if (page.value != urlpage) {const url = page.value ? page.value : './'; window.history.pushState({url: url}, '', url);                                }
+            // window.onpopstate = function() {page.value = window.location.pathname.split("/").pop()};
         })
-        
-        return {page, pages}
+        console.log("JWT:", store.$jwt);
+        return {page, pages, console}
     },
 
     template: `
         <div id="sidebar">
+        JWT: {{ jwt }}
             <nav>
                 <button v-on:click="page = ''">Home</button>
                 <template v-for="item, index in pages" key="item.name">
-                    <button v-on:click="page = index">
+                    <button v-if="logged" v-on:click="page = index">
+                        {{ item.name }}
+                    </button>
+                    
+                    <button v-if="!logged" v-on:click="page = 'pageLogin'">
                         {{ item.name }}
                     </button>
                 </template>               
