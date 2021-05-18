@@ -1,5 +1,6 @@
 package cz.muni.pa165.teamwhite.formula1.rest.controller;
 
+import cz.muni.pa165.teamwhite.formula1.dto.UserAuthenticateDTO;
 import cz.muni.pa165.teamwhite.formula1.facade.UserFacade;
 import cz.muni.pa165.teamwhite.formula1.rest.dto.JwtResponse;
 import cz.muni.pa165.teamwhite.formula1.rest.security.JwtUtils;
@@ -14,6 +15,8 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -34,11 +37,11 @@ public class AuthController {
 
     @PostMapping(value = "/signin", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public ResponseEntity<?> authenticateUser(@RequestParam(name = "login") String login, @RequestParam(name = "passowrd") String password) {
+    public ResponseEntity<?> authenticateUser(@RequestBody @Valid UserAuthenticateDTO user) {
         Authentication authentication;
         try {
             authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(login, password));
+                    new UsernamePasswordAuthenticationToken(user.getLogin(), user.getPassword()));
         } catch (AuthenticationException e) {
             return ResponseEntity.badRequest().body("Authentication error");
         }
