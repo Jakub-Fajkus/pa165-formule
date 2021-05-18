@@ -5,6 +5,7 @@ import cz.muni.pa165.teamwhite.formula1.dto.UserDTO;
 import cz.muni.pa165.teamwhite.formula1.facade.UserFacade;
 import cz.muni.pa165.teamwhite.formula1.persistence.entity.User;
 import cz.muni.pa165.teamwhite.formula1.service.UserService;
+import cz.muni.pa165.teamwhite.formula1.service.exception.EntityNotFoundException;
 import cz.muni.pa165.teamwhite.formula1.service.mapping.BeanMappingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -43,7 +44,24 @@ public class UserFacadeImpl implements UserFacade {
 
     @Override
     public UserDTO getUserById(Long userId) {
-        return beanMappingService.mapTo(userService.findById(userId), UserDTO.class);
+        User user = userService.findById(userId);
+
+        if (user == null) {
+            throw new EntityNotFoundException("User with id " + userId + " was not found");
+        }
+
+        return beanMappingService.mapTo(user, UserDTO.class);
+    }
+
+    @Override
+    public UserDTO getUserByLogin(String login) {
+        User user = userService.findByLogin(login);
+
+        if (user == null) {
+            throw new EntityNotFoundException("User with login " + login + " was not found");
+        }
+
+        return beanMappingService.mapTo(user, UserDTO.class);
     }
 
     @Override

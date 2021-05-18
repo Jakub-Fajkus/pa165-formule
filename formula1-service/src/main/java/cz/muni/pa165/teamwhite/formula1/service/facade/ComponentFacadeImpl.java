@@ -7,6 +7,7 @@ import cz.muni.pa165.teamwhite.formula1.persistence.entity.Car;
 import cz.muni.pa165.teamwhite.formula1.persistence.entity.Component;
 import cz.muni.pa165.teamwhite.formula1.service.CarService;
 import cz.muni.pa165.teamwhite.formula1.service.ComponentService;
+import cz.muni.pa165.teamwhite.formula1.service.exception.EntityNotFoundException;
 import cz.muni.pa165.teamwhite.formula1.service.mapping.BeanMappingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -43,7 +44,13 @@ public class ComponentFacadeImpl implements ComponentFacade {
 
     @Override
     public ComponentDTO getComponentById(Long componentId) {
-        return beanMappingService.mapTo(componentService.findById(componentId), ComponentDTO.class);
+        Component component = componentService.findById(componentId);
+
+        if (component == null) {
+            throw new EntityNotFoundException("Component with id " + componentId + " was not found");
+        }
+
+        return beanMappingService.mapTo(component, ComponentDTO.class);
     }
 
     @Override
@@ -54,6 +61,11 @@ public class ComponentFacadeImpl implements ComponentFacade {
     @Override
     public ComponentDTO update(ComponentDTO componentDto) {
         Component dbComponent = componentService.findById(componentDto.getId());
+
+        if (dbComponent == null) {
+            throw new EntityNotFoundException("Component with id " + componentDto.getId() + " was not found");
+        }
+
         Car inDb = dbComponent.getCar();
         if (componentDto.getCar() != null && inDb != null && inDb.getComponents().contains(beanMappingService.mapTo(componentDto, Component.class))) {
             inDb.removeComponent(componentService.findById(componentDto.getId()));

@@ -1,9 +1,9 @@
 package cz.muni.pa165.teamwhite.formula1.service;
 
 import cz.muni.pa165.teamwhite.formula1.persistence.dao.CarDao;
-import cz.muni.pa165.teamwhite.formula1.persistence.dao.DriverDao;
 import cz.muni.pa165.teamwhite.formula1.persistence.entity.Car;
 import cz.muni.pa165.teamwhite.formula1.persistence.entity.Component;
+import cz.muni.pa165.teamwhite.formula1.service.exception.EntityNotFoundException;
 import cz.muni.pa165.teamwhite.formula1.service.exception.Formula1ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -50,7 +50,7 @@ public class CarServiceImpl implements CarService {
         try {
             return carDao.findAll();
         } catch (DataAccessException e) {
-            throw new Formula1ServiceException("Could not find a car", e);
+            throw new EntityNotFoundException("Could not find a car", e);
         }
     }
 
@@ -59,7 +59,7 @@ public class CarServiceImpl implements CarService {
         try {
             return carDao.findById(id);
         } catch (DataAccessException e) {
-            throw new Formula1ServiceException("Could not find a car with id: " + id, e);
+            throw new EntityNotFoundException("Could not find a car with id: " + id, e);
         }
     }
 

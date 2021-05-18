@@ -1,6 +1,7 @@
 package cz.muni.pa165.teamwhite.formula1.service.facade;
 
 import cz.muni.pa165.teamwhite.formula1.dto.CarDTO;
+import cz.muni.pa165.teamwhite.formula1.dto.ComponentDTO;
 import cz.muni.pa165.teamwhite.formula1.facade.CarFacade;
 import cz.muni.pa165.teamwhite.formula1.persistence.entity.Car;
 import cz.muni.pa165.teamwhite.formula1.persistence.entity.Component;
@@ -8,6 +9,7 @@ import cz.muni.pa165.teamwhite.formula1.persistence.entity.Driver;
 import cz.muni.pa165.teamwhite.formula1.service.CarService;
 import cz.muni.pa165.teamwhite.formula1.service.ComponentService;
 import cz.muni.pa165.teamwhite.formula1.service.DriverService;
+import cz.muni.pa165.teamwhite.formula1.service.exception.EntityNotFoundException;
 import cz.muni.pa165.teamwhite.formula1.service.mapping.BeanMappingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -52,28 +54,54 @@ public class CarFacadeImpl implements CarFacade {
 
     @Override
     public CarDTO getCarById(Long carId) {
-        return beanMappingService.mapTo(carService.findById(carId), CarDTO.class);
+        Car car = carService.findById(carId);
+
+        if (car == null) {
+            throw new EntityNotFoundException("Car with id " + carId + " was not found");
+        }
+
+        return beanMappingService.mapTo(car, CarDTO.class);
     }
 
     @Override
     public CarDTO update(@NotNull CarDTO carDTO) {
         Car dbCar = carService.findById(carDTO.getId());
 
+        if (dbCar == null) {
+            throw new EntityNotFoundException("Car with id " + carDTO.getId() + " was not found");
+        }
+
         if (carDTO.getComponents() != null) {
             for (Component component: dbCar.getComponents()) {
                 component.setCar(null);
+                dbCar.removeComponent(component);
                 componentService.update(component);
+            }
+
+            for (ComponentDTO component:carDTO.getComponents()) {
+                dbCar.addComponent(componentService.findById(component.getId()));
             }
         }
 
         if (carDTO.getDriver() != null) {
-            Driver dbDriver = driverService.findById(dbCar.getDriver().getId());
+            if (dbCar.getDriver() != null) {
+                Driver oldDriver = driverService.findById(dbCar.getDriver().getId());
 
-            dbDriver.setCar(null);
-            driverService.update(dbDriver);
+                oldDriver.setCar(null);
+                driverService.update(oldDriver);
+            }
+
+            Driver newDriver = driverService.findById(carDTO.getDriver().getId());
+            dbCar.setDriver(newDriver);
+            newDriver.setCar(dbCar);
+            driverService.update(newDriver);
+
         }
 
-        beanMappingService.mapToObject(carDTO, dbCar);
+        if (carDTO.getName() != null) {
+            dbCar.setName(carDTO.getName());
+        }
+
         carService.update(dbCar);
 
         return getCarById(carDTO.getId());

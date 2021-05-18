@@ -49,7 +49,7 @@ public class CarDTO {
     }
 
     public Set<ComponentDTO> getComponents() {
-        return Collections.unmodifiableSet(components != null ? components : Set.of());
+        return (components != null) ? Collections.unmodifiableSet(components) : null;
     }
 
     @Override

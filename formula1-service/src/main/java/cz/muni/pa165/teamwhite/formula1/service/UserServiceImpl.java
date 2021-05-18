@@ -3,6 +3,7 @@ package cz.muni.pa165.teamwhite.formula1.service;
 import cz.muni.pa165.teamwhite.formula1.persistence.dao.UserDao;
 import cz.muni.pa165.teamwhite.formula1.persistence.entity.User;
 import cz.muni.pa165.teamwhite.formula1.persistence.enums.Role;
+import cz.muni.pa165.teamwhite.formula1.service.exception.EntityNotFoundException;
 import cz.muni.pa165.teamwhite.formula1.service.exception.Formula1ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -62,7 +63,7 @@ public class UserServiceImpl implements UserService {
         try {
             return userDao.findById(id);
         } catch (DataAccessException e) {
-            throw new Formula1ServiceException("Could not find user with id: " + id, e);
+            throw new EntityNotFoundException("Could not find user with id: " + id, e);
         }
     }
 
@@ -71,7 +72,7 @@ public class UserServiceImpl implements UserService {
         try {
             return userDao.findByLogin(login);
         } catch (DataAccessException e) {
-            throw new Formula1ServiceException("Could not find user with login: " + login, e);
+            throw new EntityNotFoundException("Could not find user with login: " + login, e);
         }
     }
 

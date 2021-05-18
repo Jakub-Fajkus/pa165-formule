@@ -48,6 +48,10 @@ public class UserDTO {
         return role;
     }
 
+    public boolean isManager() {
+        return role == Role.MANAGER;
+    }
+
     @Override
     public String toString() {
         return "User{" +

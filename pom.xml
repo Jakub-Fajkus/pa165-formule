@@ -15,6 +15,7 @@
         <module>formula1-dao</module>
         <module>formula1-service</module>
         <module>formula1-sample-data</module>
+        <module>formula1-rest</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -107,6 +108,13 @@
                                 <version>${tomcat.version}</version>
                             </artifactInstaller>
                         </container>
+                        <deployables>
+                            <deployable>
+                                <properties>
+                                    <context>/pa165</context>
+                                </properties>
+                            </deployable>
+                        </deployables>
                     </configuration>
                 </plugin>
             </plugins>
