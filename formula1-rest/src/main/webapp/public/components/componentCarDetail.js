@@ -76,6 +76,8 @@ export default { //todo: hide somehow from the menu
                     this.name = response.data.data.name;
                     this.driver = response.data.data.driver;
 
+                    functions.showSuccessNotification("Driver successfully edited")
+
                 })
                 .catch(error => {
                     console.log("Error catch", error);
@@ -86,46 +88,37 @@ export default { //todo: hide somehow from the menu
 
 
     template: `
-        <h1>Car detail with id {{id}}</h1>
-        <div class="content">
-        <div class="container-fluid">
-          <div class="row">
-            <div class="col-md-6">
-              <div class="card">
-                <div class="card-header card-header-primary">
-                  <h4 class="card-title">Car detail</h4>
-                </div>
-                <div class="card-body">
-                  <form>
-                    <div class="row">
-                      <div class="col-md-12">
-                        <div class="form-group">
-                          <label class="bmd-label-floating">Name</label>
-                          <input type="text" v-model="name" name="name" class="form-control">
-                        </div>
-                      </div>
+        <div class="card">
+            <div class="card-header card-header-primary">
+              <h4 class="card-title">Car detail</h4>
+            </div>
+            <div class="card-body">
+              <form>
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label class="bmd-label-floating">Name</label>
+                      <input type="text" v-model="name" name="name" class="form-control">
                     </div>
-                    <div class="row">
-                      <div class="col-md-12">
-                        <div class="form-group">
-                          <label class="bmd-label-floating">Driver</label>
-                          <select v-model="driver" class="form-control">
-                              <option v-for="driverOption in drivers" :value="driverOption.id">
-                                  {{ driverOption.name }} {{driverOption.surname}}
-                              </option>
-                          </select>
-                        </div>
-                      </div>
-                    </div>
-
-                    <button type="button" @click="editCar()" class="btn btn-primary pull-right">Edit</button>
-                    <div class="clearfix"></div>
-                  </form>
+                  </div>
                 </div>
-              </div>
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label class="bmd-label-floating">Driver</label>
+                      <select v-model="driver" class="form-control">
+                          <option v-for="driverOption in drivers" :value="driverOption.id">
+                              {{ driverOption.name }} {{driverOption.surname}}
+                          </option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+    
+                <button type="button" @click="editCar()" class="btn btn-primary pull-right">Edit</button>
+                <div class="clearfix"></div>
+              </form>
             </div>
           </div>
-        </div>
-      </div>
     `,
 };
