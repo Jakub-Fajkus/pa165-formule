@@ -3,6 +3,8 @@ import componentLogin from '../components/componentLogin.js'
 export default {
     name: 'Login',
     icon: 'login',
+    showInMenu: true,
+
     components: {componentLogin},
 
     setup() {        
