@@ -42,6 +42,13 @@ export default {
 
             this.page = "pageCarDetail";
             this.pageParams = {id: carId};
+        },
+
+        onShowDriverDetail(driverId) {
+            console.log("parent onShowDriverDetail " + driverId);
+
+            this.page = "pageDriverDetail";
+            this.pageParams = {id: driverId};
         }
     },
 
@@ -134,7 +141,7 @@ export default {
       <div class="content">
         <div class="container-fluid">
           <!-- your content here -->
-          <component :is="page || 'homepage'" @show-car-detail="onShowCarDetail" :pageParams="pageParams"></component>
+          <component :is="page || 'homepage'" @show-car-detail="onShowCarDetail" @show-driver-detail="onShowDriverDetail" :pageParams="pageParams"></component>
         </div>
       </div>
       <footer class="footer">
