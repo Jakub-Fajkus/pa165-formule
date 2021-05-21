@@ -79,6 +79,11 @@ public class DriverFacadeImpl implements DriverFacade {
         Driver dbDriver = driverService.findById(driverDTO.getId());
 
         beanMappingService.mapToObject(driverDTO, dbDriver);
+
+        if (driverDTO.isAggressive() != null) {
+            dbDriver.setIsAggressive(driverDTO.isAggressive());
+        }
+
         driverService.update(dbDriver);
 
         return getDriverById(driverDTO.getId());

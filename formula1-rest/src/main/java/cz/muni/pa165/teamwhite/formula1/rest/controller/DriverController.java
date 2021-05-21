@@ -8,7 +8,6 @@ import cz.muni.pa165.teamwhite.formula1.rest.ApiUris;
 import cz.muni.pa165.teamwhite.formula1.rest.ResponseStatuses;
 import cz.muni.pa165.teamwhite.formula1.rest.RestResponse;
 import cz.muni.pa165.teamwhite.formula1.rest.dto.DriverAPIDTO;
-import cz.muni.pa165.teamwhite.formula1.rest.dto.UpdateDriverAPIDTO;
 import cz.muni.pa165.teamwhite.formula1.rest.security.Role;
 import cz.muni.pa165.teamwhite.formula1.service.mapping.BeanMappingService;
 import io.swagger.annotations.Api;
@@ -38,7 +37,7 @@ public class DriverController {
     @ApiOperation(value = "Creates new driver.")
     @RequestMapping(value = ApiUris.ROOT_URI_DRIVERS, method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public RestResponse<DriverAPIDTO> createDriver(@RequestBody DriverAPIDTO driver) {
-        Long id = driverFacade.createDriver(new DriverDTO(null, driver.getName(), driver.getSurname(), driver.getNationality(), driver.isAggressive(), driver.getWetDriving(), driver.getReactions()));
+        Long id = driverFacade.createDriver(new DriverDTO(null, driver.getName(), driver.getSurname(), driver.getNationality(), driver.getAggressive(), driver.getWetDriving(), driver.getReactions()));
         return getDriver(id);
     }
 
@@ -56,7 +55,7 @@ public class DriverController {
 
     @ApiOperation(value = "Update information about given driver")
     @PatchMapping(value = ApiUris.ROOT_URI_DRIVER, produces = MediaType.APPLICATION_JSON_VALUE)
-    public RestResponse<DriverAPIDTO> updateDriver(@ApiParam(value = "The id of a driver") @PathVariable Long id, @RequestBody UpdateDriverAPIDTO driver) {
+    public RestResponse<DriverAPIDTO> updateDriver(@ApiParam(value = "The id of a driver") @PathVariable Long id, @RequestBody DriverAPIDTO driver) {
         CarDTO carDTO = driver.getCar() == null ? null : carFacade.getCarById(driver.getCar());
 
         driverFacade.update(new DriverDTO(id, carDTO, driver.getName(), driver.getSurname(), driver.getNationality(), driver.getAggressive(), driver.getWetDriving(), driver.getReactions()));

@@ -13,7 +13,7 @@ public class DriverAPIDTO {
 
     private String nationality;
 
-    private Boolean isAggressive;
+    private Boolean aggressive;
 
     private Integer wetDriving;
 
@@ -22,23 +22,23 @@ public class DriverAPIDTO {
     public DriverAPIDTO() {}
 
     public DriverAPIDTO(Long car, String name, String surname, String nationality,
-                     Boolean isAggressive, Integer wetDriving, Integer reactions) {
+                        Boolean aggressive, Integer wetDriving, Integer reactions) {
         this.car = car;
         this.name = name;
         this.surname = surname;
         this.nationality = nationality;
-        this.isAggressive = isAggressive;
+        this.aggressive = aggressive;
         this.wetDriving = wetDriving;
         this.reactions = reactions;
     }
 
-    public DriverAPIDTO(Long id, Long car, String name, String surname, String nationality,
-                     Boolean isAggressive, Integer wetDriving, Integer reactions) {
-
-        this(car, name, surname, nationality, isAggressive, wetDriving, reactions);
-
-        this.id = id;
-    }
+//    public DriverAPIDTO(Long id, Long car, String name, String surname, String nationality,
+//                        Boolean aggressive, Integer wetDriving, Integer reactions) {
+//
+//        this(car, name, surname, nationality, aggressive, wetDriving, reactions);
+//
+//        this.id = id;
+//    }
 
     public Long getId() {
         return id;
@@ -60,8 +60,8 @@ public class DriverAPIDTO {
         return nationality;
     }
 
-    public Boolean isAggressive() {
-        return isAggressive;
+    public Boolean getAggressive() {
+        return aggressive;
     }
 
     public Integer getWetDriving() {
@@ -80,7 +80,7 @@ public class DriverAPIDTO {
                 ", name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
                 ", nationality='" + nationality + '\'' +
-                ", isAggressive=" + (isAggressive ? "yes" : "no") +
+                ", aggressive=" + (aggressive ? "yes" : "no") +
                 ", wetDriving=" + wetDriving +
                 ", reactions=" + reactions +
                 '}';

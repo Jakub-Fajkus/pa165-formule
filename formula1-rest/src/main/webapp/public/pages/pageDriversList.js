@@ -3,6 +3,8 @@ import componentDriversList from '../components/componentDriversList.js'
 export default {
     name: 'Drivers',
     icon: 'accessible',
+    showInMenu: true,
+
     components: {componentDriversList},
 
     setup() {
@@ -18,17 +20,16 @@ export default {
         },
 
         onNewDriverDetail() {
-            console.log("onNewDriverDetail ");
+            console.log("onNewDriverDetail");
 
             this.$emit('new-driver-detail');
-        }
-
+        },
     },
 
     template: `
         <div>
             {{ title }}
-            <componentDriversList @show-driver-detail="onShowDriverDetail" @new-driver-detail="onNewDriverDetail"></componentDriversList>
+            <componentDriversList @show-driver-detail="onShowDriverDetail" @new-driver-detail="onNewDriverDetail" @show-drivers-list="onShowDriversList"></componentDriversList>
         </div>
     `,
 };

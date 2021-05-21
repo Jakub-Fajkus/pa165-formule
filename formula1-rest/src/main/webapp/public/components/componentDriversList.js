@@ -11,54 +11,7 @@ export default {
     },
 
     mounted() {
-        axios.get('http://localhost:8080/pa165/rest/drivers', {}, {
-            headers: {
-                "Content-type": "application/json",
-                "Authorization": `Bearer ${store.$jwt}`,
-            }
-        })
-            .then(response => {
-                console.log("Driver response", response);
-
-                response.data.data.forEach(driver => {
-                    console.log("Each driver", driver);
-
-                    if (!driver.car) {
-                        return;
-                    }
-
-                    axios.get('http://localhost:8080/pa165/rest/cars/'+driver.car, {}, {
-                        headers: {
-                            "Content-type": "application/json",
-                            "Authorization": `Bearer ${store.$jwt}`,
-                        }
-                    }).then(response => {
-                        console.log("Car response", response);
-
-                        this.drivers.forEach(driver => {
-                            console.log("For each driver: ", driver);
-
-                            console.log(response.data.data.id)
-                            if (driver.car == response.data.data.id) {
-                                driver.car = {id: driver.car, name: response.data.data.name};
-                                console.log("Editing driver: ", driver);
-                            }
-                        })
-                    }).catch(function (error) {
-                        console.log("Error catch", error);
-
-                        functions.showErrorNotification(error);
-                    });
-                })
-
-                this.drivers = response.data.data;
-
-                console.log("DRIVERS:", this.drivers);
-            })
-            .catch(function (error) {
-                console.log("Error catch", error);
-                functions.showErrorNotification(error);
-            });
+        this.manualReload();
     },
 
     setup() {
@@ -67,13 +20,61 @@ export default {
     },
 
     methods: {
-        creteDriver() {
-            console.log("New car with properties: ", this.name, this.driver)
+        manualReload() {
+            axios.get('http://localhost:8080/pa165/rest/drivers', {}, {
+                headers: {
+                    "Content-type": "application/json",
+                    "Authorization": `Bearer ${store.$jwt}`,
+                }
+            })
+                .then(response => {
+                    console.log("Driver response", response);
 
-            axios.patch('http://localhost:8080/pa165/rest/drivers/' + '', {
-                "name": this.name,
-                "driver": this.driver
-            }, {
+                    response.data.data.forEach(driver => {
+                        console.log("Each driver", driver);
+
+                        if (!driver.car) {
+                            return;
+                        }
+
+                        axios.get('http://localhost:8080/pa165/rest/cars/'+driver.car, {}, {
+                            headers: {
+                                "Content-type": "application/json",
+                                "Authorization": `Bearer ${store.$jwt}`,
+                            }
+                        }).then(response => {
+                            console.log("Car response", response);
+
+                            this.drivers.forEach(driver => {
+                                console.log("For each driver: ", driver);
+
+                                console.log(response.data.data.id)
+                                if (driver.car == response.data.data.id) {
+                                    driver.car = {id: driver.car, name: response.data.data.name};
+                                    console.log("Editing driver: ", driver);
+                                }
+                            })
+                        }).catch(function (error) {
+                            console.log("Error catch", error);
+
+                            functions.showErrorNotification(error);
+                        });
+                    })
+
+                    this.drivers = response.data.data;
+
+                    console.log("DRIVERS:", this.drivers);
+                })
+                .catch(function (error) {
+                    console.log("Error catch", error);
+                    functions.showErrorNotification(error);
+                });
+        },
+
+        removeDriver(driverId) {
+            console.log("Delete driver with id: ", driverId)
+
+            axios.delete('http://localhost:8080/pa165/rest/drivers/' + driverId + '', {
                 headers: {
                     "Content-type": "application/json",
                     "Authorization": `Bearer ${store.$jwt}`,
@@ -82,20 +83,14 @@ export default {
                 .then(response => {
                     console.log("Success:", response);
 
-                    this.car = response.data.data.car;
-                    this.name = response.data.data.name;
-                    this.surname = response.data.data.surname;
-                    this.nationality = response.data.data.nationality;
-                    this.aggressive = response.data.data.aggressive;
-                    this.wetDriving = response.data.data.wetDriving;
-                    this.reactions = response.data.data.reactions;
-
                     functions.showSuccessNotification("Driver successfully edited")
-
+                    this.manualReload()
                 })
                 .catch(error => {
                     console.log("Error catch", error);
+
                     functions.showErrorNotification(error)
+                    this.manualReload()
                 });
         },
     },
@@ -113,8 +108,7 @@ export default {
                       <span class="nav-tabs-title">Drivers</span>
                       <ul class="nav nav-tabs" data-tabs="tabs">
                         <li class="nav-item">
-<!--                        nova komponenta na new-->
-                          <a class="nav-link active" @click="$emit('show-driver-detail', 1)" href="" data-toggle="tab">
+                          <a class="nav-link active" @click="$emit('new-driver-detail')" href="" data-toggle="tab">
                             <i class="material-icons">add</i> New
                             <div class="ripple-container"></div>
                           </a>
@@ -190,13 +184,10 @@ export default {
                                     {{driver.reactions}}
                                   </td>
                                   <td class="td-actions text-right">
-<!--                                      <button type="button" @click="$emit('show-driver-detail', driver.id)" rel="tooltip" title="Detail" class="btn btn-primary btn-link btn-sm">-->
-<!--                                        <i class="material-icons">search</i>-->
-<!--                                      </button>-->
                                       <button type="button" @click="$emit('show-driver-detail', driver.id)" rel="tooltip" title="Edit Task" class="btn btn-primary btn-link btn-sm">
                                         <i class="material-icons">edit</i>
                                       </button>
-                                      <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-link btn-sm">
+                                      <button type="button" @click="removeDriver(driver.id)" rel="tooltip" title="Remove" class="btn btn-danger btn-link btn-sm" v-bind:disabled="driver.car">
                                         <i class="material-icons">close</i>
                                       </button>
                                   </td>

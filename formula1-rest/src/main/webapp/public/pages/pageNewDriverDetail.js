@@ -4,9 +4,9 @@ export default {
     name: 'New driver detail',
     components: {componentNewDriverDetail},
 
-    // props: {
-    //     pageParams: Object,
-    // },
+    props: {
+        pageParams: Object,
+    },
 
     setup() {
         const title = 'New driver detail'
@@ -14,18 +14,20 @@ export default {
         return {title}
     },
 
-    // mounted() {
-    //     console.log(this.pageParams);
-    // },
+    methods: {
+        onShowDriversList() {
+            this.$emit("show-drivers-list");
+        },
+    },
 
     template: `
         <div>
          <div class="content">
             <div class="container-fluid">
-              {{ title }} {{id}} {{pageParams.id}}
+            {{ title }}
               <div class="row">
-                <div class="col-md-4">
-                  <componentDriverDetail :id="pageParams.id"></componentDriverDetail>
+                <div class="col-md-12">
+                  <componentNewDriverDetail @new-driver-detail="onNewDriverDetail" @show-drivers-list="onShowDriversList"></componentNewDriverDetail>
                 </div>
               </div>
             </div>

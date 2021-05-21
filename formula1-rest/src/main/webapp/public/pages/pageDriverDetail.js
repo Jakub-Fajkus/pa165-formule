@@ -24,7 +24,7 @@ export default {
             <div class="container-fluid">
               {{ title }} {{id}} {{pageParams.id}}
               <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-12">
                   <componentDriverDetail :id="pageParams.id"></componentDriverDetail>
                 </div>
               </div>
