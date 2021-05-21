@@ -42,6 +42,24 @@ export default {
 
             this.page = "pageCarDetail";
             this.pageParams = {id: carId};
+        },
+
+        onShowComponentDetail(componentId) {
+            console.log("parent onShowComponentDetail " + componentId);
+
+            this.page = "pageComponentDetail";
+            this.pageParams = {id: componentId};
+        },
+
+
+        onAddComponent() {
+            console.log("parent addComponent ");
+
+            this.page = "pageComponentAdd";
+        },
+
+        onGoToList() {
+            this.page = "pageComponentList";
         }
     },
 
@@ -133,7 +151,8 @@ export default {
       <div class="content">
         <div class="container-fluid">
           <!-- your content here -->
-          <component :is="page" @show-car-detail="onShowCarDetail" :pageParams="pageParams"></component>
+          <component :is="page || 'homepage'" @show-car-detail="onShowCarDetail"  @add-component="onAddComponent" @show-component-detail="onShowComponentDetail" @go-to-component-list="onGoToList" :pageParams="pageParams"></component>
+          
         </div>
       </div>
       <footer class="footer">
