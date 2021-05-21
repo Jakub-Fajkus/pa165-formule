@@ -3,6 +3,8 @@ import componentCarsList from '../components/componentCarsList.js'
 export default {
     name: 'Cars',
     icon: 'commute',
+    showInMenu: true,
+
     components: {componentCarsList},
 
     setup() {        

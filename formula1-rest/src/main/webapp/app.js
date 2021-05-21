@@ -94,7 +94,7 @@ export default {
           </li>
           
           <template v-for="item, index in pages" key="item.name">
-              <li class="nav-item ">
+              <li class="nav-item " v-if="item.showInMenu">
                 <a @click="tabClicked(index)" class="nav-link" href="#0">
                   <i class="material-icons">{{ item.icon }}</i>
                   <p v-on:click="page = ''">{{ item.name }}</p>
