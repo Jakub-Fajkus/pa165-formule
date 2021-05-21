@@ -8,11 +8,10 @@ import cz.muni.pa165.teamwhite.formula1.dto.CarDTO;
 import cz.muni.pa165.teamwhite.formula1.dto.ComponentDTO;
 import cz.muni.pa165.teamwhite.formula1.dto.DriverDTO;
 import cz.muni.pa165.teamwhite.formula1.dto.UserDTO;
-import cz.muni.pa165.teamwhite.formula1.persistence.PersistenceConfig;
 import cz.muni.pa165.teamwhite.formula1.rest.dto.CarAPIDTO;
 import cz.muni.pa165.teamwhite.formula1.rest.dto.ComponentAPIDTO;
 import cz.muni.pa165.teamwhite.formula1.rest.dto.DriverAPIDTO;
-import cz.muni.pa165.teamwhite.formula1.rest.mixin.UserDTOMixin;
+import cz.muni.pa165.teamwhite.formula1.rest.dto.UserAPIDTO;
 import cz.muni.pa165.teamwhite.formula1.rest.security.SecurityConfiguration;
 import cz.muni.pa165.teamwhite.formula1.sampleData.SampleDataConfiguration;
 import cz.muni.pa165.teamwhite.formula1.service.DozerCustomConfig;
@@ -141,7 +140,7 @@ public class RestConfiguration implements WebMvcConfigurer {
         objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
         objectMapper.setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.ENGLISH));
 
-        objectMapper.addMixIn(UserDTO.class, UserDTOMixin.class);
+        objectMapper.addMixIn(UserDTO.class, UserAPIDTO.class);
 
         objectMapper.disable(MapperFeature.DEFAULT_VIEW_INCLUSION);
 
