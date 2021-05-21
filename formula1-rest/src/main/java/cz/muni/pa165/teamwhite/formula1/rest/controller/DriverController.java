@@ -1,5 +1,6 @@
 package cz.muni.pa165.teamwhite.formula1.rest.controller;
 
+import cz.muni.pa165.teamwhite.formula1.dto.ScoredDriverDTO;
 import cz.muni.pa165.teamwhite.formula1.facade.DriverFacade;
 import cz.muni.pa165.teamwhite.formula1.rest.ApiUris;
 import cz.muni.pa165.teamwhite.formula1.rest.ResponseStatuses;
@@ -41,5 +42,11 @@ public class DriverController {
     @GetMapping(value = ApiUris.ROOT_URI_DRIVER, produces = MediaType.APPLICATION_JSON_VALUE)
     public RestResponse<DriverAPIDTO> getComponent(@ApiParam(value = "The id of a driver") @PathVariable Long id) {
         return new RestResponse<>(dozer.mapTo(driverFacade.getDriverById(id), DriverAPIDTO.class), ResponseStatuses.OK);
+    }
+
+    @ApiOperation(value = "Get information about all drivers and their score")
+    @GetMapping(value = ApiUris.ROOT_URI_DRIVERS_SCORE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public RestResponse<List<ScoredDriverDTO>> getAllDriversScored() {
+        return new RestResponse<>(driverFacade.getAllDriversWithScore(), ResponseStatuses.OK);
     }
 }
