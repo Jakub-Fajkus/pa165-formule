@@ -71,7 +71,19 @@ export default {
                 <div class="col-md-12">
                   <div class="card">
                     <div class="card-header card-header-primary">
-                      <h4 class="card-title ">Compoments</h4>
+                      <h4 class="card-title ">
+                        <div class="nav-tabs-wrapper">
+                      <span class="nav-tabs-title">Components</span>
+                      <ul class="nav nav-tabs" data-tabs="tabs">
+                        <li class="nav-item">
+                          <a class="nav-link active" @click="$emit('add-component')" href="" data-toggle="tab">
+                            <i class="material-icons">add</i> New
+                            <div class="ripple-container"></div>
+                          </a>
+                        </li>
+                      </ul>
+                    </div>
+                    </h4>
                     </div>
                     <div class="card-body">
                       <div class="table-responsive">

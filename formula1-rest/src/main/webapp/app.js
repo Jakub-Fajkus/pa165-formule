@@ -51,7 +51,8 @@ export default {
             this.pageParams = {id: componentId};
         },
 
-        addComponent() {
+
+        onAddComponent() {
             console.log("parent addComponent ");
 
             this.page = "pageComponentAdd";
@@ -147,7 +148,7 @@ export default {
       <div class="content">
         <div class="container-fluid">
           <!-- your content here -->
-          <component :is="page || 'homepage'" @show-car-detail="onShowCarDetail"  @show-component-detail="onShowComponentDetail" :pageParams="pageParams"></component>
+          <component :is="page || 'homepage'" @show-car-detail="onShowCarDetail"  @add-component="onAddComponent" @show-component-detail="onShowComponentDetail" :pageParams="pageParams"></component>
           
         </div>
       </div>

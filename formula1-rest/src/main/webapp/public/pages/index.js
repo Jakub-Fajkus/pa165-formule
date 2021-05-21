@@ -5,6 +5,7 @@ import page4 from './page4.js'
 import pageLogin from './pageLogin.js'
 import pageComponentList from './pageComponentList.js'
 import pageComponentDetail from './pageComponentDetail.js'
+import pageComponentAdd from './pageComponentAdd.js'
 
 export {
     pageLogin,
@@ -14,4 +15,6 @@ export {
     page4,
     pageComponentList,
     pageComponentDetail,
+    pageComponentAdd,
+
 }

@@ -1,6 +1,5 @@
 import componentComponentDetail from '../components/componentComponentDetail.js'
 
-// import store from "../../store";
 
 export default {
     name: 'Component detail',
@@ -24,7 +23,6 @@ export default {
         <div>
          <div class="content">
             <div class="container-fluid">
-              {{ title }} {{id}} {{pageParams.id}}
               <div class="row">
                 <div class="col-md-4">
                   <componentComponentDetail :id="pageParams.id"></componentComponentDetail>
