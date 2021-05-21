@@ -13,6 +13,7 @@ export default { //todo: hide somehow from the menu
             drivers: [],
             name: null,
             driver: null,
+            errors: {}
         }
     },
 
@@ -58,8 +59,25 @@ export default { //todo: hide somehow from the menu
     },
 
     methods: {
+        validateForm() {
+            let success = true;
+
+            this.errors = [];
+
+            if (!this.name) {
+                this.errors.name = "Name is required";
+                success = false;
+            }
+
+            return success;
+        },
+
         editCar() {
             console.log("Edit car with properties: ", this.name, this.driver)
+
+            if (!this.validateForm()) {
+                return;
+            }
 
             axios.patch('http://localhost:8080/pa165/rest/cars/' + this.id + '', {
                 "name": this.name,
@@ -97,8 +115,8 @@ export default { //todo: hide somehow from the menu
                 <div class="row">
                   <div class="col-md-12">
                     <div class="form-group">
-                      <label class="bmd-label-floating">Name</label>
-                      <input type="text" v-model="name" name="name" class="form-control">
+                      <label class="bmd-label-floating">Name <span class="error">{{errors.name}}</span></label>
+                      <input type="text" v-model="name" name="name" class="form-control" required>
                     </div>
                   </div>
                 </div>
