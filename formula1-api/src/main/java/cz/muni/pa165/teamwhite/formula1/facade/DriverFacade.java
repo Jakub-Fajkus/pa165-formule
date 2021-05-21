@@ -2,6 +2,7 @@ package cz.muni.pa165.teamwhite.formula1.facade;
 
 
 import cz.muni.pa165.teamwhite.formula1.dto.DriverDTO;
+import cz.muni.pa165.teamwhite.formula1.dto.ScoredDriverDTO;
 
 import java.util.List;
 
@@ -14,6 +15,11 @@ public interface DriverFacade {
 	 * @return list of all drivers
 	 */
 	List<DriverDTO> getAllDrivers();
+
+	/**
+	 * @return list of all drivers with score
+	 */
+	List<ScoredDriverDTO> getAllDriversWithScore();
 
 	/**
 	 *

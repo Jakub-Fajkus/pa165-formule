@@ -1,14 +1,22 @@
+import componentDriversStatistics from '../components/componentDriversStatistics.js'
+
+
 export default {
-    name: 'Home',
+    name: 'Driver statistics',
+    icon: 'dashboard',
+    components: {componentDriversStatistics},
 
     setup() {
-        const title = 'Home page'
+        const title = 'Driver statistics'
         return {title}
     },
 
     template: `
         <div>
             {{ title }}
+            
+            <componentDriversStatistics></componentDriversStatistics>
+
         </div>
     `,
   };

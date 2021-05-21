@@ -20,6 +20,7 @@ public abstract class ApiUris {
 
     public static final String ROOT_URI_DRIVERS = "/drivers";
     public static final String ROOT_URI_DRIVER = "/drivers/{id}";
+    public static final String ROOT_URI_DRIVERS_SCORE = "/drivers/score";
 
     public static final String ROOT_URI_CARS = "/cars";
     public static final String ROOT_URI_CAR = "/cars/{id}";
