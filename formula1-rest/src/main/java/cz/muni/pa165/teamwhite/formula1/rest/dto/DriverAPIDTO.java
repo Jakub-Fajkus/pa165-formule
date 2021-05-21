@@ -2,6 +2,9 @@ package cz.muni.pa165.teamwhite.formula1.rest.dto;
 
 import java.util.Objects;
 
+/**
+ * @author Karolina Hecova
+ */
 public class DriverAPIDTO {
     private Long id;
 
@@ -31,14 +34,6 @@ public class DriverAPIDTO {
         this.wetDriving = wetDriving;
         this.reactions = reactions;
     }
-
-//    public DriverAPIDTO(Long id, Long car, String name, String surname, String nationality,
-//                        Boolean aggressive, Integer wetDriving, Integer reactions) {
-//
-//        this(car, name, surname, nationality, aggressive, wetDriving, reactions);
-//
-//        this.id = id;
-//    }
 
     public Long getId() {
         return id;

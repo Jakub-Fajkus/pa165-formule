@@ -83,7 +83,7 @@ export default {
                 .then(response => {
                     console.log("Success:", response);
 
-                    functions.showSuccessNotification("Driver successfully edited")
+                    functions.showSuccessNotification("Driver successfully deleted")
                     this.manualReload()
                 })
                 .catch(error => {
