@@ -6,6 +6,7 @@ import homepage from './home.js'
 import pageLogin from './pageLogin.js'
 import pageComponentList from './pageComponentList.js'
 import pageComponentDetail from './pageComponentDetail.js'
+import pageComponentAdd from './pageComponentAdd.js'
 
 export {
     homepage,
@@ -16,4 +17,6 @@ export {
     page4,
     pageComponentList,
     pageComponentDetail,
+    pageComponentAdd,
+
 }

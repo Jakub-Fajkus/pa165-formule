@@ -4,6 +4,7 @@ export default {
     name: 'Component',
     components: {componentComponentsList},
     icon: 'handyman',
+    showInMenu: true,
 
     setup() {
         const title = ''
@@ -13,24 +14,19 @@ export default {
     methods: {
         onShowComponentDetail(componentId) {
             console.log("onShowComponentDetail " + componentId);
-
             this.$emit('show-component-detail', componentId);
+        },
+
+        onAddComponent() {
+            console.log("onAddComponent");
+            this.$emit('add-component');
         }
-
-
     },
 
-    template: `
-        <div class="row">
-            <div class="col-md-12">
-                <button @click="$emit('add-component')" class="btn btn-primary pull-right">+</button>
-            </div>
-        </div>
-                
+    template: `     
         <div>
             {{ title }}
-            <componentComponentsList @show-component-detail="onShowComponentDetail"></componentComponentsList>
-            
+            <componentComponentsList @show-component-detail="onShowComponentDetail" @add-component="onAddComponent"></componentComponentsList>
         </div>
     `,
 };

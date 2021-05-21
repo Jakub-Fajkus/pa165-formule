@@ -22,7 +22,8 @@ export default {
     mounted() {
         console.log("Component detail id: ", this.id);
 
-        axios.get('http://localhost:8080/pa165/rest/components', {}, {
+
+        axios.get('http://localhost:8080/pa165/rest/components/' + this.id, {}, {
             headers: {
                 "Content-type": "application/json",
                 "Authorization": `Bearer ${store.$jwt}`,
@@ -31,10 +32,11 @@ export default {
             .then(response => {
                 console.log("All components: ", response);
 
-                this.components = response.data.data;
+                this.name = response.data.data.name;
+
             })
             .catch(error => {
-                console.log("component detail error: ", error);
+                console.log("Component detail error: ", error);
                 functions.showErrorNotification(error)
             });
 

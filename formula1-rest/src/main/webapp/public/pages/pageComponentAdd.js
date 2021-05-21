@@ -15,7 +15,7 @@ export default {
         return {title}
     },
 
-    mounted() {
+    addComponent() {
         console.log("try to add component");
     },
 
@@ -25,7 +25,7 @@ export default {
             <div class="container-fluid">
               <div class="row">
                 <div class="col-md-12">
-                  <componentComponenAdd></componentComponenAdd>
+                  <componentComponenAdd @show-component-detail="addComponent"></componentComponenAdd>
                 </div>
               </div>
             </div>
