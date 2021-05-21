@@ -5,18 +5,18 @@ import functions from './functions.js'
 
 export default {
     name: 'App',
-    components: Object.assign({homepage}, pages),
+    components: pages,
 
     data() {
         return {
-            page: "home",
+            page: null,
             pageParams: {}
         }
     },
 
     methods: {
         tabClicked(index) {
-            console.log("tabClicked")
+            console.log("tabClicked", index)
             console.log("JWT:", store.$jwt, store.$username, store.$role);
             if (store.$jwt == null) {
                 this.page = "pageLogin";
@@ -88,6 +88,10 @@ export default {
         return {page, pages, store}
     },
 
+    mounted() {
+        this.tabClicked('homepage');
+    },
+
     template: `
 
         <div class="sidebar" data-color="green" data-background-color="black">
@@ -99,18 +103,12 @@ export default {
 
       <div class="sidebar-wrapper">
         <ul class="nav">
-          <li class="nav-item">
-            <a v-on:click="page = ''" class="nav-link" href="#0">
-              <i class="material-icons">dashboard</i>
-              <p>Dashboard</p>
-            </a>
-          </li>
           
           <template v-for="item, index in pages" key="item.name">
-              <li class="nav-item ">
+              <li class="nav-item " v-if="item.showInMenu">
                 <a @click="tabClicked(index)" class="nav-link" href="#0">
                   <i class="material-icons">{{ item.icon }}</i>
-                  <p v-on:click="page = ''">{{ item.name }}</p>
+                  <p>{{ item.name }}</p>
                 </a>
               </li>
           </template>
@@ -137,6 +135,7 @@ export default {
                   <p class="d-lg-none d-md-block">
                     Log out
                   </p>
+              </a>
               </li>
               <!-- your navbar here -->
             </ul>
@@ -147,7 +146,7 @@ export default {
       <div class="content">
         <div class="container-fluid">
           <!-- your content here -->
-          <component :is="page || 'homepage'" @show-car-detail="onShowCarDetail" @show-driver-detail="onShowDriverDetail" @new-driver-detail="onNewDriverDetail" :pageParams="pageParams"></component>
+          <component :is="page || 'homepage'" @show-car-detail="onShowCarDetail" @show-driver-detail="onShowDriverDetail" @new-driver-detail="onNewDriverDetail":pageParams="pageParams"></component>
         </div>
       </div>
       <footer class="footer">
