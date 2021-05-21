@@ -49,6 +49,12 @@ export default {
 
             this.page = "pageDriverDetail";
             this.pageParams = {id: driverId};
+        },
+
+        onNewDriverDetail() {
+            console.log("parent onShowDriverDetail ");
+
+            this.page = "pageNewDriverDetail";
         }
     },
 
@@ -141,7 +147,7 @@ export default {
       <div class="content">
         <div class="container-fluid">
           <!-- your content here -->
-          <component :is="page || 'homepage'" @show-car-detail="onShowCarDetail" @show-driver-detail="onShowDriverDetail" :pageParams="pageParams"></component>
+          <component :is="page || 'homepage'" @show-car-detail="onShowCarDetail" @show-driver-detail="onShowDriverDetail" @new-driver-detail="onNewDriverDetail" :pageParams="pageParams"></component>
         </div>
       </div>
       <footer class="footer">

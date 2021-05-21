@@ -1,7 +1,7 @@
 import store from '../../store.js'
 import functions from '../../functions.js'
 
-export default { //todo: hide somehow from the menu
+export default {
     name: 'Driver detail',
 
     props: {
@@ -26,25 +26,9 @@ export default { //todo: hide somehow from the menu
     },
 
     mounted() {
-        console.log("Driver detail id: ", this.id);
+        console.log("New driver detail.");
 
-        axios.get('http://localhost:8080/pa165/rest/cars', {}, {
-            headers: {
-                "Content-type": "application/json",
-                "Authorization": `Bearer ${store.$jwt}`,
-            }
-        })
-            .then(response => {
-                console.log("All cars: ", response);
-
-                this.cars = response.data.data;
-            })
-            .catch(error => {
-                console.log("Driver detail error: ", error);
-                functions.showErrorNotification(error)
-            });
-
-        axios.get('http://localhost:8080/pa165/rest/drivers/' + this.id, {}, {
+        axios.post('http://localhost:8080/pa165/rest/drivers', {}, {
             headers: {
                 "Content-type": "application/json",
                 "Authorization": `Bearer ${store.$jwt}`,
@@ -68,12 +52,12 @@ export default { //todo: hide somehow from the menu
     },
 
     methods: {
-        editDriver() {
-            console.log("Edit car with properties: ",
-                        this.car, this.name, this.surname, this.nationality,
-                        this.aggressive, this.wetDriving, this.reactions)
+        newDriver() {
+            console.log("New driver with properties: ",
+                this.car, this.name, this.surname, this.nationality,
+                this.aggressive, this.wetDriving, this.reactions)
 
-            axios.patch('http://localhost:8080/pa165/rest/drivers/' + this.id + '', {
+            axios.post('http://localhost:8080/pa165/rest/drivers/', {
                 "car": this.car,
                 "name": this.name,
                 "surname": this.surname,
@@ -188,7 +172,7 @@ export default { //todo: hide somehow from the menu
                     </div>
                   </div>
                 </div>
-                    <button type="button" @click="editDriver()" class="btn btn-primary pull-right">Edit</button>
+                    <button type="button" @click="newDriver()" class="btn btn-primary pull-right">New</button>
                 <div class="clearfix"></div>
               </form>
             </div>
