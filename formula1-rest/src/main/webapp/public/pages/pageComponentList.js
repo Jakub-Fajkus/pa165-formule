@@ -26,7 +26,7 @@ export default {
     template: `     
         <div>
             {{ title }}
-            <componentComponentsList @show-component-detail="onShowComponentDetail" @add-component="onAddComponent"></componentComponentsList>
+            <componentComponentsList @show-component-detail="onShowComponentDetail" @add-component="onAddComponent" ></componentComponentsList>
         </div>
     `,
 };

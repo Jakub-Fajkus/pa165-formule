@@ -51,7 +51,7 @@ export default {
             this.errors = [];
 
             if (!this.name) {
-                this.errors.name = "Name is required";
+                this.errors.name = " Name is required!";
                 functions.showWarningNotification(this.errors.name)
                 success = false;
             }
@@ -79,7 +79,8 @@ export default {
 
                     this.name = response.data.data.name;
 
-                    functions.showSuccessNotification("Component successfully edited, maybe :D")
+                    this.$emit('go-back');
+                    functions.showSuccessNotification("Component successfully edited.")
 
                 })
                 .catch(error => {
@@ -100,7 +101,7 @@ export default {
                 <div class="row">
                   <div class="col-md-12">
                     <div class="form-group">
-                      <label class="bmd-label-floating">Name</label>
+                      <label class="bmd-label-floating">Name<span class="error">{{errors.name}}</span></label>
                       <input type="text" v-model="name" name="name" class="form-control">
                     </div>
                   </div>

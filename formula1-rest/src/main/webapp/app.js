@@ -56,6 +56,10 @@ export default {
             console.log("parent addComponent ");
 
             this.page = "pageComponentAdd";
+        },
+
+        onGoToList() {
+            this.page = "pageComponentList";
         }
     },
 
@@ -147,7 +151,7 @@ export default {
       <div class="content">
         <div class="container-fluid">
           <!-- your content here -->
-          <component :is="page || 'homepage'" @show-car-detail="onShowCarDetail"  @add-component="onAddComponent" @show-component-detail="onShowComponentDetail" :pageParams="pageParams"></component>
+          <component :is="page || 'homepage'" @show-car-detail="onShowCarDetail"  @add-component="onAddComponent" @show-component-detail="onShowComponentDetail" @go-to-component-list="onGoToList" :pageParams="pageParams"></component>
           
         </div>
       </div>

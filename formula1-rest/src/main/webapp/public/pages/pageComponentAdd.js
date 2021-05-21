@@ -1,4 +1,5 @@
 import componentComponenAdd from '../components/componentComponentAdd.js'
+import functions from "../../functions.js";
 
 
 export default {
@@ -9,14 +10,16 @@ export default {
         pageParams: Object,
     },
 
+    methods: {
+        onGoBack() {
+            this.$emit('go-to-component-list');
+        },
+    },
+
     setup() {
         const title = 'Add new component'
 
         return {title}
-    },
-
-    addComponent() {
-        console.log("try to add component");
     },
 
     template: `
@@ -25,7 +28,7 @@ export default {
             <div class="container-fluid">
               <div class="row">
                 <div class="col-md-12">
-                  <componentComponenAdd @show-component-detail="addComponent"></componentComponenAdd>
+                  <componentComponenAdd @go-back="onGoBack"></componentComponenAdd>
                 </div>
               </div>
             </div>
