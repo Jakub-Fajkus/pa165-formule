@@ -9,6 +9,12 @@ export default {
         pageParams: Object,
     },
 
+    methods: {
+        onGoBack() {
+            this.$emit('go-to-component-list');
+        },
+    },
+
     setup() {
         const title = 'Component detail'
 

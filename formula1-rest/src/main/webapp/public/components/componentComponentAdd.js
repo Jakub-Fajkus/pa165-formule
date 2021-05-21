@@ -1,6 +1,7 @@
 import store from '../../store.js'
 import functions from '../../functions.js'
 
+
 export default {
     name: 'Component add',
 
@@ -27,13 +28,13 @@ export default {
             this.errors = [];
 
             if (!this.name) {
-                this.errors.name = "Name required";
+                this.errors.name = " Name required!";
                 functions.showWarningNotification(this.errors.name)
                 success = false;
             }
 
             if (!this.type) {
-                this.errors.name = "Type required";
+                this.errors.type = " Type required!";
                 functions.showWarningNotification(this.errors.name)
                 success = false;
             }
@@ -48,7 +49,7 @@ export default {
                 return;
             }
 
-            axios.put('http://localhost:8080/pa165/rest/components/', {
+            axios.post('http://localhost:8080/pa165/rest/components/', {
                 "name": this.name,
                 "type": this.type,
             }, {
@@ -60,9 +61,7 @@ export default {
                 .then(response => {
                     console.log("Success:", response);
 
-                    this.name = response.data.data.name;
-
-                    this.$emit('add-component');
+                    this.$emit('go-back');
                     functions.showSuccessNotification("Component successfully created")
 
                 })
@@ -85,7 +84,7 @@ export default {
                 <div class="row">
                   <div class="col-md-12">
                     <div class="form-group">
-                      <label class="bmd-label-floating">Name</label>
+                      <label class="bmd-label-floating">Name<span class="error">{{errors.name}}</span></label>
                       <input type="text" class="form-control" v-model="name">
                     </div>
                   </div>
@@ -93,7 +92,7 @@ export default {
                 
             
             <div class="form-group">
-               <label class="bmd-label-floating">Type</label>
+               <label class="bmd-label-floating">Type<span class="error">{{errors.type}}</span></label>
                   <select class="form-control" v-model="type">
                     <option value="0">Engine</option>
                     <option value="1">Suspension</option>
