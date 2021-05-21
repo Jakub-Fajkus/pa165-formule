@@ -7,6 +7,7 @@ import org.hibernate.service.spi.ServiceException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -52,5 +53,14 @@ public class GlobalExceptionController {
         log.debug("handleException - validation", ex);
 
         return new RestResponse<>(Arrays.asList("Validation error", ex.getMessage()), ResponseStatuses.ERROR);
+    }
+
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    @ResponseBody
+    RestResponse<List<String>> handleException(AccessDeniedException ex) {
+        log.debug("handleException - Wrong credentials", ex);
+
+        return new RestResponse<>(Arrays.asList("Credentials error", ex.getMessage()), ResponseStatuses.ERROR);
     }
 }

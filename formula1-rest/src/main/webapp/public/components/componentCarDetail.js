@@ -62,7 +62,7 @@ export default { //todo: hide somehow from the menu
         validateForm() {
             let success = true;
 
-            this.errors = [];
+            this.errors = {};
 
             if (!this.name) {
                 this.errors.name = "Name is required";
