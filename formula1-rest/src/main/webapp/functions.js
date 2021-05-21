@@ -40,6 +40,10 @@ export default {
 
     showSuccessNotification(message) {
         this.showNotification("success", message, "add_alert");
+    },
+
+    showWarningNotification(message) {
+        this.showNotification("warning", message, "add_alert");
     }
     
 

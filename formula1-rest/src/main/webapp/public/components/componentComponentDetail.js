@@ -12,6 +12,7 @@ export default {
         return {
             name: null,
             type: null,
+            errors: {}
         }
     },
 
@@ -44,8 +45,26 @@ export default {
     },
 
     methods: {
+        validateForm() {
+            let success = true;
+
+            this.errors = [];
+
+            if (!this.name) {
+                this.errors.name = "Name is required";
+                functions.showWarningNotification(this.errors.name)
+                success = false;
+            }
+
+            return success;
+        },
+
         editComponent() {
             console.log("Edit component with properties: ", this.name)
+
+            if (!this.validateForm()) {
+                return;
+            }
 
             axios.patch('http://localhost:8080/pa165/rest/components/' + this.id + '', {
                 "name": this.name
