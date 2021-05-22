@@ -2,6 +2,7 @@ package cz.muni.pa165.teamwhite.formula1.rest.controller;
 
 import cz.muni.pa165.teamwhite.formula1.dto.CarDTO;
 import cz.muni.pa165.teamwhite.formula1.dto.DriverDTO;
+import cz.muni.pa165.teamwhite.formula1.dto.ScoredDriverDTO;
 import cz.muni.pa165.teamwhite.formula1.facade.CarFacade;
 import cz.muni.pa165.teamwhite.formula1.facade.DriverFacade;
 import cz.muni.pa165.teamwhite.formula1.rest.ApiUris;
@@ -75,5 +76,11 @@ public class DriverController {
     @RequestMapping(value = ApiUris.ROOT_URI_DRIVER, method = RequestMethod.DELETE)
     public void removeDriver(@ApiParam(value = "The id of a driver") @PathVariable Long id) {
         driverFacade.deleteDriver(id);
+    }
+
+    @ApiOperation(value = "Get information about all drivers and their score")
+    @GetMapping(value = ApiUris.ROOT_URI_DRIVERS_SCORE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public RestResponse<List<ScoredDriverDTO>> getAllDriversScored() {
+        return new RestResponse<>(driverFacade.getAllDriversWithScore(), ResponseStatuses.OK);
     }
 }
