@@ -28,8 +28,7 @@ public class CarDaoImpl implements CarDao {
 
     @Override
     public Car findByName(String name) {
-        Car car = em.createQuery("select c from Car c where c.name = :name", Car.class).setParameter("name", name).getSingleResult();
-        return car;
+        return em.createQuery("select c from Car c where c.name = :name", Car.class).setParameter("name", name).getSingleResult();
     }
 
     @Override

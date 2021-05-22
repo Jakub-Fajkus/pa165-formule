@@ -1,8 +1,8 @@
 package cz.muni.pa165.teamwhite.formula1.rest;
 
 public class RestResponse<T> {
-    private String status;
-    private T data;
+    private final String status;
+    private final T data;
 
     public RestResponse(T data, String status) {
         this.status = status;

@@ -38,7 +38,7 @@ public class CarFacadeImplTest extends AbstractTestNGSpringContextTests {
 
     @Test
     public void testCreateACarAndThenUpdateOnlyItsName() {
-        CarDTO createdDTO = new CarDTO("mercedes", new DriverDTO(null, "Valtteri", "Bottas", "FI", true, 9, 9), null);
+        CarDTO createdDTO = createMercedesWithBottas();
         Long id = carFacade.createCar(createdDTO);
 
         CarDTO updated = carFacade.update(new CarDTO(id, "McLaren", null, null));
@@ -54,12 +54,12 @@ public class CarFacadeImplTest extends AbstractTestNGSpringContextTests {
 
     @Test
     public void testCreateACarAndThenUpdateOnlyItsDriver() {
-        CarDTO createdDTO = new CarDTO("mercedes", new DriverDTO(null, "Valtteri", "Bottas", "FI", true, 9, 9), null);
+        CarDTO createdDTO = createMercedesWithBottas();
         Long id = carFacade.createCar(createdDTO);
 
         Long botasId = carFacade.getCarById(id).getDriver().getId();
 
-        DriverDTO newDriver = new DriverDTO(null, "Pepik", "Novaku", "CZE", false, 0, 0);
+        DriverDTO newDriver = createDriverPepik();
         Long newDriverId = driverFacade.createDriver(newDriver);
 
         CarDTO updated = carFacade.update(new CarDTO(id, null, driverFacade.getDriverById(newDriverId), null));
@@ -75,12 +75,12 @@ public class CarFacadeImplTest extends AbstractTestNGSpringContextTests {
 
     @Test
     public void testCreateACarAndThenUpdateBothItsNameAndDriver() {
-        CarDTO createdDTO = new CarDTO("mercedes", new DriverDTO(null, "Valtteri", "Bottas", "FI", true, 9, 9), null);
+        CarDTO createdDTO = createMercedesWithBottas();
         Long id = carFacade.createCar(createdDTO);
 
         Long botasId = carFacade.getCarById(id).getDriver().getId();
 
-        DriverDTO newDriver = new DriverDTO( null, "Pepik", "Novaku", "CZE", false, 0, 0);
+        DriverDTO newDriver = createDriverPepik();
         Long newDriverId = driverFacade.createDriver(newDriver);
         CarDTO updated = carFacade.update(new CarDTO(id, "McLaren", driverFacade.getDriverById(newDriverId), null));
 
@@ -141,5 +141,14 @@ public class CarFacadeImplTest extends AbstractTestNGSpringContextTests {
         Assert.assertNull(dbOldComponent1.getCar());
         Assert.assertNull(dbOldComponent2.getCar());
         Assert.assertEquals(createdDTO, dbNewComponent.getCar());
+    }
+
+
+    private DriverDTO createDriverPepik() {
+        return new DriverDTO(null, "Pepik", "Novaku", "CZE", false, 0, 0);
+    }
+
+    private CarDTO createMercedesWithBottas() {
+        return new CarDTO("mercedes", new DriverDTO(null, "Valtteri", "Bottas", "FI", true, 9, 9), null);
     }
 }

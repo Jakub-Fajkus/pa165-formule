@@ -32,7 +32,7 @@ public class ComponentFacadeImplTest extends AbstractTestNGSpringContextTests {
 
     @Test
     public void testCreateAComponentAndThenUpdateOnlyItsName() {
-        ComponentDTO createdDTO = new ComponentDTO(ComponentType.ENGINE, "engine", new CarDTO("mercedes", null, null));
+        ComponentDTO createdDTO = new ComponentDTO(ComponentType.ENGINE, "engine", createCarMercedes());
         Long id = componentFacade.createComponent(createdDTO);
 
         ComponentDTO updated = componentFacade.update(new ComponentDTO(id, null, "new engine", null));
@@ -48,7 +48,7 @@ public class ComponentFacadeImplTest extends AbstractTestNGSpringContextTests {
 
     @Test
     public void testCreateAComponentAndThenUpdateOnlyItsType() {
-        ComponentDTO createdDTO = new ComponentDTO(ComponentType.ENGINE, "component", new CarDTO("mercedes", null, null));
+        ComponentDTO createdDTO = new ComponentDTO(ComponentType.ENGINE, "component", createCarMercedes());
         Long id = componentFacade.createComponent(createdDTO);
 
         ComponentDTO updated = componentFacade.update(new ComponentDTO(id, ComponentType.RIMS, null, null));
@@ -62,9 +62,10 @@ public class ComponentFacadeImplTest extends AbstractTestNGSpringContextTests {
         Assert.assertEquals(updated.getType(), ComponentType.RIMS);
     }
 
+
     @Test
     public void testCreateAComponentAndThenUpdateOnlyItsCar() {
-        ComponentDTO createdDTO = new ComponentDTO(ComponentType.ENGINE, "component", new CarDTO("mercedes", null, null));
+        ComponentDTO createdDTO = new ComponentDTO(ComponentType.ENGINE, "component", createCarMercedes());
         Long id = componentFacade.createComponent(createdDTO);
 
         CarDTO newCar =  new CarDTO("ferrari", null, null);
@@ -84,7 +85,7 @@ public class ComponentFacadeImplTest extends AbstractTestNGSpringContextTests {
         ComponentDTO newComponentDTO = new ComponentDTO(ComponentType.ENGINE, "engine", null);
         Long componentId = componentFacade.createComponent(newComponentDTO);
 
-        CarDTO carForComponent = new CarDTO("mercedes", null, null);
+        CarDTO carForComponent = createCarMercedes();
 
         ComponentDTO updated = componentFacade.update(new ComponentDTO(componentId, null, null, carForComponent));
 
@@ -93,5 +94,7 @@ public class ComponentFacadeImplTest extends AbstractTestNGSpringContextTests {
         Assert.assertEquals(updated.getCar(), carForComponent);
     }
 
-
+    private CarDTO createCarMercedes() {
+        return new CarDTO("mercedes", null, null);
+    }
 }
