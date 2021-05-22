@@ -7,11 +7,6 @@ export default {
 
     components: {componentDriversList},
 
-    setup() {
-        const title = 'Drivers'
-        return {title}
-    },
-
     methods: {
         onShowDriverDetail(driverId) {
             console.log("onShowDriverDetail " + driverId);
@@ -28,7 +23,6 @@ export default {
 
     template: `
         <div>
-            {{ title }}
             <componentDriversList @show-driver-detail="onShowDriverDetail" @new-driver-detail="onNewDriverDetail" @show-drivers-list="onShowDriversList"></componentDriversList>
         </div>
     `,

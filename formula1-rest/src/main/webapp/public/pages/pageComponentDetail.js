@@ -15,12 +15,6 @@ export default {
         },
     },
 
-    setup() {
-        const title = 'Component detail'
-
-        return {title}
-    },
-
     mounted() {
         console.log(this.pageParams);
     },

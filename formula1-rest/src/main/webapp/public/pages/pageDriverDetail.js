@@ -8,12 +8,6 @@ export default {
         pageParams: Object,
     },
 
-    setup() {
-        const title = 'Driver detail'
-
-        return {title}
-    },
-
     mounted() {
         console.log(this.pageParams);
     },
@@ -22,7 +16,6 @@ export default {
         <div>
          <div class="content">
             <div class="container-fluid">
-              {{ title }} {{id}} {{pageParams.id}}
               <div class="row">
                 <div class="col-md-12">
                   <componentDriverDetail :id="pageParams.id"></componentDriverDetail>

@@ -7,11 +7,6 @@ export default {
 
     components: {componentCarsList},
 
-    setup() {        
-        const title = 'Cars'
-        return {title}
-    },
-
     methods: {
         onShowCarDetail(carId) {
             console.log("onShowCarDetail " + carId);
@@ -22,7 +17,6 @@ export default {
 
     template: `
         <div>
-            {{ title }}
             <componentCarsList @show-car-detail="onShowCarDetail"></componentCarsList>
         </div>
     `,

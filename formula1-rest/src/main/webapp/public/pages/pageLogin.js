@@ -7,11 +7,6 @@ export default {
 
     components: {componentLogin},
 
-    setup() {        
-        const title = 'Login'
-        return {title}
-    },
-
     template: `
         <div>
             <componentLogin></componentLogin>

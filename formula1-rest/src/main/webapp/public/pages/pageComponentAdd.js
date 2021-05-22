@@ -1,5 +1,4 @@
 import componentComponenAdd from '../components/componentComponentAdd.js'
-import functions from "../../functions.js";
 
 
 export default {
@@ -14,12 +13,6 @@ export default {
         onGoBack() {
             this.$emit('go-to-component-list');
         },
-    },
-
-    setup() {
-        const title = 'Add new component'
-
-        return {title}
     },
 
     template: `

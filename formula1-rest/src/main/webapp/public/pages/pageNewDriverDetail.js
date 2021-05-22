@@ -8,12 +8,6 @@ export default {
         pageParams: Object,
     },
 
-    setup() {
-        const title = 'New driver detail'
-
-        return {title}
-    },
-
     methods: {
         onShowDriversList() {
             this.$emit("show-drivers-list");
@@ -24,7 +18,6 @@ export default {
         <div>
          <div class="content">
             <div class="container-fluid">
-            {{ title }}
               <div class="row">
                 <div class="col-md-12">
                   <componentNewDriverDetail @new-driver-detail="onNewDriverDetail" @show-drivers-list="onShowDriversList"></componentNewDriverDetail>

@@ -6,11 +6,6 @@ export default {
     icon: 'handyman',
     showInMenu: true,
 
-    setup() {
-        const title = ''
-        return {title}
-    },
-
     methods: {
         onShowComponentDetail(componentId) {
             console.log("onShowComponentDetail " + componentId);
@@ -25,7 +20,6 @@ export default {
 
     template: `     
         <div>
-            {{ title }}
             <componentComponentsList @show-component-detail="onShowComponentDetail" @add-component="onAddComponent" ></componentComponentsList>
         </div>
     `,

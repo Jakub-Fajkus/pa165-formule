@@ -104,18 +104,18 @@ export default {
                   <div class="card">
                     <div class="card-header card-header-tabs card-header-primary">
                         <div class="nav-tabs-navigation">
-                    <div class="nav-tabs-wrapper">
-                      <span class="nav-tabs-title">Drivers</span>
-                      <ul class="nav nav-tabs" data-tabs="tabs">
-                        <li class="nav-item">
-                          <a class="nav-link active" @click="$emit('new-driver-detail')" href="" data-toggle="tab">
-                            <i class="material-icons">add</i> New
-                            <div class="ripple-container"></div>
-                          </a>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
+                        <div class="nav-tabs-wrapper">
+                          <h4 class="nav-tabs-title">Drivers</h4>
+                          <ul class="nav nav-tabs" data-tabs="tabs">
+                            <li class="nav-item">
+                              <a class="nav-link active" @click="$emit('new-driver-detail')" href="" data-toggle="tab">
+                                <i class="material-icons">add</i> New
+                                <div class="ripple-container"></div>
+                              </a>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
                     </div>
                     <div class="card-body table-responsive">
                         <table class="table table-hover">

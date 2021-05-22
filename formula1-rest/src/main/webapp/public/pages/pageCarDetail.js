@@ -10,12 +10,6 @@ export default {
         pageParams: Object,
     },
 
-    setup() {
-        const title = 'Car detail'
-
-        return {title}
-    },
-
     mounted() {
         console.log(this.pageParams);
     },
@@ -24,7 +18,6 @@ export default {
         <div>
          <div class="content">
             <div class="container-fluid">
-              {{ title }} {{id}} {{pageParams.id}}
               <div class="row">
                 <div class="col-md-4">
                   <componentCarDetail :id="pageParams.id"></componentCarDetail>
