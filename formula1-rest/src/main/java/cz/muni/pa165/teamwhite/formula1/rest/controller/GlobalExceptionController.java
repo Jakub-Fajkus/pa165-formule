@@ -3,6 +3,7 @@ package cz.muni.pa165.teamwhite.formula1.rest.controller;
 import cz.muni.pa165.teamwhite.formula1.rest.ResponseStatuses;
 import cz.muni.pa165.teamwhite.formula1.rest.RestResponse;
 import cz.muni.pa165.teamwhite.formula1.service.exception.EntityNotFoundException;
+import cz.muni.pa165.teamwhite.formula1.service.exception.Formula1ServiceException;
 import org.hibernate.service.spi.ServiceException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,6 +39,15 @@ public class GlobalExceptionController {
     RestResponse<List<String>> handleException(ServiceException ex) {
         log.error("handleException", ex);
         return new RestResponse<>(Arrays.asList("User service exception occurred", ex.getMessage()), ResponseStatuses.ERROR);
+    }
+
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseBody
+    RestResponse<List<String>> handleException(Formula1ServiceException ex) {
+        log.error("handleException - Formula1ServiceException", ex);
+
+        return new RestResponse<>(Arrays.asList("Bad request", ex.getMessage()), ResponseStatuses.ERROR);
     }
 
     @ExceptionHandler

@@ -1,7 +1,6 @@
 package cz.muni.pa165.teamwhite.formula1.rest.dto;
 
 import java.util.Objects;
-
 import static java.util.Objects.isNull;
 
 /**

@@ -20,7 +20,6 @@ import org.testng.annotations.Test;
 import javax.transaction.Transactional;
 import javax.validation.ConstraintViolationException;
 import javax.validation.ValidationException;
-import java.util.Set;
 
 /**
  * @author Tomas Sedlacek

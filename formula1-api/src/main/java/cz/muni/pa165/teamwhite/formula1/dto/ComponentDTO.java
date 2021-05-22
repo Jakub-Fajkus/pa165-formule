@@ -1,6 +1,7 @@
 package cz.muni.pa165.teamwhite.formula1.dto;
 
 import cz.muni.pa165.teamwhite.formula1.enums.ComponentType;
+
 import javax.validation.constraints.NotNull;
 import java.util.Objects;
 

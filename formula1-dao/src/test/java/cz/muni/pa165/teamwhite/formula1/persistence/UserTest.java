@@ -13,8 +13,6 @@ import org.springframework.test.context.transaction.TransactionalTestExecutionLi
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import javax.persistence.NoResultException;
-import javax.persistence.PersistenceException;
 import javax.transaction.Transactional;
 import javax.validation.ConstraintViolationException;
 import java.util.List;

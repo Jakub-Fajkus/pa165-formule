@@ -26,7 +26,6 @@ export default {
     methods: {
         validateForm() {
             let success = true;
-
             this.errors = [];
 
             if (!this.name) {
@@ -40,13 +39,10 @@ export default {
                 functions.showWarningNotification(this.errors.type)
                 success = false;
             }
-
             return success;
         },
 
         addComponent() {
-            console.log("Add component")
-
             if (!this.validateForm()) {
                 return;
             }
@@ -61,14 +57,10 @@ export default {
                 }
             })
                 .then(response => {
-                    console.log("Success:", response);
-
                     this.$emit('go-back');
                     functions.showSuccessNotification("Component successfully created")
-
                 })
                 .catch(error => {
-                    console.log("Error catch", error);
                     functions.showErrorNotification(error)
                 });
         },
@@ -92,24 +84,22 @@ export default {
                   </div>
                 </div>
                 
-            
-            <div class="form-group">
-               <label class="bmd-label-floating">Type <span class="error">{{errors.type}}</span></label>
-                  <select class="form-control" v-model="type">
-                    <option value="0">Engine</option>
-                    <option value="1">Suspension</option>
-                    <option value="2">Transmission</option>
-                    <option value="3">Rims</option>
-                    <option value="4">Rear spoiler</option>
-                  </select>
+                <div class="form-group">
+                   <label class="bmd-label-floating">Type <span class="error">{{errors.type}}</span></label>
+                   <select class="form-control" v-model="type">
+                      <option value="0">Engine</option>
+                      <option value="1">Suspension</option>
+                      <option value="2">Transmission</option>
+                      <option value="3">Rims</option>
+                      <option value="4">Rear spoiler</option>
+                   </select>
                 </div>
                 
- 
-                 
                 <button type="button" @click="addComponent()" class="btn btn-primary pull-right">Add</button>
+                
                 <div class="clearfix"></div>
               </form>
             </div>
-          </div>
+        </div>
     `,
 };

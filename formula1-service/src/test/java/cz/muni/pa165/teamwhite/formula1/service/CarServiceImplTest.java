@@ -10,8 +10,8 @@ import org.hibernate.service.spi.ServiceException;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.dao.DuplicateKeyException;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTransactionalTestNGSpringContextTests;
 import org.testng.Assert;
@@ -21,10 +21,10 @@ import org.testng.annotations.Test;
 import java.util.ArrayList;
 import java.util.HashSet;
 
-import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 
