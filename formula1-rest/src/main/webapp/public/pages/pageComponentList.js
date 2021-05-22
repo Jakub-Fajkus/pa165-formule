@@ -1,5 +1,8 @@
 import componentComponentsList from "../components/componentComponentsList.js";
 
+/**
+ * @author Tomas Sedlacek
+ */
 export default {
     name: 'Component',
     components: {componentComponentsList},

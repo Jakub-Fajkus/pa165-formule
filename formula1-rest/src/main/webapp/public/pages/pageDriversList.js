@@ -1,5 +1,8 @@
 import componentDriversList from '../components/componentDriversList.js'
 
+/**
+ * @author Karolina Hecova
+ */
 export default {
     name: 'Drivers',
     icon: 'accessible_forward',

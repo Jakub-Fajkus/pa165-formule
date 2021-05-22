@@ -1,6 +1,8 @@
 import componentComponenAdd from '../components/componentComponentAdd.js'
 
-
+/**
+ * @author Tomas Sedlacek
+ */
 export default {
     name: 'Component Add',
     requiredRoles: ["ROLE_MANAGER", "ROLE_ENGINEER"],

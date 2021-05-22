@@ -1,5 +1,8 @@
 import componentDriverDetail from '../components/componentDriverDetail.js'
 
+/**
+ * @author Karolina Hecova
+ */
 export default {
     name: 'Driver detail',
     requiredRoles: ["ROLE_MANAGER"],

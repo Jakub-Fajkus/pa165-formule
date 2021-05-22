@@ -1,5 +1,8 @@
 import componentCarsList from '../components/componentCarsList.js'
 
+/**
+ * @author Jakub Fajkus
+ */
 export default {
     name: 'Cars',
     icon: 'commute',

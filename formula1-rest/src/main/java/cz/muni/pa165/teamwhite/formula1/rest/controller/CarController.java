@@ -28,6 +28,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * @author Jakub Fajkus
+ */
 @Api(value = ApiUris.ROOT_URI_CARS)
 @RequestMapping(ApiUris.ROOT_URI)
 @RestController

@@ -19,6 +19,9 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.security.RolesAllowed;
 import java.util.List;
 
+/**
+ * @author Jiri Andrlik
+ */
 @Api(value = ApiUris.ROOT_URI_USERS)
 @RequestMapping(ApiUris.ROOT_URI)
 @RestController

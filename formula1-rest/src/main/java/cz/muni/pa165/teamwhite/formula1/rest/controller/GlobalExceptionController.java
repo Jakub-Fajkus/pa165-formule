@@ -17,6 +17,9 @@ import javax.validation.ConstraintViolationException;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * @author Jakub Fajkus
+ */
 @ControllerAdvice
 public class GlobalExceptionController {
     final static Logger log = LoggerFactory.getLogger(GlobalExceptionController.class);

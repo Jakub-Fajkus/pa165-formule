@@ -4,6 +4,9 @@ import cz.muni.pa165.teamwhite.formula1.enums.ComponentType;
 
 import java.util.Objects;
 
+/**
+ * @author Tomas Sedlacek
+ */
 public class ComponentAPIDTO {
     private Long id;
 

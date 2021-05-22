@@ -3,6 +3,9 @@ import * as pages from './public/pages/index.js'
 import store from './store.js'
 import functions from './functions.js'
 
+/**
+ * @author Jakub Fajkus, Tomas Sedlacek, Karolina Hecova, Jiri Andrlik
+ */
 export default {
     name: 'App',
     components: pages,
