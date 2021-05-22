@@ -1,5 +1,6 @@
 package cz.muni.pa165.teamwhite.formula1.service.facade;
 
+import cz.muni.pa165.teamwhite.formula1.dto.DriverDTO;
 import cz.muni.pa165.teamwhite.formula1.dto.UserDTO;
 import cz.muni.pa165.teamwhite.formula1.enums.Role;
 import cz.muni.pa165.teamwhite.formula1.facade.UserFacade;
@@ -10,6 +11,7 @@ import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
 import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import javax.transaction.Transactional;
@@ -24,9 +26,15 @@ public class UserFacadeImplTest extends AbstractTestNGSpringContextTests {
     @Autowired
     UserFacade userFacade;
 
+    private UserDTO user;
+
+    @BeforeMethod
+    public void setUp() {
+        user = new UserDTO("franta", null, Role.MANAGER);
+    }
+
     @Test
     public void testCreateUserAndThenUpdateOnlyLogin() {
-        UserDTO user = new UserDTO("franta", null, Role.MANAGER);
         Long id = userFacade.createUser(user, "tajneHeslo");
 
         user = userFacade.getUserById(id);
@@ -40,7 +48,6 @@ public class UserFacadeImplTest extends AbstractTestNGSpringContextTests {
 
     @Test
     public void testCreateUserAndThenUpdateOnlyRole() {
-        UserDTO user = new UserDTO("franta", null, Role.MANAGER);
         Long id = userFacade.createUser(user, "tajneHeslo");
 
         user = userFacade.getUserById(id);
@@ -54,7 +61,6 @@ public class UserFacadeImplTest extends AbstractTestNGSpringContextTests {
 
     @Test
     public void testCreateUserAndThenUpdateOnlyPassword() {
-        UserDTO user = new UserDTO("franta", null, Role.MANAGER);
         Long id = userFacade.createUser(user, "tajneHeslo");
 
         user = userFacade.getUserById(id);
@@ -69,7 +75,6 @@ public class UserFacadeImplTest extends AbstractTestNGSpringContextTests {
 
     @Test
     public void testCreateUserAndThenUpdateLoginAndRole() {
-        UserDTO user = new UserDTO("franta", null, Role.MANAGER);
         Long id = userFacade.createUser(user, "tajneHeslo");
 
         user = userFacade.getUserById(id);
@@ -83,7 +88,6 @@ public class UserFacadeImplTest extends AbstractTestNGSpringContextTests {
 
     @Test
     public void testCreateUserAndThenUpdateLoginRoleAndPassword() {
-        UserDTO user = new UserDTO("franta", null, Role.MANAGER);
         Long id = userFacade.createUser(user, "tajneHeslo");
 
         user = userFacade.getUserById(id);
