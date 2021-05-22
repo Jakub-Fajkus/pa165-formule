@@ -60,6 +60,25 @@ export default {
 
         onGoToList() {
             this.page = "pageComponentList";
+        },
+
+        onShowDriverDetail(driverId) {
+            console.log("parent onShowDriverDetail " + driverId);
+
+            this.page = "pageDriverDetail";
+            this.pageParams = {id: driverId};
+        },
+
+        onNewDriverDetail() {
+            console.log("parent onShowDriverDetail ");
+
+            this.page = "pageNewDriverDetail";
+        },
+
+        onShowDriversList() {
+            console.log("parent onShowDriversList ");
+
+            this.page = "pageDriversList";
         }
     },
 
@@ -151,8 +170,13 @@ export default {
       <div class="content">
         <div class="container-fluid">
           <!-- your content here -->
-          <component :is="page || 'homepage'" @show-car-detail="onShowCarDetail"  @add-component="onAddComponent" @show-component-detail="onShowComponentDetail" @go-to-component-list="onGoToList" :pageParams="pageParams"></component>
-          
+          <component :is="page" @show-car-detail="onShowCarDetail" 
+                                @add-component="onAddComponent" 
+                                @show-component-detail="onShowComponentDetail" 
+                                @go-to-component-list="onGoToList" 
+                                @show-driver-detail="onShowDriverDetail" 
+                                @new-driver-detail="onNewDriverDetail" 
+                                @show-drivers-list="onShowDriversList" :pageParams="pageParams"></component>
         </div>
       </div>
       <footer class="footer">
@@ -176,7 +200,5 @@ export default {
         </div>
       </footer>
     </div>
-    
-        
     `,
   };

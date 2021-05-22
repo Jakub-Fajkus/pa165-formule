@@ -95,7 +95,7 @@ public class RestConfiguration implements WebMvcConfigurer {
                     .fields(field("name").accessible(), field("name").accessible())
                     .fields(field("surname").accessible(), field("surname").accessible())
                     .fields(field("nationality").accessible(), field("nationality").accessible())
-                    .fields(field("isAggressive").accessible(), field("isAggressive").accessible())
+                    .fields(field("isAggressive").accessible(), field("aggressive").accessible())
                     .fields(field("wetDriving").accessible(), field("wetDriving").accessible())
                     .fields(field("reactions").accessible(), field("reactions").accessible())
                     .fields(field("car.id").accessible(), field("car").accessible())

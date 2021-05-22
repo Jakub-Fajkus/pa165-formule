@@ -35,7 +35,7 @@ export default {
 
             if (!this.type) {
                 this.errors.type = "Type required!";
-                functions.showWarningNotification(this.errors.name)
+                functions.showWarningNotification(this.errors.type)
                 success = false;
             }
 

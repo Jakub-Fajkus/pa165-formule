@@ -47,8 +47,8 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade {
         Driver lewis = createDriver(null, "Lewis", "Hamilton", "GB", true, 10, 10);
         Driver valtteri = createDriver(null, "Valtteri", "Bottas", "FI", true, 9, 9);
         createDriver(null, "Lando", "Norris", "GB", false, 9, 5);
-        createDriver(null, "Daniel", "Ricciardo", "AUS", true, 10, 1);
-        createDriver(null, "Lance", "Stroll", "CAD", false, 2, 8);
+        createDriver(null, "Daniel", "Ricciardo", "AT", true, 10, 1);
+        createDriver(null, "Lance", "Stroll", "CA", false, 2, 8);
 
         log.debug("Creating cars");
         Car car1 = createCar("Race car #1", lewis, new HashSet<>());
