@@ -15,6 +15,8 @@ public abstract class ApiUris {
     public static final String ROOT_URI_USERS = "/users";
     public static final String ROOT_URI_USER = "/users/{id}";
 
+    public static final String ROOT_URI_PASSWORD = "/users/password";
+
     public static final String ROOT_URI_COMPONENTS = "/components";
     public static final String ROOT_URI_COMPONENT = "/components/{id}";
 
