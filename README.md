@@ -3,6 +3,9 @@
 To see the project wiki, see the `doc` directory.
 
 ## REST API
-The API Swagger2 documentation is available at URL http://localhost:8080/pa165/swagger-ui/index.html
+The API Swagger2 documentation is available [here](http://localhost:8080/pa165/swagger-ui/index.html). 
+Here you can also test our API. Not all methods from facade have their own API. In API are only methods 
+which are required for front-end in javascript as we decided that the rest of them are not useful.
 
-todo: napsat do fasady informaci, ze tato operace neni intended to be exposed to the outside
+###Test our apps
+For testing our application run this command *mvn clean install && cd formula1-rest && mvn cargo:run*.
