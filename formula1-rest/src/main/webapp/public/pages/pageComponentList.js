@@ -5,6 +5,7 @@ export default {
     components: {componentComponentsList},
     icon: 'handyman',
     showInMenu: true,
+    requiredRoles: ["ROLE_MANAGER", "ROLE_ENGINEER"],
 
     methods: {
         onShowComponentDetail(componentId) {

@@ -3,6 +3,7 @@ import componentNewDriverDetail from '../components/componentNewDriverDetail.js'
 export default {
     name: 'New driver detail',
     components: {componentNewDriverDetail},
+    requiredRoles: ["ROLE_MANAGER"],
 
     props: {
         pageParams: Object,

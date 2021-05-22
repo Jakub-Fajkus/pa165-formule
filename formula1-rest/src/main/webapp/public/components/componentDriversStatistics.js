@@ -7,7 +7,7 @@ export default {
 
 
     mounted() {
-        axios.get('http://localhost:8080/pa165/rest/drivers/score', {}, {
+        axios.get('http://localhost:8080/pa165/rest/drivers/score', {
             headers: {
                 "Content-type": "application/json",
                 "Authorization": `Bearer ${store.$jwt}`,

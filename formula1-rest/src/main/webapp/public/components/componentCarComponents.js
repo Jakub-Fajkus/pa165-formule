@@ -31,7 +31,7 @@ export default { //todo: hide somehow from the menu
     mounted() {
         console.log("Car components for id: ", this.id);
 
-        axios.get('http://localhost:8080/pa165/rest/cars/' + this.id + "/components", {}, {
+        axios.get('http://localhost:8080/pa165/rest/cars/' + this.id + "/components", {
             headers: {
                 "Content-type": "application/json",
                 "Authorization": `Bearer ${store.$jwt}`,
@@ -64,7 +64,7 @@ export default { //todo: hide somehow from the menu
                 functions.showErrorNotification(error)
             });
 
-        axios.get('http://localhost:8080/pa165/rest/components', {}, {
+        axios.get('http://localhost:8080/pa165/rest/components', {
             headers: {
                 "Content-type": "application/json",
                 "Authorization": `Bearer ${store.$jwt}`,

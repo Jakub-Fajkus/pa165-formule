@@ -4,6 +4,7 @@ export default {
     name: 'Drivers',
     icon: 'accessible_forward',
     showInMenu: true,
+    requiredRoles: ["ROLE_MANAGER"],
 
     components: {componentDriversList},
 

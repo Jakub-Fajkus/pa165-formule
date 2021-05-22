@@ -4,6 +4,7 @@ import componentCarComponents from '../components/componentCarComponents.js'
 
 export default {
     name: 'Car detail',
+    requiredRoles: ["ROLE_MANAGER"],
     components: {componentCarDetail, componentCarComponents},
 
     props: {

@@ -27,7 +27,7 @@ export default {
     mounted() {
         console.log("Driver detail id: ", this.id);
 
-        axios.get('http://localhost:8080/pa165/rest/drivers/' + this.id, {}, {
+        axios.get('http://localhost:8080/pa165/rest/drivers/' + this.id, {
             headers: {
                 "Content-type": "application/json",
                 "Authorization": `Bearer ${store.$jwt}`,
@@ -85,7 +85,7 @@ export default {
                 return;
             }
 
-            axios.patch('http://localhost:8080/pa165/rest/drivers/' + this.id + '', {
+            axios.patch('http://localhost:8080/pa165/rest/drivers/' + this.id, {
                 "name": this.name,
                 "surname": this.surname,
                 "nationality": this.nationality,

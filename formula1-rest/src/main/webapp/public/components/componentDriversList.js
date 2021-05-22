@@ -21,7 +21,7 @@ export default {
 
     methods: {
         manualReload() {
-            axios.get('http://localhost:8080/pa165/rest/drivers', {}, {
+            axios.get('http://localhost:8080/pa165/rest/drivers', {
                 headers: {
                     "Content-type": "application/json",
                     "Authorization": `Bearer ${store.$jwt}`,
@@ -37,7 +37,7 @@ export default {
                             return;
                         }
 
-                        axios.get('http://localhost:8080/pa165/rest/cars/'+driver.car, {}, {
+                        axios.get('http://localhost:8080/pa165/rest/cars/'+driver.car, {
                             headers: {
                                 "Content-type": "application/json",
                                 "Authorization": `Bearer ${store.$jwt}`,
@@ -74,7 +74,7 @@ export default {
         removeDriver(driverId) {
             console.log("Delete driver with id: ", driverId)
 
-            axios.delete('http://localhost:8080/pa165/rest/drivers/' + driverId + '', {
+            axios.delete('http://localhost:8080/pa165/rest/drivers/' + driverId, {
                 headers: {
                     "Content-type": "application/json",
                     "Authorization": `Bearer ${store.$jwt}`,

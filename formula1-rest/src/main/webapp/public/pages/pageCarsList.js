@@ -4,6 +4,7 @@ export default {
     name: 'Cars',
     icon: 'commute',
     showInMenu: true,
+    requiredRoles: ["ROLE_MANAGER"],
 
     components: {componentCarsList},
 

@@ -3,6 +3,7 @@ import componentComponentDetail from '../components/componentComponentDetail.js'
 
 export default {
     name: 'Component detail',
+    requiredRoles: ["ROLE_MANAGER", "ROLE_ENGINEER"],
     components: {componentComponentDetail},
 
     props: {

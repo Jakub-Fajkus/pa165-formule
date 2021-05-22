@@ -11,7 +11,7 @@ export default {
     },
 
     mounted() {
-        axios.get('http://localhost:8080/pa165/rest/cars', {}, {
+        axios.get('http://localhost:8080/pa165/rest/cars', {
             headers: {
                 "Content-type": "application/json",
                 "Authorization": `Bearer ${store.$jwt}`,
@@ -23,7 +23,7 @@ export default {
                 response.data.data.forEach(car => {
                     console.log("Each car", car);
 
-                    axios.get('http://localhost:8080/pa165/rest/drivers/'+car.driver, {}, {
+                    axios.get('http://localhost:8080/pa165/rest/drivers/'+car.driver, {
                         headers: {
                             "Content-type": "application/json",
                             "Authorization": `Bearer ${store.$jwt}`,

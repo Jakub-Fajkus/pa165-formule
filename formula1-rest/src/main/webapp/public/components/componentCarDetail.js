@@ -24,7 +24,7 @@ export default { //todo: hide somehow from the menu
     mounted() {
         console.log("Car detail id: ", this.id);
 
-        axios.get('http://localhost:8080/pa165/rest/drivers', {}, {
+        axios.get('http://localhost:8080/pa165/rest/drivers', {
             headers: {
                 "Content-type": "application/json",
                 "Authorization": `Bearer ${store.$jwt}`,
@@ -40,7 +40,7 @@ export default { //todo: hide somehow from the menu
                 functions.showErrorNotification(error)
             });
 
-        axios.get('http://localhost:8080/pa165/rest/cars/' + this.id, {}, {
+        axios.get('http://localhost:8080/pa165/rest/cars/' + this.id, {
             headers: {
                 "Content-type": "application/json",
                 "Authorization": `Bearer ${store.$jwt}`,
@@ -82,7 +82,7 @@ export default { //todo: hide somehow from the menu
                 return;
             }
 
-            axios.patch('http://localhost:8080/pa165/rest/cars/' + this.id + '', {
+            axios.patch('http://localhost:8080/pa165/rest/cars/' + this.id, {
                 "name": this.name,
                 "driver": this.driver
             }, {

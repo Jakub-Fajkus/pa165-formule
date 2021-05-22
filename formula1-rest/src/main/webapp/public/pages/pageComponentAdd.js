@@ -3,6 +3,7 @@ import componentComponenAdd from '../components/componentComponentAdd.js'
 
 export default {
     name: 'Component Add',
+    requiredRoles: ["ROLE_MANAGER", "ROLE_ENGINEER"],
     components: {componentComponenAdd},
 
     props: {

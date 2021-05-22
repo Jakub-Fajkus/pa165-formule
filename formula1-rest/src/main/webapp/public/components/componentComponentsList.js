@@ -11,7 +11,7 @@ export default {
     },
 
     mounted() {
-        axios.get('http://localhost:8080/pa165/rest/components', {}, {
+        axios.get('http://localhost:8080/pa165/rest/components', {
             headers: {
                 "Content-type": "application/json",
                 "Authorization": `Bearer ${store.$jwt}`,
@@ -23,7 +23,7 @@ export default {
                 response.data.data.forEach(component => {
                     console.log("Each component", component);
 
-                    axios.get('http://localhost:8080/pa165/rest/components/'+ component.id, {}, {
+                    axios.get('http://localhost:8080/pa165/rest/components/'+ component.id, {
                         headers: {
                             "Content-type": "application/json",
                             "Authorization": `Bearer ${store.$jwt}`,

@@ -24,7 +24,7 @@ export default {
         console.log("Component detail id: ", this.id);
 
 
-        axios.get('http://localhost:8080/pa165/rest/components/' + this.id, {}, {
+        axios.get('http://localhost:8080/pa165/rest/components/' + this.id, {
             headers: {
                 "Content-type": "application/json",
                 "Authorization": `Bearer ${store.$jwt}`,
@@ -66,7 +66,7 @@ export default {
                 return;
             }
 
-            axios.patch('http://localhost:8080/pa165/rest/components/' + this.id + '', {
+            axios.patch('http://localhost:8080/pa165/rest/components/' + this.id, {
                 "name": this.name
             }, {
                 headers: {

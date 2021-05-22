@@ -4,6 +4,7 @@ import componentDriversStatistics from '../components/componentDriversStatistics
 export default {
     name: 'Driver statistics',
     icon: 'dashboard',
+    requiredRoles: ["ROLE_MANAGER"],
     showInMenu: true,
     components: {componentDriversStatistics},
 

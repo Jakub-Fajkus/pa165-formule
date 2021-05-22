@@ -2,6 +2,7 @@ import componentDriverDetail from '../components/componentDriverDetail.js'
 
 export default {
     name: 'Driver detail',
+    requiredRoles: ["ROLE_MANAGER"],
     components: {componentDriverDetail},
 
     props: {

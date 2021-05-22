@@ -10,7 +10,15 @@ export default {
     data() {
         return {
             page: null,
-            pageParams: {}
+            pageParams: {},
+            role: store.$role,
+        }
+    },
+
+    computed: {
+        currentRole() {
+            // `this` points to the vm instance
+            return store.$role;
         }
     },
 
@@ -21,8 +29,9 @@ export default {
             if (store.$jwt == null) {
                 this.page = "pageLogin";
             } else {
+                console.log("NULL?:", store.$jwt);
                 if (store.$role != "ROLE_MANAGER") {
-                    let whitelist = ["pageLogin"];
+                    let whitelist = ["pageLogin", "pageComponentAdd", "pageComponentDetail", "pageComponentList",];
 
                     if (whitelist.indexOf(index) !== -1) {/* in whitelist*/ //todo: add all pages allowed for the engineer
                         this.page = index;
@@ -79,6 +88,14 @@ export default {
             console.log("parent onShowDriversList ");
 
             this.page = "pageDriversList";
+        },
+
+        handleLogout() {
+            console.log("logging out...")
+            store.$jwt = null;
+            store.$role = null;
+            store.$username = null;
+            this.page = "pageLogin";
         }
     },
 
@@ -96,7 +113,14 @@ export default {
             });
             Object.keys(store).forEach(function (key){
                 if (key.charAt(0) == "$") {
-                    if (localStorage.getItem(key)) store[key] = localStorage.getItem(key);
+                    if (localStorage.getItem(key)) {
+                        if (localStorage.getItem(key) === 'null') {
+                            store[key] = null;
+                        } else {
+                            store[key] = localStorage.getItem(key);
+
+                        }
+                    }
                 }}
             )
         })
@@ -129,7 +153,7 @@ export default {
         <ul class="nav">
           
           <template v-for="item, index in pages" key="item.name">
-              <li class="nav-item " v-if="item.showInMenu">
+              <li class="nav-item " v-if="index == 'pageLogin' || item.showInMenu && item.requiredRoles && item.requiredRoles.indexOf(currentRole) !== -1">
                 <a @click="tabClicked(index)" class="nav-link" href="#0">
                   <i class="material-icons">{{ item.icon }}</i>
                   <p>{{ item.name }}</p>
@@ -154,7 +178,7 @@ export default {
           <div class="collapse navbar-collapse justify-content-end">
             <ul class="navbar-nav">
               <li class="nav-item">
-                <a class="nav-link" href="javascript:;" @click="store.$jwt = store.$role = store.$username = null">
+                <a class="nav-link" href="javascript:;" @click="handleLogout()">
                   <i class="material-icons">logout</i>
                   <p class="d-lg-none d-md-block">
                     Log out
