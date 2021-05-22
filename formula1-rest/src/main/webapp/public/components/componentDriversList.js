@@ -163,7 +163,6 @@ export default {
                                   </td>
                                   <td>
                                   <div v-if="driver.car">
-                                  <a href="">{{driver.car.id}}</a>
                                     {{driver.car.name}}
                                   </div>
                                   </td>

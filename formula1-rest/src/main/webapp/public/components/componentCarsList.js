@@ -100,7 +100,6 @@ export default {
                                     {{car.name}}
                                   </td>
                                   <td>
-                                  <a href="">{{car.driver.id}}</a>
                                     {{car.driver.name}}
                                   </td>
                                   <td>
