@@ -2,7 +2,7 @@ import componentDriversList from '../components/componentDriversList.js'
 
 export default {
     name: 'Drivers',
-    icon: 'accessible',
+    icon: 'accessible_forward',
     showInMenu: true,
 
     components: {componentDriversList},
