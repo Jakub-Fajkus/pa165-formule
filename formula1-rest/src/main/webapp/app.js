@@ -3,6 +3,9 @@ import * as pages from './public/pages/index.js'
 import store from './store.js'
 import functions from './functions.js'
 
+/**
+ * @author Jakub Fajkus, Tomas Sedlacek, Karolina Hecova, Jiri Andrlik
+ */
 export default {
     name: 'App',
     components: pages,
@@ -33,7 +36,7 @@ export default {
                 if (store.$role != "ROLE_MANAGER") {
                     let whitelist = ["pageLogin", "pageComponentAdd", "pageComponentDetail", "pageComponentList",];
 
-                    if (whitelist.indexOf(index) !== -1) {/* in whitelist*/ //todo: add all pages allowed for the engineer
+                    if (whitelist.indexOf(index) !== -1) {/* in whitelist*/
                         this.page = index;
                     } else { /*restricted*/
                         this.page = "pageLogin";

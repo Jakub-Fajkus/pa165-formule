@@ -1,6 +1,8 @@
 import componentDriversStatistics from '../components/componentDriversStatistics.js'
 
-
+/**
+ * @author Jakub Fajkus
+ */
 export default {
     name: 'Driver statistics',
     icon: 'dashboard',

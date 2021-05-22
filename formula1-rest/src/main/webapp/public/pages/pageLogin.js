@@ -1,5 +1,8 @@
 import componentLogin from '../components/componentLogin.js'
 
+/**
+ * @author Jakub Fajkus
+ */
 export default {
     name: 'Login',
     icon: 'login',

@@ -1,5 +1,8 @@
 import componentNewDriverDetail from '../components/componentNewDriverDetail.js'
 
+/**
+ * @author Karolina Hecova
+ */
 export default {
     name: 'New driver detail',
     components: {componentNewDriverDetail},

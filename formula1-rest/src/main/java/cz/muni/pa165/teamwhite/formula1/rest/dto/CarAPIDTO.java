@@ -4,6 +4,9 @@ import java.util.Objects;
 
 import static java.util.Objects.isNull;
 
+/**
+ * @author Jakub Fajkus
+ */
 public class CarAPIDTO {
     private Long id;
 

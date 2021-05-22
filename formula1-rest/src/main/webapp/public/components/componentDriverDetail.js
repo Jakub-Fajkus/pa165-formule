@@ -1,6 +1,9 @@
 import store from '../../store.js'
 import functions from '../../functions.js'
 
+/**
+ * @author Karolina Hecova
+ */
 export default {
     name: 'Driver detail',
 

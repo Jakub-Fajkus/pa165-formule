@@ -1,7 +1,9 @@
 import componentCarDetail from '../components/componentCarDetail.js'
 import componentCarComponents from '../components/componentCarComponents.js'
-// import store from "../../store";
 
+/**
+ * @author Jakub Fajkus
+ */
 export default {
     name: 'Car detail',
     requiredRoles: ["ROLE_MANAGER"],

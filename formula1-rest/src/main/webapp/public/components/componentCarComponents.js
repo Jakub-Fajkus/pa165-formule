@@ -1,7 +1,10 @@
 import store from '../../store.js'
 import functions from '../../functions.js'
 
-export default { //todo: hide somehow from the menu
+/**
+ * @author Jakub Fajkus
+ */
+export default {
     name: 'Car components',
 
     props: {
