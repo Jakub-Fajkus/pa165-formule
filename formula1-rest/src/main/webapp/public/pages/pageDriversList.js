@@ -13,14 +13,10 @@ export default {
 
     methods: {
         onShowDriverDetail(driverId) {
-            console.log("onShowDriverDetail " + driverId);
-
             this.$emit('show-driver-detail', driverId);
         },
 
         onNewDriverDetail() {
-            console.log("onNewDriverDetail");
-
             this.$emit('new-driver-detail');
         },
     },

@@ -21,48 +21,32 @@ export default {
             }
         })
             .then(response => {
-                console.log("Car response", response);
-
                 response.data.data.forEach(car => {
-                    console.log("Each car", car);
-
                     axios.get('http://localhost:8080/pa165/rest/drivers/'+car.driver, {
                         headers: {
                             "Content-type": "application/json",
                             "Authorization": `Bearer ${store.$jwt}`,
                         }
                     }).then(response => {
-                        console.log("Driver response", response);
-
                         this.cars.forEach(car => {
-                            console.log("For each car: ", car);
-
                             if (car.driver == response.data.data.id) {
                                 car.driver = {id: car.driver, name: response.data.data.surname};
                                 console.log("Editing car: ", car);
                             }
                         })
                     }).catch(function (error) {
-                        console.log("Error catch", error);
-
                         functions.showErrorNotification(error);
                     });
                 })
 
                 this.cars = response.data.data;
-
-                console.log("CARS:", this.cars);
-
             })
             .catch(function (error) {
-                console.log("Error catch", error);
                 functions.showErrorNotification(error);
             });
     },
 
     setup() {
-
-
         return {store};
     },
 

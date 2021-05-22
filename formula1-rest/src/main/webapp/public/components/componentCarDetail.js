@@ -25,8 +25,6 @@ export default {
     },
 
     mounted() {
-        console.log("Car detail id: ", this.id);
-
         axios.get('http://localhost:8080/pa165/rest/drivers', {
             headers: {
                 "Content-type": "application/json",
@@ -34,12 +32,9 @@ export default {
             }
         })
             .then(response => {
-                console.log("All drivers: ", response);
-
                 this.drivers = response.data.data;
             })
             .catch(error => {
-                console.log("Car detail error: ", error);
                 functions.showErrorNotification(error)
             });
 
@@ -50,13 +45,10 @@ export default {
             }
         })
             .then(response => {
-                console.log("Car detail: ", response);
-
                 this.name = response.data.data.name;
                 this.driver = response.data.data.driver;
             })
             .catch(error => {
-                console.log("Car detail error: ", error);
                 functions.showErrorNotification(error)
             });
     },
@@ -64,23 +56,18 @@ export default {
     methods: {
         validateForm() {
             let success = true;
-
             this.errors = {};
 
             if (!this.name) {
                 this.errors.name = "Name is required";
-
                 functions.showWarningNotification("Name is required")
 
                 success = false;
             }
-
             return success;
         },
 
         editCar() {
-            console.log("Edit car with properties: ", this.name, this.driver)
-
             if (!this.validateForm()) {
                 return;
             }
@@ -95,21 +82,16 @@ export default {
                 }
             })
                 .then(response => {
-                    console.log("Success:", response);
-
                     this.name = response.data.data.name;
                     this.driver = response.data.data.driver;
 
                     functions.showSuccessNotification("Car successfully edited")
-
                 })
                 .catch(error => {
-                    console.log("Error catch", error);
                     functions.showErrorNotification(error)
                 });
         },
     },
-
 
     template: `
         <div class="card">

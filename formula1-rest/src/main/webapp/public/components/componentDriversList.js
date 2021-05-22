@@ -31,11 +31,7 @@ export default {
                 }
             })
                 .then(response => {
-                    console.log("Driver response", response);
-
                     response.data.data.forEach(driver => {
-                        console.log("Each driver", driver);
-
                         if (!driver.car) {
                             return;
                         }
@@ -46,37 +42,25 @@ export default {
                                 "Authorization": `Bearer ${store.$jwt}`,
                             }
                         }).then(response => {
-                            console.log("Car response", response);
-
                             this.drivers.forEach(driver => {
-                                console.log("For each driver: ", driver);
-
-                                console.log(response.data.data.id)
                                 if (driver.car == response.data.data.id) {
                                     driver.car = {id: driver.car, name: response.data.data.name};
                                     console.log("Editing driver: ", driver);
                                 }
                             })
                         }).catch(function (error) {
-                            console.log("Error catch", error);
-
                             functions.showErrorNotification(error);
                         });
                     })
 
                     this.drivers = response.data.data;
-
-                    console.log("DRIVERS:", this.drivers);
                 })
                 .catch(function (error) {
-                    console.log("Error catch", error);
                     functions.showErrorNotification(error);
                 });
         },
 
         removeDriver(driverId) {
-            console.log("Delete driver with id: ", driverId)
-
             axios.delete('http://localhost:8080/pa165/rest/drivers/' + driverId, {
                 headers: {
                     "Content-type": "application/json",
@@ -84,14 +68,10 @@ export default {
                 }
             })
                 .then(response => {
-                    console.log("Success:", response);
-
                     functions.showSuccessNotification("Driver successfully deleted")
                     this.manualReload()
                 })
                 .catch(error => {
-                    console.log("Error catch", error);
-
                     functions.showErrorNotification(error)
                     this.manualReload()
                 });

@@ -9,7 +9,6 @@ export default {
     showInMenu: true,
     requiredRoles: ["ROLE_MANAGER", "ROLE_ENGINEER"],
 
-
     components: {componentLogin},
 
     template: `
