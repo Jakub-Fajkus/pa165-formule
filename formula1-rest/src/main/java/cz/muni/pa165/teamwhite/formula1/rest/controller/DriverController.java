@@ -44,7 +44,7 @@ public class DriverController {
     @Autowired
     private BeanMappingService dozer;
 
-    @ApiOperation(value = "Creates new driver.")
+    @ApiOperation(value = "Creates new driver")
     @RequestMapping(value = ApiUris.ROOT_URI_DRIVERS, method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public RestResponse<DriverAPIDTO> createDriver(@RequestBody DriverAPIDTO driver) {
         Long id = driverFacade.createDriver(new DriverDTO(null, driver.getName(), driver.getSurname(), driver.getNationality(), driver.getAggressive(), driver.getWetDriving(), driver.getReactions()));
@@ -73,6 +73,7 @@ public class DriverController {
         return getDriver(id);
     }
 
+    @ApiOperation(value = "Delete information about given driver")
     @RequestMapping(value = ApiUris.ROOT_URI_DRIVER, method = RequestMethod.DELETE)
     public void removeDriver(@ApiParam(value = "The id of a driver") @PathVariable Long id) {
         driverFacade.deleteDriver(id);
