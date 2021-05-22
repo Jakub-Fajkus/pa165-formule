@@ -66,6 +66,9 @@ export default { //todo: hide somehow from the menu
 
             if (!this.name) {
                 this.errors.name = "Name is required";
+
+                functions.showWarningNotification("Name is required")
+
                 success = false;
             }
 
@@ -94,7 +97,7 @@ export default { //todo: hide somehow from the menu
                     this.name = response.data.data.name;
                     this.driver = response.data.data.driver;
 
-                    functions.showSuccessNotification("Driver successfully edited")
+                    functions.showSuccessNotification("Car successfully edited")
 
                 })
                 .catch(error => {
