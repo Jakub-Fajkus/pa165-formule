@@ -8,4 +8,4 @@ There you can also test our API. Not all methods from facade have their own API.
 which are required for front-end in javascript as we decided that the rest of them are not useful.
 
 ### Test our apps
-For testing our application run this command *mvn clean install && cd formula1-rest && mvn cargo:run*.
+For testing our application run this command from the root folder *mvn clean install && cd formula1-rest && mvn cargo:run*.
