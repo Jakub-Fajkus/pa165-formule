@@ -2,8 +2,6 @@ package cz.muni.pa165.teamwhite.formula1.facade;
 
 
 import cz.muni.pa165.teamwhite.formula1.dto.CarDTO;
-import cz.muni.pa165.teamwhite.formula1.dto.ComponentDTO;
-import cz.muni.pa165.teamwhite.formula1.dto.DriverDTO;
 
 import java.util.List;
 

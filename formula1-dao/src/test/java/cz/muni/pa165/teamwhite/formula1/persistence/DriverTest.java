@@ -1,9 +1,9 @@
 package cz.muni.pa165.teamwhite.formula1.persistence;
 
-import cz.muni.pa165.teamwhite.formula1.persistence.entity.Car;
-import cz.muni.pa165.teamwhite.formula1.persistence.entity.Driver;
 import cz.muni.pa165.teamwhite.formula1.persistence.dao.CarDao;
 import cz.muni.pa165.teamwhite.formula1.persistence.dao.DriverDao;
+import cz.muni.pa165.teamwhite.formula1.persistence.entity.Car;
+import cz.muni.pa165.teamwhite.formula1.persistence.entity.Driver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.test.context.ContextConfiguration;

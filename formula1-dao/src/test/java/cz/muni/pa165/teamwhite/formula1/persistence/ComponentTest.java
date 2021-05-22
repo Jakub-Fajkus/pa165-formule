@@ -1,10 +1,9 @@
 package cz.muni.pa165.teamwhite.formula1.persistence;
 
 
-import cz.muni.pa165.teamwhite.formula1.persistence.PersistenceConfig;
+import cz.muni.pa165.teamwhite.formula1.persistence.dao.CarDao;
 import cz.muni.pa165.teamwhite.formula1.persistence.dao.ComponentDao;
 import cz.muni.pa165.teamwhite.formula1.persistence.entity.Car;
-import cz.muni.pa165.teamwhite.formula1.persistence.dao.CarDao;
 import cz.muni.pa165.teamwhite.formula1.persistence.entity.Component;
 import cz.muni.pa165.teamwhite.formula1.persistence.enums.ComponentType;
 import org.springframework.beans.factory.annotation.Autowired;
