@@ -1,5 +1,8 @@
 import componentUsersList from '../components/componentUsersList.js'
 
+/**
+ * @author Jiri Andrlik
+ */
 export default {
     name: 'Users',
     icon: 'accessibility',

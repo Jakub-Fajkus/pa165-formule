@@ -1,6 +1,9 @@
 import store from '../../store.js'
 import functions from '../../functions.js'
 
+/**
+ * @author Jiri Andrlik
+ */
 export default {
     name: 'User list',
 

@@ -1,7 +1,10 @@
 import componentNewUserDetail from '../components/componentNewUserDetail.js'
 
+/**
+ * @author Jiri Andrlik
+ */
 export default {
-    name: 'New user detail',
+    name: 'New User',
     requiredRoles: ["ROLE_MANAGER"],
     components: {componentNewUserDetail},
 

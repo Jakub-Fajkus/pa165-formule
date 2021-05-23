@@ -4,6 +4,9 @@ import cz.muni.pa165.teamwhite.formula1.enums.Role;
 
 import java.util.Objects;
 
+/**
+ * @author Jiri Andrlik
+ */
 public class UpdateUserAPIDTO {
 
     private String login;

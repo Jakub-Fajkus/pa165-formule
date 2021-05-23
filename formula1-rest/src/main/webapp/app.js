@@ -34,7 +34,7 @@ export default {
             } else {
                 console.log("NULL?:", store.$jwt);
                 if (store.$role != "ROLE_MANAGER") {
-                    let whitelist = ["pageLogin", "pageComponentAdd", "pageComponentDetail", "pageComponentList", "pageUsersList"];
+                    let whitelist = ["pageLogin", "pageComponentAdd", "pageComponentDetail", "pageComponentList"];
 
                     if (whitelist.indexOf(index) !== -1) {/* in whitelist*/
                         this.page = index;
@@ -109,7 +109,7 @@ export default {
         },
 
         onNewUserDetail() {
-            console.log("parent onShowUserDetail ");
+            console.log("parent onNewUserDetail ");
 
             this.page = "pageNewUserDetail";
         },
@@ -232,8 +232,7 @@ export default {
                                 @show-drivers-list="onShowDriversList"
                                 @show-user-detail="onShowUserDetail"
                                 @new-user-detail="onNewUserDetail"
-                                @show-users-list="onShowUsersList"
-                                @submit-user-password="onSubmitPasswordChange" :pageParams="pageParams"></component>
+                                @show-users-list="onShowUsersList" :pageParams="pageParams"></component>
         </div>
       </div>
       <footer class="footer">

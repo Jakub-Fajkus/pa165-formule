@@ -27,14 +27,8 @@ export default {
     },
 
     template: `
-    ahoj tohle je text
         <div>
             <componentDriversList @show-driver-detail="onShowDriverDetail" @new-driver-detail="onNewDriverDetail" @show-drivers-list="onShowDriversList"></componentDriversList>
         </div>
-        <div>
-            spam
-            <componentUsersList @show-user-detail="onShowUserDetail" @new-user-detail="onNewUserDetail" @show-users-list="onShowUsersList"></componentUsersList>
-        </div>
-
     `,
 };

@@ -1,5 +1,8 @@
 import componentUserDetail from '../components/componentUserDetail.js'
 
+/**
+ * @author Jiri Andrlik
+ */
 export default {
     name: 'User detail',
     requiredRoles: ["ROLE_MANAGER"],
