@@ -1,4 +1,5 @@
 import componentDriversList from '../components/componentDriversList.js'
+import componentUsersList from '../components/componentUsersList.js'
 
 /**
  * @author Karolina Hecova

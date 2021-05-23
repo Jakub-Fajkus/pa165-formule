@@ -34,7 +34,7 @@ export default {
             } else {
                 console.log("NULL?:", store.$jwt);
                 if (store.$role != "ROLE_MANAGER") {
-                    let whitelist = ["pageLogin", "pageComponentAdd", "pageComponentDetail", "pageComponentList",];
+                    let whitelist = ["pageLogin", "pageComponentAdd", "pageComponentDetail", "pageComponentList"];
 
                     if (whitelist.indexOf(index) !== -1) {/* in whitelist*/
                         this.page = index;
@@ -99,6 +99,32 @@ export default {
             store.$role = null;
             store.$username = null;
             this.page = "pageLogin";
+        },
+
+        onShowUserDetail(userId) {
+            console.log("parent onShowUserDetail " + userId);
+
+            this.page = "pageUserDetail";
+            this.pageParams = {id: userId};
+        },
+
+        onNewUserDetail() {
+            console.log("parent onNewUserDetail ");
+
+            this.page = "pageNewUserDetail";
+        },
+
+        onShowUsersList() {
+            console.log("parent onShowUsersList ");
+
+            this.page = "pageUsersList";
+        },
+
+        onSubmitPasswordChange(userLogin) {
+            console.log("parent onSubmitPasswordChange ");
+
+            this.page = "submitPasswordChange";
+            this.pageParams = {login: userLogin};
         }
     },
 
@@ -203,7 +229,10 @@ export default {
                                 @go-to-component-list="onGoToList" 
                                 @show-driver-detail="onShowDriverDetail" 
                                 @new-driver-detail="onNewDriverDetail" 
-                                @show-drivers-list="onShowDriversList" :pageParams="pageParams"></component>
+                                @show-drivers-list="onShowDriversList"
+                                @show-user-detail="onShowUserDetail"
+                                @new-user-detail="onNewUserDetail"
+                                @show-users-list="onShowUsersList" :pageParams="pageParams"></component>
         </div>
       </div>
       <footer class="footer">
