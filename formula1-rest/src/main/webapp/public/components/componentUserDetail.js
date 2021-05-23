@@ -24,7 +24,7 @@ export default {
     mounted() {
         console.log("User detail id: ", this.id);
 
-        axios.get('http://localhost:8080/pa165/rest/users/' + this.id, {}, {
+        axios.get('http://localhost:8080/pa165/rest/users/' + this.id, {
             headers: {
                 "Content-type": "application/json",
                 "Authorization": `Bearer ${store.$jwt}`,

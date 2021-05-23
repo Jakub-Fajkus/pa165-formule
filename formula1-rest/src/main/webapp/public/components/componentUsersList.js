@@ -20,7 +20,7 @@ export default {
 
     methods: {
         manualReload() {
-            axios.get('http://localhost:8080/pa165/rest/users', {}, {
+            axios.get('http://localhost:8080/pa165/rest/users', {
                 headers: {
                     "Content-type": "application/json",
                     "Authorization": `Bearer ${store.$jwt}`,
@@ -43,7 +43,7 @@ export default {
         removeUser(userId) {
             console.log("Delete user with id: ", userId)
 
-            axios.delete('http://localhost:8080/pa165/rest/users/' + userId + '', {
+            axios.delete('http://localhost:8080/pa165/rest/users/' + userId, {
                 headers: {
                     "Content-type": "application/json",
                     "Authorization": `Bearer ${store.$jwt}`,
