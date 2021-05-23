@@ -8,7 +8,6 @@ import pageLogin from './pageLogin.js'
 import pageComponentList from './pageComponentList.js'
 import pageComponentDetail from './pageComponentDetail.js'
 import pageComponentAdd from './pageComponentAdd.js'
-import pageChangePassword from './pageChangePassword.js'
 import pageUsersList from './pageUsersList.js'
 import pageUserDetail from './pageUserDetail.js'
 import pageNewUserDetail from './pageNewUserDetail.js'
@@ -30,6 +29,5 @@ export {
     pageUsersList,
     pageUserDetail,
     pageNewUserDetail,
-    pageChangePassword,
 
 }

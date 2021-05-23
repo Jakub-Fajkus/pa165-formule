@@ -59,13 +59,6 @@ public class UserController {
         return getUser(id);
     }
 
-    @ApiOperation(value = "Change a password for the given user")
-    @PostMapping(value = ApiUris.ROOT_URI_PASSWORD, produces = MediaType.APPLICATION_JSON_VALUE)
-    public RestResponse<UserAPIDTO> changeUserPassword(@ApiParam(value = "The id of a user") @PathVariable Long id, @RequestBody UpdateUserAPIDTO user) {
-        userFacade.update(new UserDTO(id, null, user.getPassword(), null));
-        return getUser(id);
-    }
-
     @ApiOperation(value = "Create new user")
     @PostMapping(value = ApiUris.ROOT_URI_USERS, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public RestResponse<UserAPIDTO> createUser(@RequestBody UpdateUserAPIDTO user) {

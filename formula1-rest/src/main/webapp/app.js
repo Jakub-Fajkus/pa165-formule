@@ -34,7 +34,7 @@ export default {
             } else {
                 console.log("NULL?:", store.$jwt);
                 if (store.$role != "ROLE_MANAGER") {
-                    let whitelist = ["pageLogin", "pageComponentAdd", "pageComponentDetail", "pageComponentList", "pageUsersList", "pageChangePassword"];
+                    let whitelist = ["pageLogin", "pageComponentAdd", "pageComponentDetail", "pageComponentList", "pageUsersList"];
 
                     if (whitelist.indexOf(index) !== -1) {/* in whitelist*/
                         this.page = index;
