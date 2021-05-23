@@ -2,6 +2,7 @@ import componentUserDetail from '../components/componentUserDetail.js'
 
 export default {
     name: 'User detail',
+    requiredRoles: ["ROLE_MANAGER"],
     components: {componentUserDetail},
 
     props: {

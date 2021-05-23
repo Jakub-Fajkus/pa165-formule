@@ -4,6 +4,7 @@ export default {
     name: 'Users',
     icon: 'accessibility',
     showInMenu: true,
+    requiredRoles: ["ROLE_MANAGER"],
 
     components: {componentUsersList},
 
