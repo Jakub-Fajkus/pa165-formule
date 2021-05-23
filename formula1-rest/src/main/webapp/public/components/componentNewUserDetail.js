@@ -110,8 +110,8 @@ export default {
                     <div class="form-group">
                       <label class="bmd-label-floating">Role <span class="error">{{errors.role}}</span></label>
                         <select v-model="role" name="role" class="form-control">
-                            <option value="0">Manager</option>
-                            <option value="1">Engineer</option>
+                            <option value="MANAGER">Manager</option>
+                            <option value="ENGINEER">Engineer</option>
                         </select>
                     </div>
                   </div>

@@ -55,12 +55,6 @@ export default {
                 success = false;
             }
 
-            if (!this.password) {
-                this.errors.password = "Password is required";
-                functions.showWarningNotification(this.errors.password)
-                success = false;
-            }
-
             if (!this.role) {
                 this.errors.role = "role is required";
                 functions.showWarningNotification(this.errors.role)
@@ -134,8 +128,8 @@ export default {
                       <label class="bmd-label-floating">Role <span class="error">{{errors.role}}</span></label>
                         <select v-model="role" name="role" class="form-control">
                             <option></option>
-                            <option value="0">Manager</option>
-                            <option value="1">Engineer</option>
+                            <option value="MANAGER">Manager</option>
+                            <option value="ENGINEER">Engineer</option>
                         </select>
                     </div>
                   </div>
