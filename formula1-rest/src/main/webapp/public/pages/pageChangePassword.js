@@ -5,6 +5,8 @@ export default {
     icon: 'lock',
     showInMenu: true,
     components: {componentChangePassword},
+    requiredRoles: ["ROLE_MANAGER", "ROLE_ENGINEER"],
+
 
     props: {
         pageParams: Object,

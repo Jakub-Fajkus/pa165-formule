@@ -17,39 +17,25 @@ export default {
             submitPasswordChange() {
                 console.log("Changing password for user: ", store.$username)
 
-                axios.post('http://localhost:8080/pa165/rest/auth/signin', {
-                    login: store.$username,
-                    password: this.oldpassword
-                }, {
-                    headers: {
-                        "Content-type": "application/json",
-                        "Authorization": `Bearer ${store.$jwt}`,
-                    }
-                })
-                    .then(function (response) {
+                    axios.post("http://localhost:8080/pa165/rest/users/password", {
+                            login: store.$username,
+                            password: this.newpassword
+                        }, {
+                           headers: {
+                               "Content-type": "application/json",
+                               "Authorization": `Bearer ${store.$jwt}`,
+                           }
+                        })
+                            .then(function (response){
+                                console.log("Successfully changed!", response);
 
-                    })
-                    .catch(function (error) {
-                        console.log("Error catch", error);
+                                functions.showSuccessNotification("Password changed")
+                            })
+                            .catch(function (error) {
+                                console.log("Error catch", error);
 
-                        functions.showErrorNotification("Old password not valid.")
-                    });
-
-
-                axios.post("http://localhost:8080/pa165/rest/users/password", {
-                    login: store.$username,
-                    password: this.newpassword
-                })
-                    .then(function (response){
-                        console.log("Successfully changed!", response);
-
-                        functions.showSuccessNotification("Password changed")
-                    })
-                    .catch(function (error) {
-                        console.log("Error catch", error);
-
-                        functions.showErrorNotification("Something went wrong..")
-                    });
+                                functions.showErrorNotification("Something went wrong..")
+                            });
 
             },
             logout() {
@@ -97,7 +83,6 @@ export default {
                                 </div>
                               </div>
                             </div>
-
                             <button type="button" @click="submitPasswordChange()" class="btn btn-primary pull-right">Submit</button>
                             <div class="clearfix"></div>
                           </form>
