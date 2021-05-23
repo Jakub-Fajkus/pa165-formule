@@ -114,6 +114,12 @@ public class RestConfiguration implements WebMvcConfigurer {
                     .fields(field("name").accessible(), field("name").accessible())
                     .fields(field("driver.id").accessible(), field("driver").accessible())
             ;
+
+            mapping(UserDTO.class, UserAPIDTO.class)
+                    .fields(field("id").accessible(), field("id").accessible())
+                    .fields(field("login").accessible(), field("login").accessible())
+                    .fields(field("role").accessible(), field("role").accessible())
+            ;
         }
     }
 

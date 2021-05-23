@@ -68,7 +68,7 @@ public class UserController {
 
     @ApiOperation(value = "Create new user")
     @PostMapping(value = ApiUris.ROOT_URI_USERS, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public RestResponse<UserAPIDTO> createUser(@RequestBody UserAPIDTO user) {
+    public RestResponse<UserAPIDTO> createUser(@RequestBody UpdateUserAPIDTO user) {
         Long id = userFacade.createUser(new UserDTO(user.getLogin(), user.getPassword(), user.getRole()), user.getPassword());
 
         return getUser(id);

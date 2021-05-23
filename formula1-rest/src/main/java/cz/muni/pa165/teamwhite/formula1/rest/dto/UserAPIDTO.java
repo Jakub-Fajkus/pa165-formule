@@ -9,15 +9,13 @@ public class UserAPIDTO {
 
     private String login;
 
-    private String password;
-
     private Role role;
 
     public UserAPIDTO() {
 
     }
 
-    public UserAPIDTO(Long id, String login, String password, Role role) {
+    public UserAPIDTO(Long id, String login, Role role) {
         this.id = id;
         this.login = login;
     }
@@ -30,10 +28,6 @@ public class UserAPIDTO {
         return login;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
     public Role getRole() {
         return role;
     }
@@ -43,6 +37,7 @@ public class UserAPIDTO {
         return "User{" +
                 "id=" + id +
                 "login=" + login +
+                "role=" + role +
                 "}";
     }
 
