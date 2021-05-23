@@ -51,6 +51,10 @@ export default {
             .catch(error => {
                 console.log("Driver score error: ", error);
                 functions.showErrorNotification(error)
+
+                store.$jwt = null;
+                store.$username = null;
+                store.$role = null;
             });
 
 
