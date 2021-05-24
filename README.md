@@ -9,3 +9,8 @@ which are required for front-end in javascript as we decided that the rest of th
 
 ### Test our apps
 For testing our application run this command from the root folder *mvn clean install && cd formula1-rest && mvn cargo:run*.
+
+### Credentials:
+Manager account - username: manager, password: passmanager
+
+Engineer account (restricted access) - username: engineer1, password: passengineer1
