@@ -18,10 +18,6 @@ export default {
         },
     },
 
-    mounted() {
-        console.log(this.pageParams);
-    },
-
     template: `
         <div>
          <div class="content">

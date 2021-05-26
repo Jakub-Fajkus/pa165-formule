@@ -13,7 +13,6 @@ export default {
     template: `
         <div>
             <componentDriversStatistics></componentDriversStatistics>
-
         </div>
     `,
   };

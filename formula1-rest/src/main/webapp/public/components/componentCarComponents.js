@@ -32,8 +32,6 @@ export default {
     },
 
     mounted() {
-        console.log("Car components for id: ", this.id);
-
         axios.get('http://localhost:8080/pa165/rest/cars/' + this.id + "/components", {
             headers: {
                 "Content-type": "application/json",
@@ -41,7 +39,6 @@ export default {
             }
         })
             .then(response => {
-                console.log("Car components: ", response);
                 response.data.data.forEach(component => {
                     console.log(component);
 
@@ -58,12 +55,9 @@ export default {
                     } else {
                         functions.showErrorNotification("unknown component type " + component.type);
                     }
-
-                    console.log(this.engine, this.suspension, this.transmission, this.rims, this.rearspoiler);
                 });
             })
             .catch(error => {
-                console.log("Car components error: ", error);
                 functions.showErrorNotification(error)
             });
 
@@ -74,10 +68,7 @@ export default {
             }
         })
             .then(response => {
-                console.log("All components: ", response);
                 response.data.data.forEach(component => {
-                    console.log(component);
-
                     if (component.car != null && component.car != this.id) {
                         return;
                     }
@@ -95,19 +86,15 @@ export default {
                     } else {
                         functions.showErrorNotification("unknown component type " + component.type);
                     }
-
-                    console.log(this.allEngines, this.allSuspensions, this.allTransmissions, this.allRims, this.allRearspoilers);
                 });
             })
             .catch(error => {
-                console.log("All components error: ", error);
                 functions.showErrorNotification(error)
             });
     },
 
     methods: {
         editCar() {
-            console.log("Edit car components")
             let newComponents = [];
 
             if (this.engine) {
@@ -129,7 +116,6 @@ export default {
                 newComponents.push(this.rearspoiler)
             }
 
-            console.log(newComponents);
             axios.put('http://localhost:8080/pa165/rest/cars/' + this.id + '/components', newComponents, {
                 headers: {
                     "Content-type": "application/json",
@@ -137,13 +123,10 @@ export default {
                 }
             })
                 .then(response => {
-                    console.log("Success:", response);
-
                     functions.showSuccessNotification("Car assembled successfully")
                     this.$forceUpdate();
                 })
                 .catch(error => {
-                    console.log("Error catch", error);
                     functions.showErrorNotification(error)
                     this.$forceUpdate();
                 });

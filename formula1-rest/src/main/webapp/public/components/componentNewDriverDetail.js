@@ -59,10 +59,6 @@ export default {
         },
 
         newDriver() {
-            console.log("New driver with properties: ",
-                this.name, this.surname, this.nationality,
-                this.aggressive, this.wetDriving, this.reactions)
-
             if (!this.validateForm()) {
                 return;
             }
@@ -81,8 +77,6 @@ export default {
                 }
             })
                 .then(response => {
-                    console.log("Success:", response);
-
                     this.name = response.data.data.name;
                     this.surname = response.data.data.surname;
                     this.nationality = response.data.data.nationality;
@@ -94,12 +88,10 @@ export default {
                     functions.showSuccessNotification("Driver successfully created.")
                 })
                 .catch(error => {
-                    console.log("Error catch", error);
                     functions.showErrorNotification(error)
                 });
         },
     },
-
 
     template: `
         <div class="card">

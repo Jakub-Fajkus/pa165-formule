@@ -16,7 +16,6 @@ export default {
             }
         })
             .then(response => {
-                console.log("Driver scores: ", response);
                 response.data.data.map(driver => {
                     return driver.firstName + " " + driver.lastName;
                 });
@@ -49,7 +48,6 @@ export default {
                 new Chartist.Bar('#websiteViewsChart', dataDailySalesChart, optionsDailySalesChart);
             })
             .catch(error => {
-                console.log("Driver score error: ", error);
                 functions.showErrorNotification(error)
 
                 store.$jwt = null;

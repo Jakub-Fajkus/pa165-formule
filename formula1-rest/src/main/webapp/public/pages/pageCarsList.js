@@ -13,8 +13,6 @@ export default {
 
     methods: {
         onShowCarDetail(carId) {
-            console.log("onShowCarDetail " + carId);
-
             this.$emit('show-car-detail', carId);
         }
     },

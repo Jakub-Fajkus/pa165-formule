@@ -28,8 +28,6 @@ export default {
     },
 
     mounted() {
-        console.log("Driver detail id: ", this.id);
-
         axios.get('http://localhost:8080/pa165/rest/drivers/' + this.id, {
             headers: {
                 "Content-type": "application/json",
@@ -37,8 +35,6 @@ export default {
             }
         })
             .then(response => {
-                console.log("Driver detail: ", response);
-
                 this.name = response.data.data.name;
                 this.surname = response.data.data.surname;
                 this.nationality = response.data.data.nationality;
@@ -47,7 +43,6 @@ export default {
                 this.reactions = response.data.data.reactions;
             })
             .catch(error => {
-                console.log("Driver detail error: ", error);
                 functions.showErrorNotification(error)
             });
     },
@@ -55,7 +50,6 @@ export default {
     methods: {
         validateForm() {
             let success = true;
-
             this.errors = {};
 
             if (!this.name) {
@@ -80,10 +74,6 @@ export default {
         },
 
         editDriver() {
-            console.log("Edit driver with properties: ",
-                        this.name, this.surname, this.nationality,
-                        this.aggressive, this.wetDriving, this.reactions)
-
             if (!this.validateForm()) {
                 return;
             }
@@ -102,8 +92,6 @@ export default {
                 }
             })
                 .then(response => {
-                    console.log("Success:", response);
-
                     this.name = response.data.data.name;
                     this.surname = response.data.data.surname;
                     this.nationality = response.data.data.nationality;
@@ -114,7 +102,6 @@ export default {
                     functions.showSuccessNotification("Driver successfully edited")
                 })
                 .catch(error => {
-                    console.log("Error catch", error);
                     functions.showErrorNotification(error)
                 });
         },

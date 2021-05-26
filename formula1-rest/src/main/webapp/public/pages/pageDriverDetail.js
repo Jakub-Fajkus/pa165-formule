@@ -12,10 +12,6 @@ export default {
         pageParams: Object,
     },
 
-    mounted() {
-        console.log(this.pageParams);
-    },
-
     template: `
         <div>
          <div class="content">

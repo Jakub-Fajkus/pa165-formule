@@ -12,12 +12,10 @@ export default {
 
     methods: {
         onShowComponentDetail(componentId) {
-            console.log("onShowComponentDetail " + componentId);
             this.$emit('show-component-detail', componentId);
         },
 
         onAddComponent() {
-            console.log("onAddComponent");
             this.$emit('add-component');
         }
     },
