@@ -125,6 +125,16 @@ export default {
 
             this.page = "submitPasswordChange";
             this.pageParams = {login: userLogin};
+        },
+
+        onRedirectAfterLogin() {
+            console.log("parent onRedirectAfterLogin");
+
+            if (store.$role == "ROLE_MANAGER") {
+                this.page = "homepage";
+            } else {
+                this.page = "pageComponentList";
+            }
         }
     },
 
@@ -232,7 +242,8 @@ export default {
                                 @show-drivers-list="onShowDriversList"
                                 @show-user-detail="onShowUserDetail"
                                 @new-user-detail="onNewUserDetail"
-                                @show-users-list="onShowUsersList" :pageParams="pageParams"></component>
+                                @show-users-list="onShowUsersList" 
+                                @redirect-after-login="onRedirectAfterLogin" :pageParams="pageParams"></component>
         </div>
       </div>
       <footer class="footer">
