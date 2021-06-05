@@ -9,12 +9,16 @@ export default {
     showInMenu: true,
     requiredRoles: ["ROLE_MANAGER", "ROLE_ENGINEER"],
 
-
     components: {componentLogin},
 
+    methods: {
+        onRedirectAfterLogin(userId) {
+            this.$emit('redirect-after-login', userId);
+        },
+    },
     template: `
         <div>
-            <componentLogin></componentLogin>
+            <componentLogin @redirect-after-login="onRedirectAfterLogin"></componentLogin>
         </div>
     `,
 };

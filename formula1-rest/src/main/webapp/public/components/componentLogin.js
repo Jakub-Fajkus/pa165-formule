@@ -18,6 +18,8 @@ export default {
         submitLogin(login, password) {
             console.log(login, password)
 
+            let component = this
+
             axios.post('http://localhost:8080/pa165/rest/auth/signin', {
                 login: login,
                 password: password
@@ -33,6 +35,7 @@ export default {
 
                     functions.showSuccessNotification("Login successful")
 
+                    component.$emit('redirect-after-login');
                 })
                 .catch(function (error) {
                     console.log("Error catch", error);
